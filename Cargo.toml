@@ -1,0 +1,13 @@
+[package]
+name = "eyeliner"
+version = "0.1.0"
+authors = ["Dylan Frankland <dylan@frankland.io>"]
+
+[dependencies]
+kuchiki = { git = "https://github.com/dfrankland/kuchiki" }
+servo-css-parser = { git = "https://github.com/victorporof/servo-css-parser" }
+markup5ever = "0.7.0"
+
+[replace]
+"serde:1.0.23" = { git = "https://github.com/gankro/serde", branch = "deserialize_from_enums3" }
+"serde_derive:1.0.23" = { git = "https://github.com/gankro/serde", branch = "deserialize_from_enums3" }
