@@ -95,9 +95,10 @@ impl StylesheetToHashMap for Eyeliner {
                                         for (i, declartion) in block.declarations().into_iter().enumerate() {
                                             #[allow(unknown_lints)]
                                             #[allow(match_bool)]
-                                            let importance = match block.declarations_importance().get(i as u32) {
-                                                true => Importance::Important,
-                                                false => Importance::Normal,
+                                            let importance = if block.declarations_importance().get(i as u32) {
+                                                Importance::Important
+                                            } else {
+                                                Importance::Normal
                                             };
                                             entry.get_mut().push(declartion.clone(), importance, DeclarationSource::Parsing);
                                         }
@@ -141,7 +142,12 @@ impl InlineStylesheetAndDocument for Eyeliner {
                 match attributes.map.entry(style_attr) {
                     Occupied(mut entry) => {
                         let exising_style = entry.get().clone();
-                        entry.insert(format!("{}{}", exising_style, block.to_css_string()));
+                        let delimeter = match true {
+                            _ if exising_style.ends_with("; ") => "",
+                            _ if exising_style.ends_with(";") => " ",
+                            _ => "; ",
+                        };
+                        entry.insert(format!("{}{}{}", exising_style, delimeter, block.to_css_string()));
                     },
                     Vacant(entry) => {
                         entry.insert(block.to_css_string());

@@ -12,7 +12,7 @@ fn test() {
             <body>
                 <h1>Hello, world!</h1>
                 <p class="foo bar">I love HTML</p>
-                <heart>&lt;3</heart>
+                <heart style="transform: rotate(90deg)">&lt;3</heart>
             </body>
         </html>
     "#;
@@ -41,7 +41,7 @@ fn test() {
             <body>
                 <h1>Hello, world!</h1>
                 <p style="color: red; font-weight: bold; text-decoration: underline !important;">I love HTML</p>
-                <heart style="color: red; font-weight: bold;">&lt;3</heart>
+                <heart style="transform: rotate(90deg); color: red; font-weight: bold;">&lt;3</heart>
             </body>
         </html>
     "#;
