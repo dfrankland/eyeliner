@@ -1,12 +1,14 @@
 extern crate kuchiki;
 extern crate servo_css_parser;
-#[macro_use] extern crate markup5ever;
 
 pub mod eyeliner;
+pub mod rules;
+pub mod traits;
+pub mod hash;
 
-use eyeliner::{Eyeliner, InlineStylesheetAndDocument};
+use traits::*;
+use eyeliner::Eyeliner;
 
 pub fn inline<'a>(html: &'a str, css: &'a str) -> String {
-    let eyeliner = Eyeliner::new(html, css);
-    eyeliner.inline_stylesheet_and_document()
+    Eyeliner::new(html, css).inline_stylesheet_and_document().serialize_document()
 }

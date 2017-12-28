@@ -7,37 +7,16 @@ use test::Bencher;
 use eyeliner::inline;
 
 #[bench]
-fn bench(b: &mut Bencher) {
-    let html = r#"
-        <html>
-            <head>
-                <title>Hello, world!</title>
-            </head>
-            <body>
-                <h1>Hello, world!</h1>
-                <p class="foo bar">I love HTML</p>
-                <heart>&lt;3</heart>
-            </body>
-        </html>
-    "#;
+fn bench_dashboard(b: &mut Bencher) {
+    let html = include_str!("./bootstrap/docs/4.0/examples/dashboard/index.html");
+    let css = include_str!("./bootstrap/dist/css/bootstrap.min.css");
+    println!("{}", inline(html, css));
+    b.iter(|| inline(html, css))
+}
 
-    let css = r#"
-        .foo {
-            color: black;
-        }
-        .foo.bar, heart {
-            color: red;
-            font-weight: bold;
-        }
-        .foo.bar {
-            text-decoration: underline !important;
-        }
-        .foo.bar {
-            text-decoration: inherit;
-        }
-    "#;
-
-    b.iter(|| {
-        test::black_box(inline(html, css));
-    });
+#[bench]
+fn bench_navbar(b: &mut Bencher) {
+    let html = include_str!("./bootstrap/docs/4.0/examples/navbars/index.html");
+    let css = include_str!("./bootstrap/dist/css/bootstrap.min.css");
+    b.iter(|| inline(html, css))
 }

@@ -1,58 +1,29 @@
 extern crate eyeliner;
+extern crate kuchiki;
 
 use eyeliner::inline;
+use kuchiki::traits::*;
+use kuchiki::parse_html;
 
 #[test]
 fn test() {
-    let html = r#"
-        <html>
-            <head>
-                <title>Hello, world!</title>
-            </head>
-            <body>
-                <h1>Hello, world!</h1>
-                <p class="foo bar">I love HTML</p>
-                <heart style="transform: rotate(90deg)">&lt;3</heart>
-            </body>
-        </html>
-    "#;
+    let expected_document = parse_html().one(include_str!("./fixture.html"));
+    let result_document = parse_html().one(inline(include_str!("./test.html"), include_str!("./test.css")));
 
-    let css = r#"
-        .foo {
-            color: black;
-        }
-        .foo.bar, heart {
-            color: red;
-            font-weight: bold;
-        }
-        .foo.bar {
-            text-decoration: underline !important;
-        }
-        .foo.bar {
-            text-decoration: inherit;
-        }
-    "#;
+    let selector = "#test1, #test2";
+    let expected_select = expected_document.select(selector).unwrap();
+    let result_select = result_document.select(selector).unwrap();
 
-    let expected_result = r#"
-        <html>
-            <head>
-                <title>Hello, world!</title>
-            </head>
-            <body>
-                <h1>Hello, world!</h1>
-                <p style="color: red; font-weight: bold; text-decoration: underline !important;">I love HTML</p>
-                <heart style="transform: rotate(90deg); color: red; font-weight: bold;">&lt;3</heart>
-            </body>
-        </html>
-    "#;
+    for (expected_node, result_node) in expected_select.zip(result_select) {
+        let expected_attributes = expected_node.attributes.borrow();
+        let result_attributes = result_node.attributes.borrow();
 
-    let result: String = inline(html, css);
+        let attribute = "style";
+        let expected_style = expected_attributes.get(attribute).unwrap();
+        let result_style = result_attributes.get(attribute).unwrap();
 
-    let expected_result_vec: Vec<&str> = expected_result.split_whitespace().collect();
-    let result_vec: Vec<&str> = result.split_whitespace().collect();
+        println!("\nExpected:\t{}\nResult:  \t{}", expected_style, result_style);
 
-    assert_eq!(
-        expected_result_vec.join(""),
-        result_vec.join(""),
-    );
+        assert_eq!(result_style, expected_style);
+    }
 }
