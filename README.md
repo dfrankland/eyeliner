@@ -41,7 +41,7 @@ unlocking the potential for processing emails and sending them on-the-fly.
 
 [Documentation][documentation]
 
-[documentation]: https://dfrankland.github.io/eyeliner/
+[documentation]: https://dfrankland.github.io/eyeliner/eyeliner/index.html
 
 **Much of [Servo][servo] and other dependencies that `eyeliner` uses are under
 development, use `eyeliner` with caution.**
