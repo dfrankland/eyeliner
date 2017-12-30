@@ -1,4 +1,0 @@
-[submodule "benches/bootstrap"]
-  path = benches/bootstrap
-  url = https://github.com/twbs/bootstrap.git
-  shallow = true

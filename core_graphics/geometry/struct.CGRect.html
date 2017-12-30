@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `CGRect` struct in crate `core_graphics`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, CGRect">
+
+    <title>core_graphics::geometry::CGRect - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Struct CGRect</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.origin">origin</a><a href="#structfield.size">size</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.inset">inset</a><a href="#method.from_dict_representation">from_dict_representation</a><a href="#method.is_empty">is_empty</a><a href="#method.is_intersects">is_intersects</a><a href="#method.apply_transform">apply_transform</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Copy">Copy</a><a href="#impl-Debug">Debug</a><a href="#impl-Default">Default</a></div></div><p class='location'><a href='../index.html'>core_graphics</a>::<wbr><a href='index.html'>geometry</a></p><script>window.sidebarCurrent = {name: 'CGRect', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>core_graphics</a>::<wbr><a href='index.html'>geometry</a>::<wbr><a class="struct" href=''>CGRect</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/core_graphics/geometry.rs.html#85-88' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct CGRect {
+    pub origin: <a class="struct" href="../../core_graphics/geometry/struct.CGPoint.html" title="struct core_graphics::geometry::CGPoint">CGPoint</a>,
+    pub size: <a class="struct" href="../../core_graphics/geometry/struct.CGSize.html" title="struct core_graphics::geometry::CGSize">CGSize</a>,
+}</pre><h2 id='fields' class='fields small-section-header'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.origin" class="structfield small-section-header">
+                           <a href="#structfield.origin" class="anchor field"></a>
+                           <span id="origin.v" class='invisible'>
+                           <code>origin: <a class="struct" href="../../core_graphics/geometry/struct.CGPoint.html" title="struct core_graphics::geometry::CGPoint">CGPoint</a></code>
+                           </span></span><span id="structfield.size" class="structfield small-section-header">
+                           <a href="#structfield.size" class="anchor field"></a>
+                           <span id="size.v" class='invisible'>
+                           <code>size: <a class="struct" href="../../core_graphics/geometry/struct.CGSize.html" title="struct core_graphics::geometry::CGSize">CGSize</a></code>
+                           </span></span>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#90-141' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(origin: &amp;<a class="struct" href="../../core_graphics/geometry/struct.CGPoint.html" title="struct core_graphics::geometry::CGPoint">CGPoint</a>, size: &amp;<a class="struct" href="../../core_graphics/geometry/struct.CGSize.html" title="struct core_graphics::geometry::CGSize">CGSize</a>) -&gt; <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#92-97' title='goto source code'>[src]</a></span></h4>
+<h4 id='method.inset' class="method"><span id='inset.v' class='invisible'><code>pub fn <a href='#method.inset' class='fnname'>inset</a>(&amp;self, size: &amp;<a class="struct" href="../../core_graphics/geometry/struct.CGSize.html" title="struct core_graphics::geometry::CGSize">CGSize</a>) -&gt; <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#100-104' title='goto source code'>[src]</a></span></h4>
+<h4 id='method.from_dict_representation' class="method"><span id='from_dict_representation.v' class='invisible'><code>pub fn <a href='#method.from_dict_representation' class='fnname'>from_dict_representation</a>(dict: &amp;<a class="struct" href="../../core_graphics/display/struct.CFDictionary.html" title="struct core_graphics::display::CFDictionary">CFDictionary</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#107-117' title='goto source code'>[src]</a></span></h4>
+<h4 id='method.is_empty' class="method"><span id='is_empty.v' class='invisible'><code>pub fn <a href='#method.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#120-125' title='goto source code'>[src]</a></span></h4>
+<h4 id='method.is_intersects' class="method"><span id='is_intersects.v' class='invisible'><code>pub fn <a href='#method.is_intersects' class='fnname'>is_intersects</a>(&amp;self, other: &amp;<a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#128-133' title='goto source code'>[src]</a></span></h4>
+<h4 id='method.apply_transform' class="method"><span id='apply_transform.v' class='invisible'><code>pub fn <a href='#method.apply_transform' class='fnname'>apply_transform</a>(&amp;self, t: &amp;<a class="struct" href="../../core_graphics/geometry/struct.CGAffineTransform.html" title="struct core_graphics::geometry::CGAffineTransform">CGAffineTransform</a>) -&gt; <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#136-140' title='goto source code'>[src]</a></span></h4>
+</div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Clone' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code><a href='#impl-Clone' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#84' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#84' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self)</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/clone.rs.html#112-114' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 id='impl-Copy' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code><a href='#impl-Copy' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#84' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#84' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#84' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
+</div></div><h3 id='impl-Default' class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html" title="trait core::default::Default">Default</a> for <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code><a href='#impl-Default' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#84' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class="method"><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class="struct" href="../../core_graphics/geometry/struct.CGRect.html" title="struct core_graphics::geometry::CGRect">CGRect</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/geometry.rs.html#84' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "core_graphics";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

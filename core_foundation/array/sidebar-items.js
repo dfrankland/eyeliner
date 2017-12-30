@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["CFRelease",""]],"struct":[["CFArray","A heterogeneous immutable array."],["CFArrayIterator",""]],"trait":[["FromVoid","A trait describing how to convert from the stored *const c_void to the desired T"]],"type":[["CFIndex",""]]});

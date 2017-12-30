@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["TendrilSink","Trait for types that can process a tendril."]]});

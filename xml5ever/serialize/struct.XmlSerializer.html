@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `XmlSerializer` struct in crate `xml5ever`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, XmlSerializer">
+
+    <title>xml5ever::serialize::XmlSerializer - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Struct XmlSerializer</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Serializer">Serializer</a></div></div><p class='location'><a href='../index.html'>xml5ever</a>::<wbr><a href='index.html'>serialize</a></p><script>window.sidebarCurrent = {name: 'XmlSerializer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>xml5ever</a>::<wbr><a href='index.html'>serialize</a>::<wbr><a class="struct" href=''>XmlSerializer</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#43-46' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct XmlSerializer&lt;Wr&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Struct used for serializing nodes into a text that other XML
+parses can read.</p>
+
+<p>Serializer contains a set of functions (start_elem, end_elem...)
+that make parsing nodes easier.</p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;Wr:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="struct" href="../../xml5ever/serialize/struct.XmlSerializer.html" title="struct xml5ever::serialize::XmlSerializer">XmlSerializer</a>&lt;Wr&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#101-144' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(writer: Wr) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#103-108' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Creates a new Serializier from a writer and given serialization options.</p>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Serializer' class='impl'><span class='in-band'><code>impl&lt;Wr:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a>&gt; <a class="trait" href="../../xml5ever/serialize/trait.Serializer.html" title="trait xml5ever::serialize::Serializer">Serializer</a> for <a class="struct" href="../../xml5ever/serialize/struct.XmlSerializer.html" title="struct xml5ever::serialize::XmlSerializer">XmlSerializer</a>&lt;Wr&gt;</code><a href='#impl-Serializer' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#146-221' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.start_elem' class="method"><span id='start_elem.v' class='invisible'><code>fn <a href='../../xml5ever/serialize/trait.Serializer.html#tymethod.start_elem' class='fnname'>start_elem</a>&lt;'a, AttrIter&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;name: <a class="struct" href="../../markup5ever/interface/struct.QualName.html" title="struct markup5ever::interface::QualName">QualName</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;attrs: AttrIter<br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;AttrIter: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html" title="trait core::iter::iterator::Iterator">Iterator</a>&lt;Item = <a class="type" href="../../xml5ever/serialize/type.AttrRef.html" title="type xml5ever::serialize::AttrRef">AttrRef</a>&lt;'a&gt;&gt;,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#149-183' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Serializes given start element into text. Start element contains
+qualified name and an attributes iterator.</p>
+</div><h4 id='method.end_elem' class="method"><span id='end_elem.v' class='invisible'><code>fn <a href='../../xml5ever/serialize/trait.Serializer.html#tymethod.end_elem' class='fnname'>end_elem</a>(&amp;mut self, name: <a class="struct" href="../../markup5ever/interface/struct.QualName.html" title="struct markup5ever::interface::QualName">QualName</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#186-191' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Serializes given end element into text.</p>
+</div><h4 id='method.write_comment' class="method"><span id='write_comment.v' class='invisible'><code>fn <a href='../../xml5ever/serialize/trait.Serializer.html#tymethod.write_comment' class='fnname'>write_comment</a>(&amp;mut self, text: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#194-198' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Serializes comment into text.</p>
+</div><h4 id='method.write_doctype' class="method"><span id='write_doctype.v' class='invisible'><code>fn <a href='../../xml5ever/serialize/trait.Serializer.html#tymethod.write_doctype' class='fnname'>write_doctype</a>(&amp;mut self, name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#201-205' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Serializes given doctype</p>
+</div><h4 id='method.write_text' class="method"><span id='write_text.v' class='invisible'><code>fn <a href='../../xml5ever/serialize/trait.Serializer.html#tymethod.write_text' class='fnname'>write_text</a>(&amp;mut self, text: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#208-210' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Serializes text for a node or an attributes.</p>
+</div><h4 id='method.write_processing_instruction' class="method"><span id='write_processing_instruction.v' class='invisible'><code>fn <a href='../../xml5ever/serialize/trait.Serializer.html#tymethod.write_processing_instruction' class='fnname'>write_processing_instruction</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;target: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;data: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a><br>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/xml5ever/serialize/mod.rs.html#213-219' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Serializes given processing instruction.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "xml5ever";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["create_data",""],["create_with_data",""]],"struct":[["CFPropertyList","A CFPropertyList struct. This is superclass to [`CFData`], [`CFString`], [`CFArray`], [`CFDictionary`], [`CFDate`], [`CFBoolean`], and [`CFNumber`]."]],"trait":[["CFPropertyListSubClass","Trait for all subclasses of [`CFPropertyList`]."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ArcSlice","A reference-counted slice type."],["WeakSlice","A non-owning reference-counted slice type."]]});

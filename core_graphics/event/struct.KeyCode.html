@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `KeyCode` struct in crate `core_graphics`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, KeyCode">
+
+    <title>core_graphics::event::KeyCode - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Struct KeyCode</p><div class="sidebar-elems"><p class='location'><a href='../index.html'>core_graphics</a>::<wbr><a href='index.html'>event</a></p><script>window.sidebarCurrent = {name: 'KeyCode', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>core_graphics</a>::<wbr><a href='index.html'>event</a>::<wbr><a class="struct" href=''>KeyCode</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/core_graphics/event.rs.html#45' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct KeyCode;</pre><div class='docblock'><p>Key codes for keys that are independent of keyboard layout.</p>
+
+<p><a href="https://github.com/phracker/MacOSX-SDKs/blob/master/MacOSX10.13.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/Headers/Events.h">Ref</a></p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../core_graphics/event/struct.KeyCode.html" title="struct core_graphics::event::KeyCode">KeyCode</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/event.rs.html#46-95' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedconstant.RETURN' class="associatedconstant"><span id='RETURN.v' class='invisible'><code>pub const <a href='#associatedconstant.RETURN' class="constant"><b>RETURN</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">RETURN</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">36</span></pre>
+</div><h4 id='associatedconstant.TAB' class="associatedconstant"><span id='TAB.v' class='invisible'><code>pub const <a href='#associatedconstant.TAB' class="constant"><b>TAB</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TAB</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">48</span></pre>
+</div><h4 id='associatedconstant.SPACE' class="associatedconstant"><span id='SPACE.v' class='invisible'><code>pub const <a href='#associatedconstant.SPACE' class="constant"><b>SPACE</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SPACE</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">49</span></pre>
+</div><h4 id='associatedconstant.DELETE' class="associatedconstant"><span id='DELETE.v' class='invisible'><code>pub const <a href='#associatedconstant.DELETE' class="constant"><b>DELETE</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">DELETE</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">51</span></pre>
+</div><h4 id='associatedconstant.ESCAPE' class="associatedconstant"><span id='ESCAPE.v' class='invisible'><code>pub const <a href='#associatedconstant.ESCAPE' class="constant"><b>ESCAPE</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">ESCAPE</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">53</span></pre>
+</div><h4 id='associatedconstant.COMMAND' class="associatedconstant"><span id='COMMAND.v' class='invisible'><code>pub const <a href='#associatedconstant.COMMAND' class="constant"><b>COMMAND</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">COMMAND</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">55</span></pre>
+</div><h4 id='associatedconstant.SHIFT' class="associatedconstant"><span id='SHIFT.v' class='invisible'><code>pub const <a href='#associatedconstant.SHIFT' class="constant"><b>SHIFT</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SHIFT</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">56</span></pre>
+</div><h4 id='associatedconstant.CAPS_LOCK' class="associatedconstant"><span id='CAPS_LOCK.v' class='invisible'><code>pub const <a href='#associatedconstant.CAPS_LOCK' class="constant"><b>CAPS_LOCK</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">CAPS_LOCK</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">57</span></pre>
+</div><h4 id='associatedconstant.OPTION' class="associatedconstant"><span id='OPTION.v' class='invisible'><code>pub const <a href='#associatedconstant.OPTION' class="constant"><b>OPTION</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">OPTION</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">58</span></pre>
+</div><h4 id='associatedconstant.CONTROL' class="associatedconstant"><span id='CONTROL.v' class='invisible'><code>pub const <a href='#associatedconstant.CONTROL' class="constant"><b>CONTROL</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">CONTROL</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">59</span></pre>
+</div><h4 id='associatedconstant.RIGHT_COMMAND' class="associatedconstant"><span id='RIGHT_COMMAND.v' class='invisible'><code>pub const <a href='#associatedconstant.RIGHT_COMMAND' class="constant"><b>RIGHT_COMMAND</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">RIGHT_COMMAND</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">54</span></pre>
+</div><h4 id='associatedconstant.RIGHT_SHIFT' class="associatedconstant"><span id='RIGHT_SHIFT.v' class='invisible'><code>pub const <a href='#associatedconstant.RIGHT_SHIFT' class="constant"><b>RIGHT_SHIFT</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">RIGHT_SHIFT</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">60</span></pre>
+</div><h4 id='associatedconstant.RIGHT_OPTION' class="associatedconstant"><span id='RIGHT_OPTION.v' class='invisible'><code>pub const <a href='#associatedconstant.RIGHT_OPTION' class="constant"><b>RIGHT_OPTION</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">RIGHT_OPTION</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">61</span></pre>
+</div><h4 id='associatedconstant.RIGHT_CONTROL' class="associatedconstant"><span id='RIGHT_CONTROL.v' class='invisible'><code>pub const <a href='#associatedconstant.RIGHT_CONTROL' class="constant"><b>RIGHT_CONTROL</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">RIGHT_CONTROL</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">62</span></pre>
+</div><h4 id='associatedconstant.FUNCTION' class="associatedconstant"><span id='FUNCTION.v' class='invisible'><code>pub const <a href='#associatedconstant.FUNCTION' class="constant"><b>FUNCTION</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">FUNCTION</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">63</span></pre>
+</div><h4 id='associatedconstant.VOLUME_UP' class="associatedconstant"><span id='VOLUME_UP.v' class='invisible'><code>pub const <a href='#associatedconstant.VOLUME_UP' class="constant"><b>VOLUME_UP</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">VOLUME_UP</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">72</span></pre>
+</div><h4 id='associatedconstant.VOLUME_DOWN' class="associatedconstant"><span id='VOLUME_DOWN.v' class='invisible'><code>pub const <a href='#associatedconstant.VOLUME_DOWN' class="constant"><b>VOLUME_DOWN</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">VOLUME_DOWN</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">73</span></pre>
+</div><h4 id='associatedconstant.MUTE' class="associatedconstant"><span id='MUTE.v' class='invisible'><code>pub const <a href='#associatedconstant.MUTE' class="constant"><b>MUTE</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MUTE</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">74</span></pre>
+</div><h4 id='associatedconstant.F1' class="associatedconstant"><span id='F1.v' class='invisible'><code>pub const <a href='#associatedconstant.F1' class="constant"><b>F1</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F1</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">122</span></pre>
+</div><h4 id='associatedconstant.F2' class="associatedconstant"><span id='F2.v' class='invisible'><code>pub const <a href='#associatedconstant.F2' class="constant"><b>F2</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F2</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">120</span></pre>
+</div><h4 id='associatedconstant.F3' class="associatedconstant"><span id='F3.v' class='invisible'><code>pub const <a href='#associatedconstant.F3' class="constant"><b>F3</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F3</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">99</span></pre>
+</div><h4 id='associatedconstant.F4' class="associatedconstant"><span id='F4.v' class='invisible'><code>pub const <a href='#associatedconstant.F4' class="constant"><b>F4</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F4</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">118</span></pre>
+</div><h4 id='associatedconstant.F5' class="associatedconstant"><span id='F5.v' class='invisible'><code>pub const <a href='#associatedconstant.F5' class="constant"><b>F5</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F5</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">96</span></pre>
+</div><h4 id='associatedconstant.F6' class="associatedconstant"><span id='F6.v' class='invisible'><code>pub const <a href='#associatedconstant.F6' class="constant"><b>F6</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F6</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">97</span></pre>
+</div><h4 id='associatedconstant.F7' class="associatedconstant"><span id='F7.v' class='invisible'><code>pub const <a href='#associatedconstant.F7' class="constant"><b>F7</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F7</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">98</span></pre>
+</div><h4 id='associatedconstant.F8' class="associatedconstant"><span id='F8.v' class='invisible'><code>pub const <a href='#associatedconstant.F8' class="constant"><b>F8</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F8</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">100</span></pre>
+</div><h4 id='associatedconstant.F9' class="associatedconstant"><span id='F9.v' class='invisible'><code>pub const <a href='#associatedconstant.F9' class="constant"><b>F9</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F9</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">101</span></pre>
+</div><h4 id='associatedconstant.F10' class="associatedconstant"><span id='F10.v' class='invisible'><code>pub const <a href='#associatedconstant.F10' class="constant"><b>F10</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F10</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">109</span></pre>
+</div><h4 id='associatedconstant.F11' class="associatedconstant"><span id='F11.v' class='invisible'><code>pub const <a href='#associatedconstant.F11' class="constant"><b>F11</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F11</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">103</span></pre>
+</div><h4 id='associatedconstant.F12' class="associatedconstant"><span id='F12.v' class='invisible'><code>pub const <a href='#associatedconstant.F12' class="constant"><b>F12</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F12</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">111</span></pre>
+</div><h4 id='associatedconstant.F13' class="associatedconstant"><span id='F13.v' class='invisible'><code>pub const <a href='#associatedconstant.F13' class="constant"><b>F13</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F13</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">105</span></pre>
+</div><h4 id='associatedconstant.F14' class="associatedconstant"><span id='F14.v' class='invisible'><code>pub const <a href='#associatedconstant.F14' class="constant"><b>F14</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F14</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">107</span></pre>
+</div><h4 id='associatedconstant.F15' class="associatedconstant"><span id='F15.v' class='invisible'><code>pub const <a href='#associatedconstant.F15' class="constant"><b>F15</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F15</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">113</span></pre>
+</div><h4 id='associatedconstant.F16' class="associatedconstant"><span id='F16.v' class='invisible'><code>pub const <a href='#associatedconstant.F16' class="constant"><b>F16</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F16</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">106</span></pre>
+</div><h4 id='associatedconstant.F17' class="associatedconstant"><span id='F17.v' class='invisible'><code>pub const <a href='#associatedconstant.F17' class="constant"><b>F17</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F17</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">64</span></pre>
+</div><h4 id='associatedconstant.F18' class="associatedconstant"><span id='F18.v' class='invisible'><code>pub const <a href='#associatedconstant.F18' class="constant"><b>F18</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F18</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">79</span></pre>
+</div><h4 id='associatedconstant.F19' class="associatedconstant"><span id='F19.v' class='invisible'><code>pub const <a href='#associatedconstant.F19' class="constant"><b>F19</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F19</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">80</span></pre>
+</div><h4 id='associatedconstant.F20' class="associatedconstant"><span id='F20.v' class='invisible'><code>pub const <a href='#associatedconstant.F20' class="constant"><b>F20</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">F20</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">90</span></pre>
+</div><h4 id='associatedconstant.HELP' class="associatedconstant"><span id='HELP.v' class='invisible'><code>pub const <a href='#associatedconstant.HELP' class="constant"><b>HELP</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">HELP</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">114</span></pre>
+</div><h4 id='associatedconstant.HOME' class="associatedconstant"><span id='HOME.v' class='invisible'><code>pub const <a href='#associatedconstant.HOME' class="constant"><b>HOME</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">HOME</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">115</span></pre>
+</div><h4 id='associatedconstant.PAGE_UP' class="associatedconstant"><span id='PAGE_UP.v' class='invisible'><code>pub const <a href='#associatedconstant.PAGE_UP' class="constant"><b>PAGE_UP</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">PAGE_UP</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">116</span></pre>
+</div><h4 id='associatedconstant.FORWARD_DELETE' class="associatedconstant"><span id='FORWARD_DELETE.v' class='invisible'><code>pub const <a href='#associatedconstant.FORWARD_DELETE' class="constant"><b>FORWARD_DELETE</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">FORWARD_DELETE</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">117</span></pre>
+</div><h4 id='associatedconstant.END' class="associatedconstant"><span id='END.v' class='invisible'><code>pub const <a href='#associatedconstant.END' class="constant"><b>END</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">END</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">119</span></pre>
+</div><h4 id='associatedconstant.PAGE_DOWN' class="associatedconstant"><span id='PAGE_DOWN.v' class='invisible'><code>pub const <a href='#associatedconstant.PAGE_DOWN' class="constant"><b>PAGE_DOWN</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">PAGE_DOWN</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">121</span></pre>
+</div><h4 id='associatedconstant.LEFT_ARROW' class="associatedconstant"><span id='LEFT_ARROW.v' class='invisible'><code>pub const <a href='#associatedconstant.LEFT_ARROW' class="constant"><b>LEFT_ARROW</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">LEFT_ARROW</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">123</span></pre>
+</div><h4 id='associatedconstant.RIGHT_ARROW' class="associatedconstant"><span id='RIGHT_ARROW.v' class='invisible'><code>pub const <a href='#associatedconstant.RIGHT_ARROW' class="constant"><b>RIGHT_ARROW</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">RIGHT_ARROW</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">124</span></pre>
+</div><h4 id='associatedconstant.DOWN_ARROW' class="associatedconstant"><span id='DOWN_ARROW.v' class='invisible'><code>pub const <a href='#associatedconstant.DOWN_ARROW' class="constant"><b>DOWN_ARROW</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">DOWN_ARROW</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">125</span></pre>
+</div><h4 id='associatedconstant.UP_ARROW' class="associatedconstant"><span id='UP_ARROW.v' class='invisible'><code>pub const <a href='#associatedconstant.UP_ARROW' class="constant"><b>UP_ARROW</b></a>: <a class="type" href="../../core_graphics/event/type.CGKeyCode.html" title="type core_graphics::event::CGKeyCode">CGKeyCode</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">UP_ARROW</span>: <span class="ident">CGKeyCode</span> <span class="op">=</span> <span class="number">126</span></pre>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "core_graphics";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `EventField` struct in crate `core_graphics`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, EventField">
+
+    <title>core_graphics::event::EventField - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Struct EventField</p><div class="sidebar-elems"><p class='location'><a href='../index.html'>core_graphics</a>::<wbr><a href='index.html'>event</a></p><script>window.sidebarCurrent = {name: 'EventField', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>core_graphics</a>::<wbr><a href='index.html'>event</a>::<wbr><a class="struct" href=''>EventField</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/core_graphics/event.rs.html#136' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct EventField;</pre><div class='docblock'><p>Constants used as keys to access specialized fields in low-level events.</p>
+
+<p><a href="https://developer.apple.com/documentation/coregraphics/cgeventfield">Ref</a></p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../core_graphics/event/struct.EventField.html" title="struct core_graphics::event::EventField">EventField</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/core_graphics/event.rs.html#137-359' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedconstant.MOUSE_EVENT_NUMBER' class="associatedconstant"><span id='MOUSE_EVENT_NUMBER.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_NUMBER' class="constant"><b>MOUSE_EVENT_NUMBER</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_NUMBER</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">0</span></pre>
+<p>Key to access an integer field that contains the mouse button event
+number. Matching mouse-down and mouse-up events will have the same
+event number.</p>
+</div><h4 id='associatedconstant.MOUSE_EVENT_CLICK_STATE' class="associatedconstant"><span id='MOUSE_EVENT_CLICK_STATE.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_CLICK_STATE' class="constant"><b>MOUSE_EVENT_CLICK_STATE</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_CLICK_STATE</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">1</span></pre>
+<p>Key to access an integer field that contains the mouse button click
+state. A click state of 1 represents a single click. A click state of
+2 represents a double-click. A click state of 3 represents a
+triple-click.</p>
+</div><h4 id='associatedconstant.MOUSE_EVENT_PRESSURE' class="associatedconstant"><span id='MOUSE_EVENT_PRESSURE.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_PRESSURE' class="constant"><b>MOUSE_EVENT_PRESSURE</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_PRESSURE</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">2</span></pre>
+<p>Key to access a double field that contains the mouse button pressure.
+The pressure value may range from 0 to 1, with 0 representing the
+mouse being up. This value is commonly set by tablet pens mimicking a
+mouse.</p>
+</div><h4 id='associatedconstant.MOUSE_EVENT_BUTTON_NUMBER' class="associatedconstant"><span id='MOUSE_EVENT_BUTTON_NUMBER.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_BUTTON_NUMBER' class="constant"><b>MOUSE_EVENT_BUTTON_NUMBER</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_BUTTON_NUMBER</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">3</span></pre>
+<p>Key to access an integer field that contains the mouse button number.</p>
+</div><h4 id='associatedconstant.MOUSE_EVENT_DELTA_X' class="associatedconstant"><span id='MOUSE_EVENT_DELTA_X.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_DELTA_X' class="constant"><b>MOUSE_EVENT_DELTA_X</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_DELTA_X</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">4</span></pre>
+<p>Key to access an integer field that contains the horizontal mouse
+delta since the last mouse movement event.</p>
+</div><h4 id='associatedconstant.MOUSE_EVENT_DELTA_Y' class="associatedconstant"><span id='MOUSE_EVENT_DELTA_Y.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_DELTA_Y' class="constant"><b>MOUSE_EVENT_DELTA_Y</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_DELTA_Y</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">5</span></pre>
+<p>Key to access an integer field that contains the vertical mouse delta
+since the last mouse movement event.</p>
+</div><h4 id='associatedconstant.MOUSE_EVENT_INSTANT_MOUSER' class="associatedconstant"><span id='MOUSE_EVENT_INSTANT_MOUSER.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_INSTANT_MOUSER' class="constant"><b>MOUSE_EVENT_INSTANT_MOUSER</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_INSTANT_MOUSER</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">6</span></pre>
+<p>Key to access an integer field. The value is non-zero if the event
+should be ignored by the Inkwell subsystem.</p>
+</div><h4 id='associatedconstant.MOUSE_EVENT_SUB_TYPE' class="associatedconstant"><span id='MOUSE_EVENT_SUB_TYPE.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_SUB_TYPE' class="constant"><b>MOUSE_EVENT_SUB_TYPE</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_SUB_TYPE</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">7</span></pre>
+<p>Key to access an integer field that encodes the mouse event subtype as
+a `kCFNumberIntType&#39;.</p>
+</div><h4 id='associatedconstant.KEYBOARD_EVENT_AUTOREPEAT' class="associatedconstant"><span id='KEYBOARD_EVENT_AUTOREPEAT.v' class='invisible'><code>pub const <a href='#associatedconstant.KEYBOARD_EVENT_AUTOREPEAT' class="constant"><b>KEYBOARD_EVENT_AUTOREPEAT</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">KEYBOARD_EVENT_AUTOREPEAT</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">8</span></pre>
+<p>Key to access an integer field, non-zero when this is an autorepeat of
+a key-down, and zero otherwise.</p>
+</div><h4 id='associatedconstant.KEYBOARD_EVENT_KEYCODE' class="associatedconstant"><span id='KEYBOARD_EVENT_KEYCODE.v' class='invisible'><code>pub const <a href='#associatedconstant.KEYBOARD_EVENT_KEYCODE' class="constant"><b>KEYBOARD_EVENT_KEYCODE</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">KEYBOARD_EVENT_KEYCODE</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">9</span></pre>
+<p>Key to access an integer field that contains the virtual keycode of the
+key-down or key-up event.</p>
+</div><h4 id='associatedconstant.KEYBOARD_EVENT_KEYBOARD_TYPE' class="associatedconstant"><span id='KEYBOARD_EVENT_KEYBOARD_TYPE.v' class='invisible'><code>pub const <a href='#associatedconstant.KEYBOARD_EVENT_KEYBOARD_TYPE' class="constant"><b>KEYBOARD_EVENT_KEYBOARD_TYPE</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">KEYBOARD_EVENT_KEYBOARD_TYPE</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">10</span></pre>
+<p>Key to access an integer field that contains the keyboard type
+identifier.</p>
+</div><h4 id='associatedconstant.SCROLL_WHEEL_EVENT_DELTA_AXIS_1' class="associatedconstant"><span id='SCROLL_WHEEL_EVENT_DELTA_AXIS_1.v' class='invisible'><code>pub const <a href='#associatedconstant.SCROLL_WHEEL_EVENT_DELTA_AXIS_1' class="constant"><b>SCROLL_WHEEL_EVENT_DELTA_AXIS_1</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SCROLL_WHEEL_EVENT_DELTA_AXIS_1</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">11</span></pre>
+<p>Key to access an integer field that contains scrolling data. This field
+typically contains the change in vertical position since the last
+scrolling event from a Mighty Mouse scroller or a single-wheel mouse
+scroller.</p>
+</div><h4 id='associatedconstant.SCROLL_WHEEL_EVENT_DELTA_AXIS_2' class="associatedconstant"><span id='SCROLL_WHEEL_EVENT_DELTA_AXIS_2.v' class='invisible'><code>pub const <a href='#associatedconstant.SCROLL_WHEEL_EVENT_DELTA_AXIS_2' class="constant"><b>SCROLL_WHEEL_EVENT_DELTA_AXIS_2</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SCROLL_WHEEL_EVENT_DELTA_AXIS_2</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">12</span></pre>
+<p>Key to access an integer field that contains scrolling data. This field
+typically contains the change in horizontal position since the last
+scrolling event from a Mighty Mouse scroller.</p>
+</div><h4 id='associatedconstant.SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_1' class="associatedconstant"><span id='SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_1.v' class='invisible'><code>pub const <a href='#associatedconstant.SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_1' class="constant"><b>SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_1</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_1</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">93</span></pre>
+<p>Key to access a field that contains scrolling data. The scrolling data
+represents a line-based or pixel-based change in vertical position
+since the last scrolling event from a Mighty Mouse scroller or a
+single-wheel mouse scroller. The scrolling data uses a fixed-point
+16.16 signed integer format. If this key is passed to
+`CGEventGetDoubleValueField&#39;, the fixed-point value is converted to a
+double value.</p>
+</div><h4 id='associatedconstant.SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_2' class="associatedconstant"><span id='SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_2.v' class='invisible'><code>pub const <a href='#associatedconstant.SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_2' class="constant"><b>SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_2</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SCROLL_WHEEL_EVENT_FIXED_POINT_DELTA_AXIS_2</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">94</span></pre>
+<p>Key to access a field that contains scrolling data. The scrolling data
+represents a line-based or pixel-based change in horizontal position
+since the last scrolling event from a Mighty Mouse scroller. The
+scrolling data uses a fixed-point 16.16 signed integer format. If this
+key is passed to `CGEventGetDoubleValueField&#39;, the fixed-point value is
+converted to a double value.</p>
+</div><h4 id='associatedconstant.SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_1' class="associatedconstant"><span id='SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_1.v' class='invisible'><code>pub const <a href='#associatedconstant.SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_1' class="constant"><b>SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_1</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_1</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">96</span></pre>
+<p>Key to access an integer field that contains pixel-based scrolling
+data. The scrolling data represents the change in vertical position
+since the last scrolling event from a Mighty Mouse scroller or a
+single-wheel mouse scroller.</p>
+</div><h4 id='associatedconstant.SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_2' class="associatedconstant"><span id='SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_2.v' class='invisible'><code>pub const <a href='#associatedconstant.SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_2' class="constant"><b>SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_2</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SCROLL_WHEEL_EVENT_POINT_DELTA_AXIS_2</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">97</span></pre>
+<p>Key to access an integer field that contains pixel-based scrolling
+data. The scrolling data represents the change in horizontal position
+since the last scrolling event from a Mighty Mouse scroller.</p>
+</div><h4 id='associatedconstant.SCROLL_WHEEL_EVENT_INSTANT_MOUSER' class="associatedconstant"><span id='SCROLL_WHEEL_EVENT_INSTANT_MOUSER.v' class='invisible'><code>pub const <a href='#associatedconstant.SCROLL_WHEEL_EVENT_INSTANT_MOUSER' class="constant"><b>SCROLL_WHEEL_EVENT_INSTANT_MOUSER</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SCROLL_WHEEL_EVENT_INSTANT_MOUSER</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">14</span></pre>
+<p>Key to access an integer field that indicates whether the event should
+be ignored by the Inkwell subsystem. If the value is non-zero, the
+event should be ignored.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_POINT_X' class="associatedconstant"><span id='TABLET_EVENT_POINT_X.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_POINT_X' class="constant"><b>TABLET_EVENT_POINT_X</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_POINT_X</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">15</span></pre>
+<p>Key to access an integer field that contains the absolute X coordinate
+in tablet space at full tablet resolution.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_POINT_Y' class="associatedconstant"><span id='TABLET_EVENT_POINT_Y.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_POINT_Y' class="constant"><b>TABLET_EVENT_POINT_Y</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_POINT_Y</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">16</span></pre>
+<p>Key to access an integer field that contains the absolute Y coordinate
+in tablet space at full tablet resolution.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_POINT_Z' class="associatedconstant"><span id='TABLET_EVENT_POINT_Z.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_POINT_Z' class="constant"><b>TABLET_EVENT_POINT_Z</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_POINT_Z</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">17</span></pre>
+<p>Key to access an integer field that contains the absolute Z coordinate
+in tablet space at full tablet resolution.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_POINT_BUTTONS' class="associatedconstant"><span id='TABLET_EVENT_POINT_BUTTONS.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_POINT_BUTTONS' class="constant"><b>TABLET_EVENT_POINT_BUTTONS</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_POINT_BUTTONS</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">18</span></pre>
+<p>Key to access an integer field that contains the tablet button state.
+Bit 0 is the first button, and a set bit represents a closed or pressed
+button. Up to 16 buttons are supported.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_POINT_PRESSURE' class="associatedconstant"><span id='TABLET_EVENT_POINT_PRESSURE.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_POINT_PRESSURE' class="constant"><b>TABLET_EVENT_POINT_PRESSURE</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_POINT_PRESSURE</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">19</span></pre>
+<p>Key to access a double field that contains the tablet pen pressure. A
+value of 0.0 represents no pressure, and 1.0 represents maximum
+pressure.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_TILT_X' class="associatedconstant"><span id='TABLET_EVENT_TILT_X.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_TILT_X' class="constant"><b>TABLET_EVENT_TILT_X</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_TILT_X</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">20</span></pre>
+<p>Key to access a double field that contains the horizontal tablet pen
+tilt. A value of 0 represents no tilt, and 1 represents maximum tilt.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_TILT_Y' class="associatedconstant"><span id='TABLET_EVENT_TILT_Y.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_TILT_Y' class="constant"><b>TABLET_EVENT_TILT_Y</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_TILT_Y</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">21</span></pre>
+<p>Key to access a double field that contains the vertical tablet pen
+tilt. A value of 0 represents no tilt, and 1 represents maximum tilt.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_ROTATION' class="associatedconstant"><span id='TABLET_EVENT_ROTATION.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_ROTATION' class="constant"><b>TABLET_EVENT_ROTATION</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_ROTATION</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">22</span></pre>
+<p>Key to access a double field that contains the tablet pen rotation.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_TANGENTIAL_PRESSURE' class="associatedconstant"><span id='TABLET_EVENT_TANGENTIAL_PRESSURE.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_TANGENTIAL_PRESSURE' class="constant"><b>TABLET_EVENT_TANGENTIAL_PRESSURE</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_TANGENTIAL_PRESSURE</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">23</span></pre>
+<p>Key to access a double field that contains the tangential pressure on
+the device. A value of 0.0 represents no pressure, and 1.0 represents
+maximum pressure.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_DEVICE_ID' class="associatedconstant"><span id='TABLET_EVENT_DEVICE_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_DEVICE_ID' class="constant"><b>TABLET_EVENT_DEVICE_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_DEVICE_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">24</span></pre>
+<p>Key to access an integer field that contains the system-assigned unique
+device ID.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_VENDOR_1' class="associatedconstant"><span id='TABLET_EVENT_VENDOR_1.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_VENDOR_1' class="constant"><b>TABLET_EVENT_VENDOR_1</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_VENDOR_1</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">25</span></pre>
+<p>Key to access an integer field that contains a vendor-specified value.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_VENDOR_2' class="associatedconstant"><span id='TABLET_EVENT_VENDOR_2.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_VENDOR_2' class="constant"><b>TABLET_EVENT_VENDOR_2</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_VENDOR_2</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">26</span></pre>
+<p>Key to access an integer field that contains a vendor-specified value.</p>
+</div><h4 id='associatedconstant.TABLET_EVENT_VENDOR_3' class="associatedconstant"><span id='TABLET_EVENT_VENDOR_3.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_EVENT_VENDOR_3' class="constant"><b>TABLET_EVENT_VENDOR_3</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_EVENT_VENDOR_3</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">27</span></pre>
+<p>Key to access an integer field that contains a vendor-specified value.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_VENDOR_ID' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_VENDOR_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_VENDOR_ID' class="constant"><b>TABLET_PROXIMITY_EVENT_VENDOR_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_VENDOR_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">28</span></pre>
+<p>Key to access an integer field that contains the vendor-defined ID,
+typically the USB vendor ID.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_TABLET_ID' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_TABLET_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_TABLET_ID' class="constant"><b>TABLET_PROXIMITY_EVENT_TABLET_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_TABLET_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">29</span></pre>
+<p>Key to access an integer field that contains the vendor-defined tablet
+ID, typically the USB product ID.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_POINTER_ID' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_POINTER_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_POINTER_ID' class="constant"><b>TABLET_PROXIMITY_EVENT_POINTER_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_POINTER_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">30</span></pre>
+<p>Key to access an integer field that contains the vendor-defined ID of
+the pointing device.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_DEVICE_ID' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_DEVICE_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_DEVICE_ID' class="constant"><b>TABLET_PROXIMITY_EVENT_DEVICE_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_DEVICE_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">31</span></pre>
+<p>Key to access an integer field that contains the system-assigned
+device ID.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_SYSTEM_TABLET_ID' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_SYSTEM_TABLET_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_SYSTEM_TABLET_ID' class="constant"><b>TABLET_PROXIMITY_EVENT_SYSTEM_TABLET_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_SYSTEM_TABLET_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">32</span></pre>
+<p>Key to access an integer field that contains the system-assigned
+unique tablet ID.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_VENDOR_POINTER_TYPE' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_VENDOR_POINTER_TYPE.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_VENDOR_POINTER_TYPE' class="constant"><b>TABLET_PROXIMITY_EVENT_VENDOR_POINTER_TYPE</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_VENDOR_POINTER_TYPE</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">33</span></pre>
+<p>Key to access an integer field that contains the vendor-assigned
+pointer type.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_VENDOR_POINTER_SERIAL_NUMBER' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_VENDOR_POINTER_SERIAL_NUMBER.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_VENDOR_POINTER_SERIAL_NUMBER' class="constant"><b>TABLET_PROXIMITY_EVENT_VENDOR_POINTER_SERIAL_NUMBER</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_VENDOR_POINTER_SERIAL_NUMBER</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">34</span></pre>
+<p>Key to access an integer field that contains the vendor-defined
+pointer serial number.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_VENDOR_UNIQUE_ID' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_VENDOR_UNIQUE_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_VENDOR_UNIQUE_ID' class="constant"><b>TABLET_PROXIMITY_EVENT_VENDOR_UNIQUE_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_VENDOR_UNIQUE_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">35</span></pre>
+<p>Key to access an integer field that contains the vendor-defined unique
+ID.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_CAPABILITY_MASK' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_CAPABILITY_MASK.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_CAPABILITY_MASK' class="constant"><b>TABLET_PROXIMITY_EVENT_CAPABILITY_MASK</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_CAPABILITY_MASK</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">36</span></pre>
+<p>Key to access an integer field that contains the device capabilities
+mask.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_POINTER_TYPE' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_POINTER_TYPE.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_POINTER_TYPE' class="constant"><b>TABLET_PROXIMITY_EVENT_POINTER_TYPE</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_POINTER_TYPE</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">37</span></pre>
+<p>Key to access an integer field that contains the pointer type.</p>
+</div><h4 id='associatedconstant.TABLET_PROXIMITY_EVENT_ENTER_PROXIMITY' class="associatedconstant"><span id='TABLET_PROXIMITY_EVENT_ENTER_PROXIMITY.v' class='invisible'><code>pub const <a href='#associatedconstant.TABLET_PROXIMITY_EVENT_ENTER_PROXIMITY' class="constant"><b>TABLET_PROXIMITY_EVENT_ENTER_PROXIMITY</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">TABLET_PROXIMITY_EVENT_ENTER_PROXIMITY</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">38</span></pre>
+<p>Key to access an integer field that indicates whether the pen is in
+proximity to the tablet. The value is non-zero if the pen is in
+proximity to the tablet and zero when leaving the tablet.</p>
+</div><h4 id='associatedconstant.EVENT_TARGET_PROCESS_SERIAL_NUMBER' class="associatedconstant"><span id='EVENT_TARGET_PROCESS_SERIAL_NUMBER.v' class='invisible'><code>pub const <a href='#associatedconstant.EVENT_TARGET_PROCESS_SERIAL_NUMBER' class="constant"><b>EVENT_TARGET_PROCESS_SERIAL_NUMBER</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">EVENT_TARGET_PROCESS_SERIAL_NUMBER</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">39</span></pre>
+<p>Key to access a field that contains the event target process serial
+number. The value is a 64-bit value.</p>
+</div><h4 id='associatedconstant.EVENT_TARGET_UNIX_PROCESS_ID' class="associatedconstant"><span id='EVENT_TARGET_UNIX_PROCESS_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.EVENT_TARGET_UNIX_PROCESS_ID' class="constant"><b>EVENT_TARGET_UNIX_PROCESS_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">EVENT_TARGET_UNIX_PROCESS_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">40</span></pre>
+<p>Key to access a field that contains the event target Unix process ID.</p>
+</div><h4 id='associatedconstant.EVENT_SOURCE_UNIX_PROCESS_ID' class="associatedconstant"><span id='EVENT_SOURCE_UNIX_PROCESS_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.EVENT_SOURCE_UNIX_PROCESS_ID' class="constant"><b>EVENT_SOURCE_UNIX_PROCESS_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">EVENT_SOURCE_UNIX_PROCESS_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">41</span></pre>
+<p>Key to access a field that contains the event source Unix process ID.</p>
+</div><h4 id='associatedconstant.EVENT_SOURCE_USER_DATA' class="associatedconstant"><span id='EVENT_SOURCE_USER_DATA.v' class='invisible'><code>pub const <a href='#associatedconstant.EVENT_SOURCE_USER_DATA' class="constant"><b>EVENT_SOURCE_USER_DATA</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">EVENT_SOURCE_USER_DATA</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">42</span></pre>
+<p>Key to access a field that contains the event source user-supplied
+data, up to 64 bits.</p>
+</div><h4 id='associatedconstant.EVENT_SOURCE_USER_ID' class="associatedconstant"><span id='EVENT_SOURCE_USER_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.EVENT_SOURCE_USER_ID' class="constant"><b>EVENT_SOURCE_USER_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">EVENT_SOURCE_USER_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">43</span></pre>
+<p>Key to access a field that contains the event source Unix effective UID.</p>
+</div><h4 id='associatedconstant.EVENT_SOURCE_GROUP_ID' class="associatedconstant"><span id='EVENT_SOURCE_GROUP_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.EVENT_SOURCE_GROUP_ID' class="constant"><b>EVENT_SOURCE_GROUP_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">EVENT_SOURCE_GROUP_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">44</span></pre>
+<p>Key to access a field that contains the event source Unix effective
+GID.</p>
+</div><h4 id='associatedconstant.EVENT_SOURCE_STATE_ID' class="associatedconstant"><span id='EVENT_SOURCE_STATE_ID.v' class='invisible'><code>pub const <a href='#associatedconstant.EVENT_SOURCE_STATE_ID' class="constant"><b>EVENT_SOURCE_STATE_ID</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">EVENT_SOURCE_STATE_ID</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">45</span></pre>
+<p>Key to access a field that contains the event source state ID used to
+create this event.</p>
+</div><h4 id='associatedconstant.SCROLL_WHEEL_EVENT_IS_CONTINUOUS' class="associatedconstant"><span id='SCROLL_WHEEL_EVENT_IS_CONTINUOUS.v' class='invisible'><code>pub const <a href='#associatedconstant.SCROLL_WHEEL_EVENT_IS_CONTINUOUS' class="constant"><b>SCROLL_WHEEL_EVENT_IS_CONTINUOUS</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">SCROLL_WHEEL_EVENT_IS_CONTINUOUS</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">88</span></pre>
+<p>Key to access an integer field that indicates whether a scrolling event
+contains continuous, pixel-based scrolling data. The value is non-zero
+when the scrolling data is pixel-based and zero when the scrolling data
+is line-based.</p>
+</div><h4 id='associatedconstant.MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER' class="associatedconstant"><span id='MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER' class="constant"><b>MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">91</span></pre>
+<p>Added in 10.5; made public in 10.7.</p>
+</div><h4 id='associatedconstant.MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER_THAT_CAN_HANDLE_THIS_EVENT' class="associatedconstant"><span id='MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER_THAT_CAN_HANDLE_THIS_EVENT.v' class='invisible'><code>pub const <a href='#associatedconstant.MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER_THAT_CAN_HANDLE_THIS_EVENT' class="constant"><b>MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER_THAT_CAN_HANDLE_THIS_EVENT</b></a>: <a class="type" href="../../core_graphics/event/type.CGEventField.html" title="type core_graphics::event::CGEventField">CGEventField</a></code></span></h4>
+<div class='docblock'><pre class="rust ">
+<span class="ident">MOUSE_EVENT_WINDOW_UNDER_MOUSE_POINTER_THAT_CAN_HANDLE_THIS_EVENT</span>: <span class="ident">CGEventField</span> <span class="op">=</span> <span class="number">92</span></pre>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "core_graphics";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
