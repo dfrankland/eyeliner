@@ -130,6 +130,15 @@ impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
             }
 
             for node in self.document.select(&selector).unwrap() {
+                if
+                    self.settings.non_visual_elements.contains(
+                        &node.name.local.chars().as_str().to_lowercase().as_str()
+                    )
+                {
+                    continue;
+                }
+
+
                 let mut attributes = node.attributes.borrow_mut();
 
                 let css = match self.node_style_map.entry(HashableNodeRef::new(&node)) {
