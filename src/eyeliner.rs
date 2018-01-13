@@ -7,8 +7,9 @@ use kuchiki::{NodeRef, parse_html};
 use servo_css_parser::parse;
 use servo_css_parser::types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet};
 use servo_css_parser::style::stylesheets::{CssRules, CssRule, StyleRule};
-use servo_css_parser::style::properties::BuilderArc as Arc;
 use servo_css_parser::style::properties::declaration_block::{parse_style_attribute, PropertyDeclarationBlock, DeclarationSource};
+use servo_css_parser::style::properties::{PropertyDeclaration, BuilderArc as Arc};
+use servo_css_parser::style::values::specified::length::LengthOrPercentageOrAuto;
 use servo_css_parser::style::shared_lock::Locked;
 use servo_css_parser::style::error_reporting::RustLogReporter;
 
@@ -162,6 +163,80 @@ impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
 
                 use servo_css_parser::style_traits::values::ToCss;
                 attributes.insert("style", css.to_css_string());
+            }
+        }
+
+        self
+    }
+}
+
+impl<'a> ApplyWidthAttributes for Eyeliner<'a> {
+    fn apply_width_attributes(self: &Self) -> &Self {
+        if !self.options.apply_width_attributes {
+            return self;
+        }
+
+        for (hash, block) in &self.node_style_map {
+            let width = block.get(
+                PropertyDeclaration::Width(LengthOrPercentageOrAuto::zero()).id()
+            );
+
+            if width.is_none() {
+                continue;
+            }
+
+            let element = hash.node.as_element().unwrap();
+
+            let mut attributes = element.attributes.borrow_mut();
+            use servo_css_parser::style_traits::values::ToCss;
+            let value = width.unwrap().0.to_css_string();
+
+            if value.ends_with("px") {
+                attributes.insert("width", value.replace("px", ""));
+            } else if
+                value.ends_with("%") &&
+                self.settings.table_elements.contains(
+                    &element.name.local.chars().as_str().to_lowercase().as_str()
+                )
+            {
+                attributes.insert("width", value);
+            }
+        }
+
+        self
+    }
+}
+
+impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
+    fn apply_height_attributes(self: &Self) -> &Self {
+        if !self.options.apply_height_attributes {
+            return self;
+        }
+
+        for (hash, block) in &self.node_style_map {
+            let height = block.get(
+                PropertyDeclaration::Height(LengthOrPercentageOrAuto::zero()).id()
+            );
+
+            if height.is_none() {
+                continue;
+            }
+
+            let element = hash.node.as_element().unwrap();
+
+            let mut attributes = element.attributes.borrow_mut();
+            use servo_css_parser::style_traits::values::ToCss;
+            let value = height.unwrap().0.to_css_string();
+
+            if value.ends_with("px") {
+                attributes.insert("height", value.replace("px", ""));
+            } else if
+                value.ends_with("%") &&
+                self.settings.table_elements.contains(
+                    &element.name.local.chars().as_str().to_lowercase().as_str()
+                )
+            {
+                attributes.insert("height", value);
             }
         }
 
