@@ -7,8 +7,8 @@ use kuchiki::{NodeRef, parse_html};
 use servo_css_parser::parse;
 use servo_css_parser::types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet};
 use servo_css_parser::style::stylesheets::{CssRules, CssRule, StyleRule};
-use servo_css_parser::style::properties::declaration_block::{parse_style_attribute, PropertyDeclarationBlock, DeclarationSource, Importance};
 use servo_css_parser::style::properties::BuilderArc as Arc;
+use servo_css_parser::style::properties::declaration_block::{parse_style_attribute, PropertyDeclarationBlock, DeclarationSource};
 use servo_css_parser::style::shared_lock::Locked;
 use servo_css_parser::style::error_reporting::RustLogReporter;
 
@@ -107,12 +107,7 @@ trait ExtendFromPropertyDeclarationBlock {
 }
 impl ExtendFromPropertyDeclarationBlock for PropertyDeclarationBlock {
     fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &Self {
-        for (i, declartion) in block.declarations().into_iter().enumerate() {
-            let importance = if block.declarations_importance().get(i as u32) {
-                Importance::Important
-            } else {
-                Importance::Normal
-            };
+        for (declartion, importance) in block.declaration_importance_iter() {
             self.push(declartion.clone(), importance, DeclarationSource::Parsing);
         }
 
