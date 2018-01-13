@@ -5,7 +5,7 @@ use kuchiki::traits::*;
 use kuchiki::{NodeRef, parse_html};
 
 use servo_css_parser::parse;
-use servo_css_parser::types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet};
+use servo_css_parser::types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet};
 use servo_css_parser::style::stylesheets::{CssRules, CssRule, StyleRule};
 use servo_css_parser::style::properties::declaration_block::{PropertyDeclarationBlock, DeclarationSource, Importance};
 use servo_css_parser::style::properties::BuilderArc as Arc;
@@ -13,9 +13,9 @@ use servo_css_parser::style::shared_lock::Locked;
 
 use traits::*;
 use hash::HashableNodeRef;
-use rules::EyelinerRules;
+use rules::Rules;
 
-fn parse_css(css: &str) -> ServoStylesheet {
+fn parse_css(css: &str) -> Stylesheet {
     let url = Url::parse("about::test").unwrap();
     let origin = Origin::UserAgent;
     let quirks_mode = QuirksMode::NoQuirks;
@@ -26,7 +26,7 @@ fn parse_css(css: &str) -> ServoStylesheet {
 
 pub struct Eyeliner {
     pub document: NodeRef,
-    pub stylesheet: ServoStylesheet,
+    pub stylesheet: Stylesheet,
 }
 
 impl Eyeliner {
@@ -36,11 +36,9 @@ impl Eyeliner {
             stylesheet: parse_css(css),
         }
     }
-}
 
-impl StylesheetAsEyelinerRules for Eyeliner {
-    fn stylesheet_as_eyeliner_rules(self: &Self, rules: &Arc<Locked<CssRules>>) -> EyelinerRules {
-        let mut eyeliner_rules = EyelinerRules::new();
+    fn stylesheet_as_eyeliner_rules(self: &Self, rules: &Arc<Locked<CssRules>>) -> Rules {
+        let mut eyeliner_rules = Rules::new();
 
         let read_guard = &self.stylesheet.shared_lock.read();
 
