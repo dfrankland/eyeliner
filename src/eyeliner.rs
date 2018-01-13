@@ -14,26 +14,50 @@ use servo_css_parser::style::shared_lock::Locked;
 use traits::*;
 use hash::HashableNodeRef;
 use rules::Rules;
+use options::{Options, default as default_options};
+use settings::{Settings, default as default_settings};
 
-fn parse_css(css: &str) -> Stylesheet {
-    let url = Url::parse("about::test").unwrap();
-    let origin = Origin::UserAgent;
-    let quirks_mode = QuirksMode::NoQuirks;
-    let media = MediaList::empty();
+use std::ops::Deref;
 
-    parse(css, url, origin, quirks_mode, media)
-}
-
-pub struct Eyeliner {
+pub struct Eyeliner<'a> {
     pub document: NodeRef,
     pub stylesheet: Stylesheet,
+    pub options: Options<'a>,
+    pub settings: Settings<'a>,
 }
 
-impl Eyeliner {
-    pub fn new(html: &str, css: &str) -> Self {
+impl<'a> Eyeliner<'a> {
+    pub fn new(
+        html: &str,
+        css: Option<&str>,
+        options: Option<default_options::Options<'a>>,
+        settings: Option<default_settings::Settings<'a>>,
+    ) -> Self {
+        let options = Options::new(options.unwrap_or(default_options::Options::default()));
+        let settings = Settings::new(settings.unwrap_or(default_settings::Settings::default()));
+
+        let mut css = css.unwrap_or("").to_owned();
+        let document = parse_html().one(html);
+
+        for node in document.select("style").unwrap() {
+            css += &node.text_contents();
+            if options.remove_style_tags {
+                node.as_node().detach();
+            }
+        }
+
+
+        let url = Url::parse("about::test").unwrap();
+        let origin = Origin::UserAgent;
+        let quirks_mode = QuirksMode::NoQuirks;
+        let media = MediaList::empty();
+        let stylesheet = parse(&css, url, origin, quirks_mode, media);
+
         Self {
-            document: parse_html().one(html),
-            stylesheet: parse_css(css),
+            document: document,
+            stylesheet: stylesheet,
+            options: options,
+            settings: settings,
         }
     }
 
@@ -78,6 +102,9 @@ impl Eyeliner {
     }
 }
 
+trait ExtendFromPropertyDeclarationBlock {
+    fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &Self;
+}
 impl ExtendFromPropertyDeclarationBlock for PropertyDeclarationBlock {
     fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &Self {
         for (i, declartion) in block.declarations().into_iter().enumerate() {
@@ -93,7 +120,7 @@ impl ExtendFromPropertyDeclarationBlock for PropertyDeclarationBlock {
     }
 }
 
-impl InlineStylesheetAndDocument for Eyeliner {
+impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
     fn inline_stylesheet_and_document(self: &Self) -> &Self {
         let eyeliner_rules = self.stylesheet_as_eyeliner_rules(&self.stylesheet.contents.rules);
 
@@ -148,7 +175,7 @@ impl InlineStylesheetAndDocument for Eyeliner {
     }
 }
 
-impl SerializeDocument for Eyeliner {
+impl<'a> SerializeDocument for Eyeliner<'a> {
     fn serialize_document(self: &Self) -> String {
         let mut writer = vec![];
         self.document.serialize(&mut writer).unwrap();

@@ -1,14 +1,21 @@
 extern crate eyeliner;
 extern crate kuchiki;
 
-use eyeliner::inline;
+use eyeliner::{inline, Options, Settings};
 use kuchiki::traits::*;
 use kuchiki::parse_html;
 
 #[test]
 fn test() {
     let expected_document = parse_html().one(include_str!("./fixture.html"));
-    let result_document = parse_html().one(inline(include_str!("./test.html"), include_str!("./test.css")));
+    let result_document = parse_html().one(
+        inline(
+            include_str!("./test.html"),
+            Some(include_str!("./test.css")),
+            None,
+            None,
+        )
+    );
 
     let selector = "#test1, #test2";
     let expected_select = expected_document.select(selector).unwrap();
