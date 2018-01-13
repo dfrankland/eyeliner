@@ -4,7 +4,6 @@ pub mod default {
     use std::collections::HashMap;
 
     pub struct Settings<'a> {
-        pub ignored_pseudos: Option<Vec<&'a str>>,
         pub width_elements: Option<Vec<&'a str>>,
         pub height_elements: Option<Vec<&'a str>>,
         pub style_to_attribute: Option<HashMap<&'a str, &'a str>>,
@@ -16,7 +15,6 @@ pub mod default {
     impl<'a> Default for Settings<'a> {
         fn default() -> Self {
             Self {
-                ignored_pseudos: None,
                 width_elements: None,
                 height_elements: None,
                 style_to_attribute: None,
@@ -30,7 +28,6 @@ pub mod default {
 
 
 pub struct Settings<'a> {
-    pub ignored_pseudos: Vec<&'a str>,
     pub width_elements: Vec<&'a str>,
     pub height_elements: Vec<&'a str>,
     pub style_to_attribute: HashMap<&'a str, &'a str>,
@@ -42,15 +39,6 @@ pub struct Settings<'a> {
 impl<'a> Settings<'a> {
     pub fn new(opt: default::Settings<'a>) -> Self {
         Self {
-            ignored_pseudos: opt.ignored_pseudos.unwrap_or(
-                vec![
-                    "hover",
-                    "active",
-                    "focus",
-                    "visited",
-                    "link",
-                ]
-            ),
             width_elements: opt.width_elements.unwrap_or(
                 vec![
                     "table",
