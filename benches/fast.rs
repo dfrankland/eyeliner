@@ -10,7 +10,6 @@ use eyeliner::inline;
 fn bench_dashboard(b: &mut Bencher) {
     let html = include_str!("./bootstrap/docs/4.0/examples/dashboard/index.html");
     let css = include_str!("./bootstrap/dist/css/bootstrap.min.css");
-    println!("{}", inline(html, css));
     b.iter(|| inline(html, css))
 }
 
