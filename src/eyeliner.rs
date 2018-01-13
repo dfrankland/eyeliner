@@ -7,9 +7,10 @@ use kuchiki::{NodeRef, parse_html};
 use servo_css_parser::parse;
 use servo_css_parser::types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet};
 use servo_css_parser::style::stylesheets::{CssRules, CssRule, StyleRule};
-use servo_css_parser::style::properties::declaration_block::{PropertyDeclarationBlock, DeclarationSource, Importance};
+use servo_css_parser::style::properties::declaration_block::{parse_style_attribute, PropertyDeclarationBlock, DeclarationSource, Importance};
 use servo_css_parser::style::properties::BuilderArc as Arc;
 use servo_css_parser::style::shared_lock::Locked;
+use servo_css_parser::style::error_reporting::RustLogReporter;
 
 use traits::*;
 use hash::HashableNodeRef;
@@ -124,7 +125,7 @@ impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
     fn inline_stylesheet_and_document(self: &Self) -> &Self {
         let eyeliner_rules = self.stylesheet_as_eyeliner_rules(&self.stylesheet.contents.rules);
 
-        let mut node_style_map: HashMap<HashableNodeRef, (PropertyDeclarationBlock, Option<String>)> = HashMap::new();
+        let mut node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock> = HashMap::new();
 
         for (selector, block) in eyeliner_rules.style {
 
@@ -139,35 +140,25 @@ impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
 
                 let css = match node_style_map.entry(HashableNodeRef::new(&node)) {
                     Occupied(mut entry) => {
-                        entry.get_mut().0.extend_from_block(&block);
+                        entry.get_mut().extend_from_block(&block);
                         entry.get().clone()
                     },
 
                     Vacant(entry) => {
-                        let exisiting_style = match attributes.get("style") {
-                            Some(style) => Some(style.to_string()),
-                            None => None,
-                        };
-                        let new_style = (block.clone(), exisiting_style);
-                        entry.insert(new_style.clone());
-                        new_style
+                        let mut exisiting_style = parse_style_attribute(
+                            &attributes.get("style").unwrap_or(""),
+                            &self.stylesheet.contents.url_data.read(),
+                            &RustLogReporter {},
+                            QuirksMode::NoQuirks,
+                        );
+                        exisiting_style.extend_from_block(&block);
+                        entry.insert(exisiting_style.clone());
+                        exisiting_style
                     },
                 };
 
                 use servo_css_parser::style_traits::values::ToCss;
-                let new_inlined_css = css.0.to_css_string();
-
-                attributes.insert("style", match &css.1 {
-                    &Some(ref existing_inlined_css) => {
-                        let delimeter = match true {
-                            _ if existing_inlined_css.ends_with("; ") => "",
-                            _ if existing_inlined_css.ends_with(";") => " ",
-                            _ => "; ",
-                        };
-                        format!("{}{}{}", existing_inlined_css, delimeter, new_inlined_css)
-                    },
-                    &None => new_inlined_css,
-                });
+                attributes.insert("style", css.to_css_string());
             }
         }
 
