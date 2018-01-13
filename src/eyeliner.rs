@@ -23,6 +23,7 @@ pub struct Eyeliner<'a> {
     pub stylesheet: Stylesheet,
     pub options: Options<'a>,
     pub settings: Settings<'a>,
+    pub node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock>,
 }
 
 impl<'a> Eyeliner<'a> {
@@ -58,6 +59,7 @@ impl<'a> Eyeliner<'a> {
             stylesheet: stylesheet,
             options: options,
             settings: settings,
+            node_style_map: HashMap::new(),
         }
     }
 
@@ -116,10 +118,8 @@ impl ExtendFromPropertyDeclarationBlock for PropertyDeclarationBlock {
 }
 
 impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
-    fn inline_stylesheet_and_document(self: &Self) -> &Self {
+    fn inline_stylesheet_and_document(self: &mut Self) -> &Self {
         let eyeliner_rules = self.stylesheet_as_eyeliner_rules(&self.stylesheet.contents.rules);
-
-        let mut node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock> = HashMap::new();
 
         for (selector, block) in eyeliner_rules.style {
 
@@ -132,7 +132,7 @@ impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
             for node in self.document.select(&selector).unwrap() {
                 let mut attributes = node.attributes.borrow_mut();
 
-                let css = match node_style_map.entry(HashableNodeRef::new(&node)) {
+                let css = match self.node_style_map.entry(HashableNodeRef::new(&node)) {
                     Occupied(mut entry) => {
                         entry.get_mut().extend_from_block(&block);
                         entry.get().clone()
