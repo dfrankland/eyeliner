@@ -18,8 +18,6 @@ use rules::Rules;
 use options::{Options, default as default_options};
 use settings::{Settings, default as default_settings};
 
-use std::ops::Deref;
-
 pub struct Eyeliner<'a> {
     pub document: NodeRef,
     pub stylesheet: Stylesheet,
@@ -40,13 +38,14 @@ impl<'a> Eyeliner<'a> {
         let mut css = css.unwrap_or("").to_owned();
         let document = parse_html().one(html);
 
-        for node in document.select("style").unwrap() {
-            css += &node.text_contents();
-            if options.remove_style_tags {
-                node.as_node().detach();
+        if options.apply_style_tags {
+            for node in document.select("style").unwrap() {
+                css += &node.text_contents();
+                if options.remove_style_tags {
+                    node.as_node().detach();
+                }
             }
         }
-
 
         let url = Url::parse("about::test").unwrap();
         let origin = Origin::UserAgent;
