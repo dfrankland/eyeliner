@@ -13,3 +13,4 @@ license = "MIT"
 kuchiki = { git = "https://github.com/kuchiki-rs/kuchiki", version = "0.7.0" }
 maplit = "1.0.0"
 servo-css-parser = { git = "https://github.com/victorporof/servo-css-parser" }
+html5ever = "0.22.0"

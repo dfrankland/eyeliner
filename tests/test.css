@@ -1,3 +1,16 @@
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v18/oMMgfZMQthOryQo9n22dcuvvDin1pK8aKteLpeZ5c0A.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215;
+}
+
+html {
+  font-size: 16px;
+  font-family: 'Roboto', Helvetica, sans-serif;
+}
+
 .foo {
   color: black;
 }
@@ -14,4 +27,10 @@ heart { /* stylelint-disable-line selector-type-no-unknown */
 
 .foo.bar { /* stylelint-disable-line no-duplicate-selectors */
   text-decoration: inherit;
+}
+
+@media (max-width: 800px) {
+  .foo {
+    color: green;
+  }
 }

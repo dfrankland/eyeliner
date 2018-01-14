@@ -2,15 +2,16 @@ use std::collections::HashMap;
 use std::collections::hash_map::Entry::{Occupied, Vacant};
 
 use kuchiki::traits::*;
-use kuchiki::{NodeRef, parse_html};
+use kuchiki::{parse_html, NodeRef};
+
+use html5ever::QualName;
 
 use servo_css_parser::parse;
 use servo_css_parser::types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet};
-use servo_css_parser::style::stylesheets::{CssRules, CssRule, StyleRule};
+use servo_css_parser::style::stylesheets::{CssRule, StyleRule};
 use servo_css_parser::style::properties::declaration_block::{parse_style_attribute, PropertyDeclarationBlock, DeclarationSource};
-use servo_css_parser::style::properties::{PropertyDeclaration, BuilderArc as Arc};
+use servo_css_parser::style::properties::PropertyDeclaration;
 use servo_css_parser::style::values::specified::length::LengthOrPercentageOrAuto;
-use servo_css_parser::style::shared_lock::Locked;
 use servo_css_parser::style::error_reporting::RustLogReporter;
 
 use traits::*;
@@ -26,6 +27,7 @@ pub struct Eyeliner<'a> {
     pub options: Options<'a>,
     pub settings: Settings<'a>,
     pub node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock>,
+    pub eyeliner_rules: Rules,
 }
 
 impl<'a> Eyeliner<'a> {
@@ -62,47 +64,8 @@ impl<'a> Eyeliner<'a> {
             options: options,
             settings: settings,
             node_style_map: HashMap::new(),
+            eyeliner_rules: Rules::new(),
         }
-    }
-
-    fn stylesheet_as_eyeliner_rules(self: &Self, rules: &Arc<Locked<CssRules>>) -> Rules {
-        let mut eyeliner_rules = Rules::new();
-
-        let read_guard = &self.stylesheet.shared_lock.read();
-
-        let css_rules = &rules.as_ref().read_with(read_guard).0;
-        for css_rule in css_rules {
-            match *css_rule {
-                CssRule::Style (ref style_rule_locked) => {
-                    let style_rule = style_rule_locked.as_ref().read_with(read_guard);
-                    let StyleRule { ref selectors, block: ref block_locked, .. } = *style_rule;
-
-                    use servo_css_parser::cssparser::ToCss;
-                    eyeliner_rules.style.push((
-                        selectors.to_css_string(),
-                        block_locked.as_ref().read_with(read_guard).clone(),
-                    ));
-                },
-
-                CssRule::Media (ref media_rule_locked) => {
-                    let media_rule = media_rule_locked.as_ref().read_with(read_guard);
-
-                    use servo_css_parser::style::shared_lock::ToCssWithGuard;
-                    eyeliner_rules.media.push(media_rule.to_css_string(read_guard));
-                },
-
-                CssRule::FontFace (ref font_face_rule_data_locked) => {
-                    let font_face_rule_data = font_face_rule_data_locked.as_ref().read_with(read_guard);
-
-                    use servo_css_parser::style::shared_lock::ToCssWithGuard;
-                    eyeliner_rules.font_face.push(font_face_rule_data.to_css_string(read_guard));
-                },
-
-                _ => {},
-            }
-        }
-
-        eyeliner_rules
     }
 }
 
@@ -119,11 +82,57 @@ impl ExtendFromPropertyDeclarationBlock for PropertyDeclarationBlock {
     }
 }
 
-impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
-    fn inline_stylesheet_and_document(self: &mut Self) -> &Self {
-        let eyeliner_rules = self.stylesheet_as_eyeliner_rules(&self.stylesheet.contents.rules);
+impl<'a> GetStylesheetAsEyelinerRules for Eyeliner<'a> {
+    fn get_stylesheet_as_eyeliner_rules(self: &mut Self) -> &mut Self {
+        {
+            let read_guard = &self.stylesheet.shared_lock.read();
+            for css_rule in &self.stylesheet.contents.rules.as_ref().read_with(read_guard).0 {
+                match *css_rule {
+                    CssRule::Style (ref style_rule_locked) => {
+                        let style_rule = style_rule_locked.as_ref().read_with(read_guard);
+                        let StyleRule { ref selectors, block: ref block_locked, .. } = *style_rule;
 
-        for (selector, block) in eyeliner_rules.style {
+                        use servo_css_parser::cssparser::ToCss;
+                        self.eyeliner_rules.style.push((
+                            selectors.to_css_string(),
+                            block_locked.as_ref().read_with(read_guard).clone(),
+                        ));
+                    },
+
+                    CssRule::Media (ref media_rule_locked) => {
+                        if !self.options.preserve_media_queries {
+                            continue;
+                        }
+
+                        let media_rule = media_rule_locked.as_ref().read_with(read_guard);
+
+                        use servo_css_parser::style::shared_lock::ToCssWithGuard;
+                        self.eyeliner_rules.media.push(media_rule.to_css_string(read_guard));
+                    },
+
+                    CssRule::FontFace (ref font_face_rule_data_locked) => {
+                        if !self.options.preserve_font_faces {
+                            continue;
+                        }
+
+                        let font_face_rule_data = font_face_rule_data_locked.as_ref().read_with(read_guard);
+
+                        use servo_css_parser::style::shared_lock::ToCssWithGuard;
+                        self.eyeliner_rules.font_face.push(font_face_rule_data.to_css_string(read_guard));
+                    },
+
+                    _ => (),
+                }
+            }
+        }
+
+        self
+    }
+}
+
+impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
+    fn inline_stylesheet_and_document(self: &mut Self) -> &mut Self {
+        for (selector, block) in self.eyeliner_rules.style.clone() {
 
             // TODO: using `::` seems to break things.
             // While testing using Bootstrap CSS, `::after` and `::before` give stack overflows.
@@ -277,6 +286,35 @@ impl<'a> ApplyAttributesTableElements for Eyeliner<'a> {
                     attribute.unwrap().clone(),
                     property_declaration_value_to_css_string(property_declaration)
                 );
+            }
+        }
+
+        self
+    }
+}
+
+impl<'a> InsertPreservedCss for Eyeliner<'a> {
+    fn insert_preserved_css(self: &Self) -> &Self {
+        for node_to_insert_style_into in &self.options.insert_preserved_css {
+            let nodes = self.document.select(node_to_insert_style_into);
+
+            if !nodes.is_ok() {
+                continue;
+            }
+
+            for node in nodes.unwrap() {
+                let mut preserved_css = vec![];
+                preserved_css.extend_from_slice(&self.eyeliner_rules.font_face);
+                preserved_css.extend_from_slice(&self.eyeliner_rules.media);
+
+                let text_node = NodeRef::new_text(preserved_css.join("\n"));
+                let style_node = NodeRef::new_element(
+                    QualName { prefix: None, ns: ns!(), local: local_name!("style") },
+                    vec![]
+                );
+                style_node.append(text_node);
+                node.as_node().append(style_node);
+                return self;
             }
         }
 
