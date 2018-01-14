@@ -15,7 +15,7 @@ use servo_css_parser::style::values::specified::length::LengthOrPercentageOrAuto
 use servo_css_parser::style::error_reporting::RustLogReporter;
 
 use traits::*;
-use hash::{HashableNodeRef, HashablePropertyDeclaration};
+use hash::HashableNodeRef;
 use rules::Rules;
 use options::{Options, default as default_options};
 use settings::{Settings, default as default_settings};
@@ -322,9 +322,8 @@ impl<'a> ApplyAttributesTableElements for Eyeliner<'a> {
             let mut attributes = element.attributes.borrow_mut();
 
             for property_declaration in block.declarations() {
-                let attribute = self.settings.style_to_attribute.get(
-                    &HashablePropertyDeclaration::new(property_declaration.clone())
-                );
+                let property = property_declaration.id().name().to_string();
+                let attribute = self.settings.style_to_attribute.get::<str>(&property);
 
                 if attribute.is_none() {
                     continue;
