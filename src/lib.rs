@@ -4,6 +4,7 @@ extern crate servo_css_parser;
 
 mod rules;
 mod hash;
+mod property_declaration_value;
 
 mod options;
 pub use options::default::*;
@@ -24,5 +25,6 @@ pub fn inline(html: &str, css: Option<&str>, options: Option<Options>, settings:
         .inline_stylesheet_and_document()
         .apply_width_attributes()
         .apply_height_attributes()
+        .apply_attributes_table_elements()
         .serialize_document()
 }

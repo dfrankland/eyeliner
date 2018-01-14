@@ -10,6 +10,10 @@ pub trait ApplyHeightAttributes {
     fn apply_height_attributes(self: &Self) -> &Self;
 }
 
+pub trait ApplyAttributesTableElements {
+    fn apply_attributes_table_elements(self: &Self) -> &Self;
+}
+
 pub trait SerializeDocument {
     fn serialize_document(self: &Self) -> String;
 }

@@ -14,10 +14,11 @@ use servo_css_parser::style::shared_lock::Locked;
 use servo_css_parser::style::error_reporting::RustLogReporter;
 
 use traits::*;
-use hash::HashableNodeRef;
+use hash::{HashableNodeRef, HashablePropertyDeclaration};
 use rules::Rules;
 use options::{Options, default as default_options};
 use settings::{Settings, default as default_settings};
+use property_declaration_value::property_declaration_value_to_css_string;
 
 pub struct Eyeliner<'a> {
     pub document: NodeRef,
@@ -237,6 +238,45 @@ impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
                 )
             {
                 attributes.insert("height", value);
+            }
+        }
+
+        self
+    }
+}
+
+impl<'a> ApplyAttributesTableElements for Eyeliner<'a> {
+    fn apply_attributes_table_elements(self: &Self) -> &Self {
+        if !self.options.apply_attributes_table_elements {
+            return self;
+        }
+
+        for (hash, block) in &self.node_style_map {
+            let element = hash.node.as_element().unwrap();
+
+            if
+                !self.settings.table_elements.contains(
+                    &element.name.local.chars().as_str().to_lowercase().as_str()
+                )
+            {
+                continue;
+            }
+
+            let mut attributes = element.attributes.borrow_mut();
+
+            for property_declaration in block.declarations() {
+                let attribute = self.settings.style_to_attribute.get(
+                    &HashablePropertyDeclaration::new(property_declaration.clone())
+                );
+
+                if attribute.is_none() {
+                    continue;
+                }
+
+                attributes.insert(
+                    attribute.unwrap().clone(),
+                    property_declaration_value_to_css_string(property_declaration)
+                );
             }
         }
 
