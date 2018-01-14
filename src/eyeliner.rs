@@ -100,6 +100,24 @@ impl RemoveImportanceFromPropertyDeclarationBlock for PropertyDeclarationBlock {
     }
 }
 
+trait RemoveExcludedPropertiesFromPropertyDeclarationBlock {
+    fn remove_excluded_properties(self: &mut Self, properties: &Vec<&str>) -> &mut Self;
+}
+impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclarationBlock {
+    fn remove_excluded_properties(self: &mut Self, properties: &Vec<&str>) -> &mut Self {
+        for property_id in properties.iter() {
+            match PropertyId::parse(property_id) {
+                Ok(ref id) => {
+                    self.remove_property(id);
+                },
+                _ => (),
+            };
+        }
+
+        self
+    }
+}
+
 impl<'a> GetStylesheetAsEyelinerRules for Eyeliner<'a> {
     fn get_stylesheet_as_eyeliner_rules(self: &mut Self) -> &mut Self {
         {
@@ -111,9 +129,11 @@ impl<'a> GetStylesheetAsEyelinerRules for Eyeliner<'a> {
                         let StyleRule { ref selectors, block: ref block_locked, .. } = *style_rule;
 
                         use servo_css_parser::cssparser::ToCss;
+                        let mut block = block_locked.as_ref().read_with(read_guard).clone();
+                        block.remove_excluded_properties(&self.settings.excluded_properties);
                         self.eyeliner_rules.style.push((
                             selectors.to_css_string(),
-                            block_locked.as_ref().read_with(read_guard).clone(),
+                            block,
                         ));
                     },
 
