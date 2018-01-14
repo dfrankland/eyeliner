@@ -9,8 +9,8 @@ use html5ever::QualName;
 use servo_css_parser::parse;
 use servo_css_parser::types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet};
 use servo_css_parser::style::stylesheets::{CssRule, StyleRule};
-use servo_css_parser::style::properties::declaration_block::{parse_style_attribute, PropertyDeclarationBlock, DeclarationSource};
-use servo_css_parser::style::properties::PropertyDeclaration;
+use servo_css_parser::style::properties::declaration_block::{parse_style_attribute, PropertyDeclarationBlock, DeclarationSource, Importance};
+use servo_css_parser::style::properties::{PropertyDeclaration, PropertyDeclarationId, PropertyId};
 use servo_css_parser::style::values::specified::length::LengthOrPercentageOrAuto;
 use servo_css_parser::style::error_reporting::RustLogReporter;
 
@@ -70,12 +70,30 @@ impl<'a> Eyeliner<'a> {
 }
 
 trait ExtendFromPropertyDeclarationBlock {
-    fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &Self;
+    fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &mut Self;
 }
 impl ExtendFromPropertyDeclarationBlock for PropertyDeclarationBlock {
-    fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &Self {
+    fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &mut Self {
         for (declartion, importance) in block.declaration_importance_iter() {
             self.push(declartion.clone(), importance, DeclarationSource::Parsing);
+        }
+
+        self
+    }
+}
+
+trait RemoveImportanceFromPropertyDeclarationBlock {
+    fn remove_importance(self: &mut Self) -> &mut Self;
+}
+impl RemoveImportanceFromPropertyDeclarationBlock for PropertyDeclarationBlock {
+    fn remove_importance(self: &mut Self) -> &mut Self {
+        let property_declaration_block = self.clone();
+        for property_declaration in property_declaration_block.declarations().iter() {
+            let property_id = match property_declaration.id() {
+                PropertyDeclarationId::Longhand(id) => PropertyId::Longhand(id),
+                PropertyDeclarationId::Custom(name) => PropertyId::Custom(name.clone()),
+            };
+            self.set_importance(&property_id, Importance::Normal);
         }
 
         self
@@ -152,7 +170,7 @@ impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
 
                 let mut attributes = node.attributes.borrow_mut();
 
-                let css = match self.node_style_map.entry(HashableNodeRef::new(&node)) {
+                match self.node_style_map.entry(HashableNodeRef::new(&node)) {
                     Occupied(mut entry) => {
                         entry.get_mut().extend_from_block(&block);
                         entry.get().clone()
@@ -170,10 +188,20 @@ impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
                         exisiting_style
                     },
                 };
-
-                use servo_css_parser::style_traits::values::ToCss;
-                attributes.insert("style", css.to_css_string());
             }
+        }
+
+        for (hash, block) in &self.node_style_map {
+            let mut cloned_block = block.clone();
+            if !self.options.preserve_important {
+                cloned_block.remove_importance();
+            }
+
+            use servo_css_parser::style_traits::values::ToCss;
+            hash.node.as_element().unwrap().attributes.borrow_mut().insert(
+                "style",
+                cloned_block.to_css_string(),
+            );
         }
 
         self
