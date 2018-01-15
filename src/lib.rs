@@ -23,7 +23,7 @@ use traits::*;
 
 pub fn inline(html: &str, css: Option<&str>, options: Option<Options>, settings: Option<Settings>) -> String {
     Eyeliner::new(html, css, options, settings)
-        .get_stylesheet_as_eyeliner_rules()
+        .get_stylesheet_as_rules()
         .inline_stylesheet_and_document()
         .apply_width_attributes()
         .apply_height_attributes()

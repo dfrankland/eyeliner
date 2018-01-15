@@ -1,5 +1,5 @@
-pub trait GetStylesheetAsEyelinerRules {
-    fn get_stylesheet_as_eyeliner_rules(self: &mut Self) -> &mut Self;
+pub trait GetStylesheetAsRules {
+    fn get_stylesheet_as_rules(self: &mut Self) -> &mut Self;
 }
 
 pub trait InlineStylesheetAndDocument {

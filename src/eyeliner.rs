@@ -26,7 +26,7 @@ pub struct Eyeliner<'a> {
     pub options: Options<'a>,
     pub settings: Settings<'a>,
     pub node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock>,
-    pub eyeliner_rules: Rules,
+    pub rules: Rules,
 }
 
 impl<'a> Eyeliner<'a> {
@@ -63,7 +63,7 @@ impl<'a> Eyeliner<'a> {
             options: options,
             settings: settings,
             node_style_map: HashMap::new(),
-            eyeliner_rules: Rules::new(),
+            rules: Rules::new(),
         }
     }
 }
@@ -117,8 +117,8 @@ impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclaratio
     }
 }
 
-impl<'a> GetStylesheetAsEyelinerRules for Eyeliner<'a> {
-    fn get_stylesheet_as_eyeliner_rules(self: &mut Self) -> &mut Self {
+impl<'a> GetStylesheetAsRules for Eyeliner<'a> {
+    fn get_stylesheet_as_rules(self: &mut Self) -> &mut Self {
         {
             let read_guard = &self.stylesheet.shared_lock.read();
             for css_rule in &self.stylesheet.contents.rules.as_ref().read_with(read_guard).0 {
@@ -130,7 +130,7 @@ impl<'a> GetStylesheetAsEyelinerRules for Eyeliner<'a> {
                         use servo_css_parser::cssparser::ToCss;
                         let mut block = block_locked.as_ref().read_with(read_guard).clone();
                         block.remove_excluded_properties(&self.settings.excluded_properties);
-                        self.eyeliner_rules.style.push((
+                        self.rules.style.push((
                             selectors.to_css_string(),
                             block,
                         ));
@@ -144,7 +144,7 @@ impl<'a> GetStylesheetAsEyelinerRules for Eyeliner<'a> {
                         let media_rule = media_rule_locked.as_ref().read_with(read_guard);
 
                         use servo_css_parser::style::shared_lock::ToCssWithGuard;
-                        self.eyeliner_rules.media.push(media_rule.to_css_string(read_guard));
+                        self.rules.media.push(media_rule.to_css_string(read_guard));
                     },
 
                     CssRule::FontFace (ref font_face_rule_data_locked) => {
@@ -155,7 +155,7 @@ impl<'a> GetStylesheetAsEyelinerRules for Eyeliner<'a> {
                         let font_face_rule_data = font_face_rule_data_locked.as_ref().read_with(read_guard);
 
                         use servo_css_parser::style::shared_lock::ToCssWithGuard;
-                        self.eyeliner_rules.font_face.push(font_face_rule_data.to_css_string(read_guard));
+                        self.rules.font_face.push(font_face_rule_data.to_css_string(read_guard));
                     },
 
                     _ => (),
@@ -169,7 +169,7 @@ impl<'a> GetStylesheetAsEyelinerRules for Eyeliner<'a> {
 
 impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
     fn inline_stylesheet_and_document(self: &mut Self) -> &mut Self {
-        for (selector, block) in self.eyeliner_rules.style.clone() {
+        for (selector, block) in self.rules.style.clone() {
 
             // TODO: using `::` seems to break things.
             // While testing using Bootstrap CSS, `::after` and `::before` give stack overflows.
@@ -354,8 +354,8 @@ impl<'a> InsertPreservedCss for Eyeliner<'a> {
 
             for node in nodes.unwrap() {
                 let mut preserved_css = vec![];
-                preserved_css.extend_from_slice(&self.eyeliner_rules.font_face);
-                preserved_css.extend_from_slice(&self.eyeliner_rules.media);
+                preserved_css.extend_from_slice(&self.rules.font_face);
+                preserved_css.extend_from_slice(&self.rules.media);
 
                 let text_node = NodeRef::new_text(preserved_css.join("\n"));
                 let style_node = NodeRef::new_element(
