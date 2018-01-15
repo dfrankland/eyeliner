@@ -20,54 +20,6 @@ use options::{Options, default as default_options};
 use settings::{Settings, default as default_settings};
 use property_declaration_value::property_declaration_value_to_css_string;
 
-pub struct Eyeliner<'a> {
-    pub document: NodeRef,
-    pub stylesheet: Stylesheet,
-    pub options: Options<'a>,
-    pub settings: Settings<'a>,
-    pub node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock>,
-    pub rules: Rules,
-}
-
-impl<'a> Eyeliner<'a> {
-    pub fn new(
-        html: &str,
-        css: Option<&str>,
-        options: Option<default_options::Options<'a>>,
-        settings: Option<default_settings::Settings<'a>>,
-    ) -> Self {
-        let options = Options::new(options.unwrap_or(default_options::Options::default()));
-        let settings = Settings::new(settings.unwrap_or(default_settings::Settings::default()));
-
-        let mut css = css.unwrap_or("").to_owned();
-        let document = parse_html().one(html);
-
-        if options.apply_style_tags {
-            for node in document.select("style").unwrap() {
-                css += &node.text_contents();
-                if options.remove_style_tags {
-                    node.as_node().detach();
-                }
-            }
-        }
-
-        let url = Url::parse("about::test").unwrap();
-        let origin = Origin::UserAgent;
-        let quirks_mode = QuirksMode::NoQuirks;
-        let media = MediaList::empty();
-        let stylesheet = parse(&css, url, origin, quirks_mode, media);
-
-        Self {
-            document: document,
-            stylesheet: stylesheet,
-            options: options,
-            settings: settings,
-            node_style_map: HashMap::new(),
-            rules: Rules::new(),
-        }
-    }
-}
-
 trait ExtendFromPropertyDeclarationBlock {
     fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &mut Self;
 }
@@ -114,6 +66,54 @@ impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclaratio
         }
 
         self
+    }
+}
+
+pub struct Eyeliner<'a> {
+    pub document: NodeRef,
+    pub stylesheet: Stylesheet,
+    pub options: Options<'a>,
+    pub settings: Settings<'a>,
+    pub node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock>,
+    pub rules: Rules,
+}
+
+impl<'a> Eyeliner<'a> {
+    pub fn new(
+        html: &str,
+        css: Option<&str>,
+        options: Option<default_options::Options<'a>>,
+        settings: Option<default_settings::Settings<'a>>,
+    ) -> Self {
+        let options = Options::new(options.unwrap_or(default_options::Options::default()));
+        let settings = Settings::new(settings.unwrap_or(default_settings::Settings::default()));
+
+        let mut css = css.unwrap_or("").to_owned();
+        let document = parse_html().one(html);
+
+        if options.apply_style_tags {
+            for node in document.select("style").unwrap() {
+                css += &node.text_contents();
+                if options.remove_style_tags {
+                    node.as_node().detach();
+                }
+            }
+        }
+
+        let url = Url::parse("about::test").unwrap();
+        let origin = Origin::UserAgent;
+        let quirks_mode = QuirksMode::NoQuirks;
+        let media = MediaList::empty();
+        let stylesheet = parse(&css, url, origin, quirks_mode, media);
+
+        Self {
+            document: document,
+            stylesheet: stylesheet,
+            options: options,
+            settings: settings,
+            node_style_map: HashMap::new(),
+            rules: Rules::new(),
+        }
     }
 }
 
