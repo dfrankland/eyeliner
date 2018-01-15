@@ -170,10 +170,9 @@ impl<'a> CollectRules for Eyeliner<'a> {
 impl<'a> ApplyRules for Eyeliner<'a> {
     fn apply_rules(self: &mut Self) -> &mut Self {
         for (selector, block) in self.rules.style.clone() {
-
             // TODO: using `::` seems to break things.
             // While testing using Bootstrap CSS, `::after` and `::before` give stack overflows.
-            if selector.contains("::after") || selector.contains("::before") {
+            if selector.contains("::") {
                 continue;
             }
 
@@ -186,25 +185,19 @@ impl<'a> ApplyRules for Eyeliner<'a> {
                     continue;
                 }
 
-
-                let mut attributes = node.attributes.borrow_mut();
-
                 match self.node_style_map.entry(HashableNodeRef::new(&node)) {
                     Occupied(mut entry) => {
                         entry.get_mut().extend_from_block(&block);
-                        entry.get().clone()
                     },
-
                     Vacant(entry) => {
                         let mut exisiting_style = parse_style_attribute(
-                            &attributes.get("style").unwrap_or(""),
+                            &node.attributes.borrow_mut().get("style").unwrap_or(""),
                             &self.stylesheet.contents.url_data.read(),
                             &RustLogReporter {},
                             QuirksMode::NoQuirks,
                         );
                         exisiting_style.extend_from_block(&block);
                         entry.insert(exisiting_style.clone());
-                        exisiting_style
                     },
                 };
             }
@@ -227,20 +220,16 @@ impl<'a> ApplyRules for Eyeliner<'a> {
     }
 }
 
-impl<'a> ApplyWidthAttributes for Eyeliner<'a> {
-    fn apply_width_attributes(self: &Self) -> &Self {
-        if !self.options.apply_width_attributes {
-            return self;
-        }
-
+impl<'a> ApplyAttributes for Eyeliner<'a> {
+    fn apply_attributes(self: &Self, property: &str) -> &Self {
         for (hash, block) in &self.node_style_map {
-            let width = block.get(
+            let property_declaration = block.get(
                 PropertyDeclarationId::Longhand(
-                    PropertyId::parse("width").unwrap().longhand_id().unwrap()
+                    PropertyId::parse(property).unwrap().longhand_id().unwrap()
                 )
             );
 
-            if width.is_none() {
+            if property_declaration.is_none() {
                 continue;
             }
 
@@ -248,21 +237,34 @@ impl<'a> ApplyWidthAttributes for Eyeliner<'a> {
 
             let mut attributes = element.attributes.borrow_mut();
             use servo_css_parser::style_traits::values::ToCss;
-            let value = width.unwrap().0.to_css_string();
+            let value = property_declaration.unwrap().0.to_css_string();
 
             if value.ends_with("px") {
-                attributes.insert("width", value.replace("px", ""));
-            } else if
+                attributes.insert(property, value.replace("px", ""));
+                continue;
+            }
+
+            if
                 value.ends_with("%") &&
                 self.settings.table_elements.contains(
                     &element.name.local.chars().as_str().to_lowercase().as_str()
                 )
             {
-                attributes.insert("width", value);
+                attributes.insert(property, value);
             }
         }
 
         self
+    }
+}
+
+impl<'a> ApplyWidthAttributes for Eyeliner<'a> {
+    fn apply_width_attributes(self: &Self) -> &Self {
+        if !self.options.apply_width_attributes {
+            return self;
+        }
+
+        self.apply_attributes("width")
     }
 }
 
@@ -272,36 +274,7 @@ impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
             return self;
         }
 
-        for (hash, block) in &self.node_style_map {
-            let height = block.get(
-                PropertyDeclarationId::Longhand(
-                    PropertyId::parse("height").unwrap().longhand_id().unwrap()
-                )
-            );
-
-            if height.is_none() {
-                continue;
-            }
-
-            let element = hash.node.as_element().unwrap();
-
-            let mut attributes = element.attributes.borrow_mut();
-            use servo_css_parser::style_traits::values::ToCss;
-            let value = height.unwrap().0.to_css_string();
-
-            if value.ends_with("px") {
-                attributes.insert("height", value.replace("px", ""));
-            } else if
-                value.ends_with("%") &&
-                self.settings.table_elements.contains(
-                    &element.name.local.chars().as_str().to_lowercase().as_str()
-                )
-            {
-                attributes.insert("height", value);
-            }
-        }
-
-        self
+        self.apply_attributes("height")
     }
 }
 
