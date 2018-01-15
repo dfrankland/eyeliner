@@ -17,8 +17,6 @@ mod eyeliner;
 pub use eyeliner::*;
 
 pub mod traits;
-pub use eyeliner::*;
-
 use traits::*;
 
 pub fn inline(html: &str, css: Option<&str>, options: Option<Options>, settings: Option<Settings>) -> String {

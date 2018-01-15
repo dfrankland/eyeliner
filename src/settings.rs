@@ -26,7 +26,6 @@ pub mod default {
     }
 }
 
-
 pub struct Settings<'a> {
     pub width_elements: Vec<&'a str>,
     pub height_elements: Vec<&'a str>,
