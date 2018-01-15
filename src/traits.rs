@@ -18,14 +18,14 @@ pub trait ApplyHeightAttributes {
     fn apply_height_attributes(self: &Self) -> &Self;
 }
 
-pub trait ApplyAttributesTableElements {
-    fn apply_attributes_table_elements(self: &Self) -> &Self;
+pub trait ApplyTableElementAttributes {
+    fn apply_table_element_attributes(self: &Self) -> &Self;
 }
 
 pub trait InsertPreservedCss {
     fn insert_preserved_css(self: &Self) -> &Self;
 }
 
-pub trait SerializeDocument {
-    fn serialize_document(self: &Self) -> String;
+pub trait ToString {
+    fn to_string(self: &Self) -> String;
 }

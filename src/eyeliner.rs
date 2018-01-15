@@ -278,8 +278,8 @@ impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
     }
 }
 
-impl<'a> ApplyAttributesTableElements for Eyeliner<'a> {
-    fn apply_attributes_table_elements(self: &Self) -> &Self {
+impl<'a> ApplyTableElementAttributes for Eyeliner<'a> {
+    fn apply_table_element_attributes(self: &Self) -> &Self {
         if !self.options.apply_attributes_table_elements {
             return self;
         }
@@ -345,8 +345,8 @@ impl<'a> InsertPreservedCss for Eyeliner<'a> {
     }
 }
 
-impl<'a> SerializeDocument for Eyeliner<'a> {
-    fn serialize_document(self: &Self) -> String {
+impl<'a> ToString for Eyeliner<'a> {
+    fn to_string(self: &Self) -> String {
         let mut writer = vec![];
         self.document.serialize(&mut writer).unwrap();
         String::from_utf8_lossy(&writer).into_owned()

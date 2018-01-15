@@ -27,7 +27,7 @@ pub fn inline(html: &str, css: Option<&str>, options: Option<Options>, settings:
         .apply_rules()
         .apply_width_attributes()
         .apply_height_attributes()
-        .apply_attributes_table_elements()
+        .apply_table_element_attributes()
         .insert_preserved_css()
-        .serialize_document()
+        .to_string()
 }
