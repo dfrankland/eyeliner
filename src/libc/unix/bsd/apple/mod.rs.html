@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.34/src/unix/bsd/apple/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.36/src/unix/bsd/apple/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -2302,11 +2302,151 @@
 <span id="2256">2256</span>
 <span id="2257">2257</span>
 <span id="2258">2258</span>
+<span id="2259">2259</span>
+<span id="2260">2260</span>
+<span id="2261">2261</span>
+<span id="2262">2262</span>
+<span id="2263">2263</span>
+<span id="2264">2264</span>
+<span id="2265">2265</span>
+<span id="2266">2266</span>
+<span id="2267">2267</span>
+<span id="2268">2268</span>
+<span id="2269">2269</span>
+<span id="2270">2270</span>
+<span id="2271">2271</span>
+<span id="2272">2272</span>
+<span id="2273">2273</span>
+<span id="2274">2274</span>
+<span id="2275">2275</span>
+<span id="2276">2276</span>
+<span id="2277">2277</span>
+<span id="2278">2278</span>
+<span id="2279">2279</span>
+<span id="2280">2280</span>
+<span id="2281">2281</span>
+<span id="2282">2282</span>
+<span id="2283">2283</span>
+<span id="2284">2284</span>
+<span id="2285">2285</span>
+<span id="2286">2286</span>
+<span id="2287">2287</span>
+<span id="2288">2288</span>
+<span id="2289">2289</span>
+<span id="2290">2290</span>
+<span id="2291">2291</span>
+<span id="2292">2292</span>
+<span id="2293">2293</span>
+<span id="2294">2294</span>
+<span id="2295">2295</span>
+<span id="2296">2296</span>
+<span id="2297">2297</span>
+<span id="2298">2298</span>
+<span id="2299">2299</span>
+<span id="2300">2300</span>
+<span id="2301">2301</span>
+<span id="2302">2302</span>
+<span id="2303">2303</span>
+<span id="2304">2304</span>
+<span id="2305">2305</span>
+<span id="2306">2306</span>
+<span id="2307">2307</span>
+<span id="2308">2308</span>
+<span id="2309">2309</span>
+<span id="2310">2310</span>
+<span id="2311">2311</span>
+<span id="2312">2312</span>
+<span id="2313">2313</span>
+<span id="2314">2314</span>
+<span id="2315">2315</span>
+<span id="2316">2316</span>
+<span id="2317">2317</span>
+<span id="2318">2318</span>
+<span id="2319">2319</span>
+<span id="2320">2320</span>
+<span id="2321">2321</span>
+<span id="2322">2322</span>
+<span id="2323">2323</span>
+<span id="2324">2324</span>
+<span id="2325">2325</span>
+<span id="2326">2326</span>
+<span id="2327">2327</span>
+<span id="2328">2328</span>
+<span id="2329">2329</span>
+<span id="2330">2330</span>
+<span id="2331">2331</span>
+<span id="2332">2332</span>
+<span id="2333">2333</span>
+<span id="2334">2334</span>
+<span id="2335">2335</span>
+<span id="2336">2336</span>
+<span id="2337">2337</span>
+<span id="2338">2338</span>
+<span id="2339">2339</span>
+<span id="2340">2340</span>
+<span id="2341">2341</span>
+<span id="2342">2342</span>
+<span id="2343">2343</span>
+<span id="2344">2344</span>
+<span id="2345">2345</span>
+<span id="2346">2346</span>
+<span id="2347">2347</span>
+<span id="2348">2348</span>
+<span id="2349">2349</span>
+<span id="2350">2350</span>
+<span id="2351">2351</span>
+<span id="2352">2352</span>
+<span id="2353">2353</span>
+<span id="2354">2354</span>
+<span id="2355">2355</span>
+<span id="2356">2356</span>
+<span id="2357">2357</span>
+<span id="2358">2358</span>
+<span id="2359">2359</span>
+<span id="2360">2360</span>
+<span id="2361">2361</span>
+<span id="2362">2362</span>
+<span id="2363">2363</span>
+<span id="2364">2364</span>
+<span id="2365">2365</span>
+<span id="2366">2366</span>
+<span id="2367">2367</span>
+<span id="2368">2368</span>
+<span id="2369">2369</span>
+<span id="2370">2370</span>
+<span id="2371">2371</span>
+<span id="2372">2372</span>
+<span id="2373">2373</span>
+<span id="2374">2374</span>
+<span id="2375">2375</span>
+<span id="2376">2376</span>
+<span id="2377">2377</span>
+<span id="2378">2378</span>
+<span id="2379">2379</span>
+<span id="2380">2380</span>
+<span id="2381">2381</span>
+<span id="2382">2382</span>
+<span id="2383">2383</span>
+<span id="2384">2384</span>
+<span id="2385">2385</span>
+<span id="2386">2386</span>
+<span id="2387">2387</span>
+<span id="2388">2388</span>
+<span id="2389">2389</span>
+<span id="2390">2390</span>
+<span id="2391">2391</span>
+<span id="2392">2392</span>
+<span id="2393">2393</span>
+<span id="2394">2394</span>
+<span id="2395">2395</span>
+<span id="2396">2396</span>
+<span id="2397">2397</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Apple (ios/darwin)-specific definitions</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This covers *-apple-* triples currently</span>
 
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">c_char</span> <span class="op">=</span> <span class="ident">i8</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">clock_t</span> <span class="op">=</span> <span class="ident">c_ulong</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">time_t</span> <span class="op">=</span> <span class="ident">c_long</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">suseconds_t</span> <span class="op">=</span> <span class="ident">i32</span>;
@@ -2781,6 +2921,27 @@
         <span class="kw">pub</span> <span class="ident">cmd</span>: <span class="ident">u32</span>,
         <span class="kw">pub</span> <span class="ident">cmdsize</span>: <span class="ident">u32</span>,
     }
+
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">sockaddr_dl</span> {
+        <span class="kw">pub</span> <span class="ident">sdl_len</span>: ::<span class="ident">c_uchar</span>,
+        <span class="kw">pub</span> <span class="ident">sdl_family</span>: ::<span class="ident">c_uchar</span>,
+        <span class="kw">pub</span> <span class="ident">sdl_index</span>: ::<span class="ident">c_ushort</span>,
+        <span class="kw">pub</span> <span class="ident">sdl_type</span>: ::<span class="ident">c_uchar</span>,
+        <span class="kw">pub</span> <span class="ident">sdl_nlen</span>: ::<span class="ident">c_uchar</span>,
+        <span class="kw">pub</span> <span class="ident">sdl_alen</span>: ::<span class="ident">c_uchar</span>,
+        <span class="kw">pub</span> <span class="ident">sdl_slen</span>: ::<span class="ident">c_uchar</span>,
+        <span class="kw">pub</span> <span class="ident">sdl_data</span>: [::<span class="ident">c_char</span>; <span class="number">12</span>],
+    }
+
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">sockaddr_inarp</span> {
+        <span class="kw">pub</span> <span class="ident">sin_len</span>: ::<span class="ident">c_uchar</span>,
+        <span class="kw">pub</span> <span class="ident">sin_family</span>: ::<span class="ident">c_uchar</span>,
+        <span class="kw">pub</span> <span class="ident">sin_port</span>: ::<span class="ident">c_ushort</span>,
+        <span class="kw">pub</span> <span class="ident">sin_addr</span>: ::<span class="ident">in_addr</span>,
+        <span class="kw">pub</span> <span class="ident">sin_srcaddr</span>: ::<span class="ident">in_addr</span>,
+        <span class="kw">pub</span> <span class="ident">sin_tos</span>: ::<span class="ident">c_ushort</span>,
+        <span class="kw">pub</span> <span class="ident">sin_other</span>: ::<span class="ident">c_ushort</span>,
+    }
 }
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">_UTX_USERSIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">256</span>;
@@ -3204,7 +3365,17 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EQFULL</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">106</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ELAST</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">106</span>;
 
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_AGAIN</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_BADFLAGS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_FAIL</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_FAMILY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_MEMORY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">6</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_NODATA</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">7</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_NONAME</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_SERVICE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">9</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_SOCKTYPE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">10</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_SYSTEM</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">11</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EAI_OVERFLOW</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">14</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">F_DUPFD</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">F_DUPFD_CLOEXEC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">67</span>;
@@ -3806,7 +3977,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SCM_TIMESTAMP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x02</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SCM_CREDS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x03</span>;
 
-<span class="doccomment">/// https://github.com/aosm/xnu/blob/master/bsd/net/if.h#L140-L156</span>
+<span class="comment">// https://github.com/aosm/xnu/blob/master/bsd/net/if.h#L140-L156</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFF_UP</span>: ::<span class="ident">c_int</span>          <span class="op">=</span> <span class="number">0x1</span>;  <span class="comment">// interface is up</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFF_BROADCAST</span>: ::<span class="ident">c_int</span>   <span class="op">=</span> <span class="number">0x2</span>;  <span class="comment">// broadcast address valid</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFF_DEBUG</span>: ::<span class="ident">c_int</span>       <span class="op">=</span> <span class="number">0x4</span>;  <span class="comment">// turn on debugging</span>
@@ -4335,7 +4506,90 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">XATTR_SHOWCOMPRESSION</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x0020</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NET_RT_IFLIST2</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x0006</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_IFINFO2</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x0012</span>;
+
+<span class="comment">// net/route.h</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_UP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_GATEWAY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_HOST</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_REJECT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_DYNAMIC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x10</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_MODIFIED</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x20</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_DONE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x40</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_DELCLONE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x80</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_CLONING</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x100</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_XRESOLVE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x200</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_LLINFO</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x400</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_STATIC</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x800</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_BLACKHOLE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x1000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_NOIFREF</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x2000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_PROTO2</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x4000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_PROTO1</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x8000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_PRCLONING</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x10000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_WASCLONED</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x20000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_PROTO3</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x40000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_PINNED</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x100000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_LOCAL</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x200000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_BROADCAST</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x400000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_MULTICAST</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x800000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_IFSCOPE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x1000000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_CONDEMNED</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x2000000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_IFREF</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x4000000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_PROXY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x8000000</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTF_ROUTER</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x10000000</span>;
+
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_VERSION</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">5</span>;
+
+<span class="comment">// Message types</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_ADD</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_DELETE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_CHANGE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_GET</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_LOSING</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_REDIRECT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x6</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_MISS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x7</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_LOCK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_OLDADD</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x9</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_OLDDEL</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0xa</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_RESOLVE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0xb</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_NEWADDR</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0xc</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_DELADDR</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0xd</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_IFINFO</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0xe</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_NEWMADDR</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0xf</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_DELMADDR</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x10</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_IFINFO2</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x12</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_NEWMADDR2</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x13</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTM_GET2</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x14</span>;
+
+<span class="comment">// Bitmask values for rtm_inits and rmx_locks.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTV_MTU</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTV_HOPCOUNT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTV_EXPIRE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTV_RPIPE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTV_SPIPE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x10</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTV_SSTHRESH</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x20</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTV_RTT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x40</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTV_RTTVAR</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x80</span>;
+
+<span class="comment">// Bitmask values for rtm_addrs.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTA_DST</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTA_GATEWAY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTA_NETMASK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTA_GENMASK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTA_IFP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x10</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTA_IFA</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x20</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTA_AUTHOR</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x40</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTA_BRD</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x80</span>;
+
+<span class="comment">// Index offsets for sockaddr array for alternate internal encoding.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTAX_DST</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTAX_GATEWAY</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTAX_NETMASK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTAX_GENMASK</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTAX_IFP</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTAX_IFA</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTAX_AUTHOR</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">6</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTAX_BRD</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">7</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RTAX_MAX</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">8</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KERN_PROCARGS2</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">49</span>;
 
@@ -4352,6 +4606,30 @@
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MH_MAGIC</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">0xfeedface</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MH_MAGIC_64</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">0xfeedfacf</span>;
+
+<span class="comment">// net/if_utun.h</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UTUN_OPT_FLAGS</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UTUN_OPT_IFNAME</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">2</span>;
+
+<span class="comment">// net/bpf.h</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_NULL</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0</span>;         <span class="comment">// no link-layer encapsulation</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_EN10MB</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">1</span>;       <span class="comment">// Ethernet (10Mb)</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_EN3MB</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">2</span>;        <span class="comment">// Experimental Ethernet (3Mb)</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_AX25</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">3</span>;         <span class="comment">// Amateur Radio AX.25</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_PRONET</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">4</span>;       <span class="comment">// Proteon ProNET Token Ring</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_CHAOS</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">5</span>;        <span class="comment">// Chaos</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_IEEE802</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">6</span>;      <span class="comment">// IEEE 802 Networks</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_ARCNET</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">7</span>;       <span class="comment">// ARCNET</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_SLIP</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">8</span>;         <span class="comment">// Serial Line IP</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_PPP</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">9</span>;          <span class="comment">// Point-to-point Protocol</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_FDDI</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">10</span>;        <span class="comment">// FDDI</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_ATM_RFC1483</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">11</span>; <span class="comment">// LLC/SNAP encapsulated atm</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_RAW</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">12</span>;         <span class="comment">// raw IP</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLT_LOOP</span>: ::<span class="ident">c_uint</span> <span class="op">=</span> <span class="number">108</span>;
+
+<span class="comment">// https://github.com/apple/darwin-xnu/blob/master/bsd/net/bpf.h#L100</span>
+<span class="comment">// sizeof(int32_t)</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BPF_ALIGNMENT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">4</span>;
 
 <span class="macro">f</span><span class="macro">!</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">WSTOPSIG</span>(<span class="ident">status</span>: ::<span class="ident">c_int</span>) <span class="op">-&gt;</span> ::<span class="ident">c_int</span> {

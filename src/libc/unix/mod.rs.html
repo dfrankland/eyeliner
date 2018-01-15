@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.34/src/unix/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.36/src/unix/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -985,6 +985,9 @@
 <span id="939">939</span>
 <span id="940">940</span>
 <span id="941">941</span>
+<span id="942">942</span>
+<span id="943">943</span>
+<span id="944">944</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Definitions found commonly among almost all Unix derivatives</span>
 <span class="doccomment">//!</span>
@@ -1198,6 +1201,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">S_ISVTX</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x200</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IF_NAMESIZE</span>: ::<span class="ident">size_t</span> <span class="op">=</span> <span class="number">16</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IFNAMSIZ</span>: ::<span class="ident">size_t</span> <span class="op">=</span> <span class="ident">IF_NAMESIZE</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOG_EMERG</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOG_ALERT</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">1</span>;
@@ -1754,6 +1758,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gmtime</span>(<span class="ident">time_p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">time_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">tm</span>;
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;__locatime50&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">localtime</span>(<span class="ident">time_p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">time_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">tm</span>;
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;__difftime50&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">difftime</span>(<span class="ident">time1</span>: <span class="ident">time_t</span>, <span class="ident">time0</span>: <span class="ident">time_t</span>) <span class="op">-&gt;</span> ::<span class="ident">c_double</span>;
 
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;netbsd&quot;</span>, <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;__mknod50&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mknod</span>(<span class="ident">pathname</span>: <span class="kw-2">*</span><span class="kw">const</span> ::<span class="ident">c_char</span>, <span class="ident">mode</span>: ::<span class="ident">mode_t</span>,

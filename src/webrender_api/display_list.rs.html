@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/git/checkouts/webrender-c3596abe1cf4f320/3db4c46/webrender_api/src/display_list.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/git/checkouts/webrender-c3596abe1cf4f320/9e6cbad/webrender_api/src/display_list.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>display_list.rs.html -- source</title>
@@ -1518,6 +1518,23 @@
 <span id="1472">1472</span>
 <span id="1473">1473</span>
 <span id="1474">1474</span>
+<span id="1475">1475</span>
+<span id="1476">1476</span>
+<span id="1477">1477</span>
+<span id="1478">1478</span>
+<span id="1479">1479</span>
+<span id="1480">1480</span>
+<span id="1481">1481</span>
+<span id="1482">1482</span>
+<span id="1483">1483</span>
+<span id="1484">1484</span>
+<span id="1485">1485</span>
+<span id="1486">1486</span>
+<span id="1487">1487</span>
+<span id="1488">1488</span>
+<span id="1489">1489</span>
+<span id="1490">1490</span>
+<span id="1491">1491</span>
 </pre><pre class="rust ">
 <span class="comment">/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -1753,7 +1770,7 @@
             {
                 <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="ident">bincode</span>::<span class="ident">read_types</span>::<span class="ident">IoReader</span>::<span class="ident">new</span>(<span class="ident">UnsafeReader</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">data</span>));
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">deserializer</span> <span class="op">=</span> <span class="ident">bincode</span>::<span class="ident">Deserializer</span>::<span class="ident">new</span>(<span class="ident">reader</span>, <span class="ident">bincode</span>::<span class="ident">Infinite</span>);
-                <span class="self">self</span>.<span class="ident">cur_item</span>.<span class="ident">deserialize_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">deserializer</span>)
+                <span class="ident">Deserialize</span>::<span class="ident">deserialize_in_place</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">deserializer</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">cur_item</span>)
                     .<span class="ident">expect</span>(<span class="string">&quot;MEH: malicious process?&quot;</span>);
             }
 
@@ -2744,6 +2761,20 @@
         <span class="self">self</span>.<span class="ident">push_item</span>(<span class="ident">item</span>, <span class="ident">info</span>);
     }
 
+    <span class="doccomment">/// Pushes a linear gradient to be displayed.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The gradient itself is described in the</span>
+    <span class="doccomment">/// `gradient` parameter. It is drawn on</span>
+    <span class="doccomment">/// a &quot;tile&quot; with the dimensions from `tile_size`.</span>
+    <span class="doccomment">/// These tiles are now repeated to the right and</span>
+    <span class="doccomment">/// to the bottom infinitly. If `tile_spacing`</span>
+    <span class="doccomment">/// is not zero spacers with the given dimensions</span>
+    <span class="doccomment">/// are inserted between the tiles as seams.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// The origin of the tiles is given in `info.rect.origin`.</span>
+    <span class="doccomment">/// If the gradient should only be displayed once limit </span>
+    <span class="doccomment">/// the `info.rect.size` to a single tile.</span>
+    <span class="doccomment">/// The gradient is only visible within the local clip.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_gradient</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">info</span>: <span class="kw-2">&amp;</span><span class="ident">LayoutPrimitiveInfo</span>,
@@ -2760,6 +2791,9 @@
         <span class="self">self</span>.<span class="ident">push_item</span>(<span class="ident">item</span>, <span class="ident">info</span>);
     }
 
+    <span class="doccomment">/// Pushes a radial gradient to be displayed.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// See [`push_gradient`](#method.push_gradient) for explanation.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_radial_gradient</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">info</span>: <span class="kw-2">&amp;</span><span class="ident">LayoutPrimitiveInfo</span>,

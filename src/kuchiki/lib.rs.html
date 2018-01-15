@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.6.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/Github/kuchiki/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -110,7 +110,7 @@ Kuchiki (朽木), a HTML/XML tree manipulation library for Rust.
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span> <span class="kw">mod</span> <span class="ident">tests</span>;
 <span class="kw">mod</span> <span class="ident">tree</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">attributes</span>::<span class="ident">Attributes</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">attributes</span>::{<span class="ident">Attributes</span>, <span class="ident">ExpandedName</span>, <span class="ident">Attribute</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">node_data_ref</span>::<span class="ident">NodeDataRef</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">parser</span>::{<span class="ident">parse_html</span>, <span class="ident">parse_html_with_options</span>, <span class="ident">ParseOpts</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">select</span>::{<span class="ident">Selectors</span>, <span class="ident">Selector</span>, <span class="ident">Specificity</span>};

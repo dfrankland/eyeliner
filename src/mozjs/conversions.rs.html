@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/mozjs-0.1.9/src/conversions.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/mozjs-0.1.10/src/conversions.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>conversions.rs.html -- source</title>
@@ -714,6 +714,11 @@
 <span id="668">668</span>
 <span id="669">669</span>
 <span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
+<span id="675">675</span>
 </pre><pre class="rust ">
 <span class="comment">/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -899,20 +904,6 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">to_jsval</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_cx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">JSContext</span>, <span class="ident">rval</span>: <span class="ident">MutableHandleValue</span>) {
         <span class="ident">rval</span>.<span class="ident">set</span>(<span class="ident">UndefinedValue</span>());
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">FromJSValConvertible</span> <span class="kw">for</span> <span class="ident">HandleValue</span> {
-    <span class="kw">type</span> <span class="ident">Config</span> <span class="op">=</span> ();
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_jsval</span>(<span class="ident">cx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">JSContext</span>,
-                         <span class="ident">value</span>: <span class="ident">HandleValue</span>,
-                         <span class="ident">_option</span>: ())
-                         <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ConversionResult</span><span class="op">&lt;</span><span class="ident">HandleValue</span><span class="op">&gt;</span>, ()<span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">is_object</span>() {
-            <span class="ident">AssertSameCompartment</span>(<span class="ident">cx</span>, <span class="ident">value</span>.<span class="ident">to_object</span>());
-        }
-        <span class="prelude-val">Ok</span>(<span class="ident">ConversionResult</span>::<span class="ident">Success</span>(<span class="ident">value</span>))
     }
 }
 
@@ -1383,6 +1374,25 @@
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">to_jsval</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">JSContext</span>, <span class="ident">rval</span>: <span class="ident">MutableHandleValue</span>) {
         <span class="ident">rval</span>.<span class="ident">set</span>(<span class="ident">ObjectOrNullValue</span>(<span class="self">self</span>.<span class="ident">get</span>()));
         <span class="ident">maybe_wrap_object_or_null_value</span>(<span class="ident">cx</span>, <span class="ident">rval</span>);
+    }
+}
+
+<span class="comment">// https://heycam.github.io/webidl/#es-object</span>
+<span class="kw">impl</span> <span class="ident">FromJSValConvertible</span> <span class="kw">for</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">JSObject</span> {
+    <span class="kw">type</span> <span class="ident">Config</span> <span class="op">=</span> ();
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_jsval</span>(<span class="ident">cx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">JSContext</span>,
+                         <span class="ident">value</span>: <span class="ident">HandleValue</span>,
+                         <span class="ident">_option</span>: ())
+                         <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ConversionResult</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">JSObject</span><span class="op">&gt;</span>, ()<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">value</span>.<span class="ident">is_object</span>() {
+            <span class="ident">throw_type_error</span>(<span class="ident">cx</span>, <span class="string">&quot;value is not an object&quot;</span>);
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(());
+        }
+
+        <span class="ident">AssertSameCompartment</span>(<span class="ident">cx</span>, <span class="ident">value</span>.<span class="ident">to_object</span>());
+
+        <span class="prelude-val">Ok</span>(<span class="ident">ConversionResult</span>::<span class="ident">Success</span>(<span class="ident">value</span>.<span class="ident">to_object</span>()))
     }
 }
 </pre>

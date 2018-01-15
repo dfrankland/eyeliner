@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/parking_lot_core-0.2.9/src/spinwait.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/parking_lot_core-0.2.10/src/spinwait.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>spinwait.rs.html -- source</title>
@@ -201,10 +201,10 @@
 <span class="comment">// http://opensource.org/licenses/MIT&gt;, at your option. This file may not be</span>
 <span class="comment">// copied, modified, or distributed except according to those terms.</span>
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
-<span class="kw">use</span> <span class="ident">kernel32</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
 <span class="kw">use</span> <span class="ident">libc</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+<span class="kw">use</span> <span class="ident">winapi</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">windows</span>, <span class="ident">unix</span>)))]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">thread</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;nightly&quot;</span>))]</span>
@@ -218,7 +218,7 @@
         <span class="comment">// We don&#39;t use SwitchToThread here because it doesn&#39;t consider all</span>
         <span class="comment">// threads in the system and the thread we are waiting for may not get</span>
         <span class="comment">// selected.</span>
-        <span class="ident">kernel32</span>::<span class="ident">Sleep</span>(<span class="number">0</span>);
+        <span class="ident">winapi</span>::<span class="ident">um</span>::<span class="ident">synchapi</span>::<span class="ident">Sleep</span>(<span class="number">0</span>);
     }
 }
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>

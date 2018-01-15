@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Body",""],["Style",""]],"struct":[["Container",""],["Field",""],["Repr",""],["Variant",""]]});
+initSidebarItems({"enum":[["Body",""],["Style",""]],"struct":[["Container",""],["Field",""],["Variant",""]]});

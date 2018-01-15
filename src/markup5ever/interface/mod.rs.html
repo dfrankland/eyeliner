@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/markup5ever-0.7.0/interface/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/markup5ever-0.7.2/interface/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -246,13 +246,13 @@
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">expanded_name</span> {
     (<span class="string">&quot;&quot;</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">local</span>: <span class="ident">tt</span>) <span class="op">=&gt;</span> {
-        <span class="ident">ExpandedName</span> {
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">interface</span>::<span class="ident">ExpandedName</span> {
             <span class="ident">ns</span>: <span class="kw-2">&amp;</span><span class="macro">ns</span><span class="macro">!</span>(),
             <span class="ident">local</span>: <span class="kw-2">&amp;</span><span class="macro">local_name</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">local</span>),
         }
     };
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ns</span>: <span class="ident">ident</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">local</span>: <span class="ident">tt</span>) <span class="op">=&gt;</span> {
-        <span class="ident">ExpandedName</span> {
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">interface</span>::<span class="ident">ExpandedName</span> {
             <span class="ident">ns</span>: <span class="kw-2">&amp;</span><span class="macro">ns</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ns</span>),
             <span class="ident">local</span>: <span class="kw-2">&amp;</span><span class="macro">local_name</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">local</span>),
         }

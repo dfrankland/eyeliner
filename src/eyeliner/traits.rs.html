@@ -66,28 +66,56 @@
 <span id="20">20</span>
 <span id="21">21</span>
 <span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">servo_css_parser</span>::<span class="ident">style</span>::<span class="ident">properties</span>::<span class="ident">declaration_block</span>::<span class="ident">PropertyDeclarationBlock</span>;
-<span class="kw">use</span> <span class="ident">servo_css_parser</span>::<span class="ident">style</span>::<span class="ident">stylesheets</span>::<span class="ident">CssRules</span>;
-<span class="kw">use</span> <span class="ident">servo_css_parser</span>::<span class="ident">style</span>::<span class="ident">properties</span>::<span class="ident">BuilderArc</span> <span class="kw">as</span> <span class="ident">Arc</span>;
-<span class="kw">use</span> <span class="ident">servo_css_parser</span>::<span class="ident">style</span>::<span class="ident">shared_lock</span>::<span class="ident">Locked</span>;
+<span class="doccomment">//! All of the traits implemented by `Eyeliner`.</span>
 
-<span class="kw">use</span> <span class="ident">rules</span>::<span class="ident">EyelinerRules</span>;
-
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">StylesheetAsEyelinerRules</span> {
-    <span class="kw">fn</span> <span class="ident">stylesheet_as_eyeliner_rules</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">rules</span>: <span class="kw-2">&amp;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Locked</span><span class="op">&lt;</span><span class="ident">CssRules</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">EyelinerRules</span>;
+<span class="doccomment">/// Collect CSS rules from the CSS stylesheet for other methods to use.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">CollectRules</span> {
+    <span class="kw">fn</span> <span class="ident">collect_rules</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>;
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ExtendFromPropertyDeclarationBlock</span> {
-    <span class="kw">fn</span> <span class="ident">extend_from_block</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>, <span class="ident">block</span>: <span class="kw-2">&amp;</span><span class="ident">PropertyDeclarationBlock</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>;
+<span class="doccomment">/// Inline CSS rules extracted from the CSS stylesheet into the HTML document.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ApplyRules</span> {
+    <span class="kw">fn</span> <span class="ident">apply_rules</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>;
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">InlineStylesheetAndDocument</span> {
-    <span class="kw">fn</span> <span class="ident">inline_stylesheet_and_document</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>;
+<span class="doccomment">/// Apply a specified CSS property as an attribute to elements.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ApplyAttributes</span> {
+    <span class="kw">fn</span> <span class="ident">apply_attributes</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">property</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>;
 }
 
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SerializeDocument</span> {
-    <span class="kw">fn</span> <span class="ident">serialize_document</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">String</span>;
+<span class="doccomment">/// Apply a width attribute to elements.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ApplyWidthAttributes</span> {
+    <span class="kw">fn</span> <span class="ident">apply_width_attributes</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>;
+}
+
+<span class="doccomment">/// Apply a height attribute to elements.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ApplyHeightAttributes</span> {
+    <span class="kw">fn</span> <span class="ident">apply_height_attributes</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>;
+}
+
+<span class="doccomment">/// Apply a table attributes to table elements.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ApplyTableElementAttributes</span> {
+    <span class="kw">fn</span> <span class="ident">apply_table_element_attributes</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>;
+}
+
+<span class="doccomment">/// Insert preserved CSS rules as a `&lt;style /&gt;` tag to a specified node.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">InsertPreservedCss</span> {
+    <span class="kw">fn</span> <span class="ident">insert_preserved_css</span>(<span class="self">self</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>;
 }
 </pre>
 </section>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.6.0/src/select.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/Github/kuchiki/src/select.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>select.rs.html -- source</title>
@@ -346,18 +346,67 @@
 <span id="300">300</span>
 <span id="301">301</span>
 <span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">cssparser</span>::{<span class="self">self</span>, <span class="ident">ToCss</span>};
+<span class="kw">use</span> <span class="ident">cssparser</span>::{<span class="self">self</span>, <span class="ident">ToCss</span>, <span class="ident">CowRcStr</span>, <span class="ident">SourceLocation</span>, <span class="ident">ParseError</span>};
 <span class="kw">use</span> <span class="ident">iter</span>::{<span class="ident">NodeIterator</span>, <span class="ident">Select</span>};
 <span class="kw">use</span> <span class="ident">node_data_ref</span>::<span class="ident">NodeDataRef</span>;
 <span class="kw">use</span> <span class="ident">selectors</span>::{<span class="self">self</span>, <span class="ident">matching</span>};
-<span class="kw">use</span> <span class="ident">selectors</span>::<span class="ident">attr</span>::{<span class="ident">AttrSelectorOperation</span>, <span class="ident">NamespaceConstraint</span>};
+<span class="kw">use</span> <span class="ident">selectors</span>::<span class="ident">attr</span>::{<span class="ident">AttrSelectorOperation</span>, <span class="ident">NamespaceConstraint</span>, <span class="ident">CaseSensitivity</span>};
+<span class="kw">use</span> <span class="ident">selectors</span>::<span class="ident">context</span>::{<span class="ident">VisitedHandlingMode</span>, <span class="ident">QuirksMode</span>};
 <span class="kw">use</span> <span class="ident">selectors</span>::<span class="ident">parser</span>::{<span class="ident">SelectorImpl</span>, <span class="ident">Parser</span>, <span class="ident">SelectorList</span>, <span class="ident">Selector</span> <span class="kw">as</span> <span class="ident">GenericSelector</span>};
+<span class="kw">use</span> <span class="ident">selectors</span>::<span class="ident">parser</span>::<span class="ident">SelectorParseErrorKind</span>;
+<span class="kw">use</span> <span class="ident">selectors</span>::<span class="ident">OpaqueElement</span>;
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ascii</span>::<span class="ident">AsciiExt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">html5ever</span>::{<span class="ident">LocalName</span>, <span class="ident">Namespace</span>};
-<span class="kw">use</span> <span class="ident">tree</span>::{<span class="ident">NodeRef</span>, <span class="ident">NodeData</span>, <span class="ident">ElementData</span>};
+<span class="kw">use</span> <span class="ident">attributes</span>::<span class="ident">ExpandedName</span>;
+<span class="kw">use</span> <span class="ident">tree</span>::{<span class="ident">Node</span>, <span class="ident">NodeRef</span>, <span class="ident">NodeData</span>, <span class="ident">ElementData</span>};
 
 <span class="doccomment">/// The definition of whitespace per CSS Selectors Level 3 § 4.</span>
 <span class="doccomment">///</span>
@@ -379,14 +428,23 @@
 
     <span class="kw">type</span> <span class="ident">NonTSPseudoClass</span> <span class="op">=</span> <span class="ident">PseudoClass</span>;
     <span class="kw">type</span> <span class="ident">PseudoElement</span> <span class="op">=</span> <span class="ident">PseudoElement</span>;
+
+    <span class="kw">type</span> <span class="ident">ExtraMatchingData</span> <span class="op">=</span> ();
+
+    <span class="kw">fn</span> <span class="ident">is_active_or_hover</span>(<span class="ident">pseudo_class</span>: <span class="kw-2">&amp;</span><span class="ident">PseudoClass</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="macro">matches</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">pseudo_class</span>, <span class="ident">PseudoClass</span>::<span class="ident">Active</span> <span class="op">|</span>
+                                <span class="ident">PseudoClass</span>::<span class="ident">Hover</span>)
+    }
 }
 
 <span class="kw">struct</span> <span class="ident">KuchikiParser</span>;
 
-<span class="kw">impl</span> <span class="ident">Parser</span> <span class="kw">for</span> <span class="ident">KuchikiParser</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> <span class="ident">Parser</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">KuchikiParser</span> {
     <span class="kw">type</span> <span class="ident">Impl</span> <span class="op">=</span> <span class="ident">KuchikiSelectors</span>;
+    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">SelectorParseErrorKind</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">parse_non_ts_pseudo_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PseudoClass</span>, ()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse_non_ts_pseudo_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">location</span>: <span class="ident">SourceLocation</span>, <span class="ident">name</span>: <span class="ident">CowRcStr</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span>)
+                                 <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PseudoClass</span>, <span class="ident">ParseError</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span>, <span class="ident">SelectorParseErrorKind</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="self">self</span>::<span class="ident">PseudoClass</span>::<span class="kw-2">*</span>;
              <span class="kw">if</span> <span class="ident">name</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="string">&quot;any-link&quot;</span>) { <span class="prelude-val">Ok</span>(<span class="ident">AnyLink</span>) }
         <span class="kw">else</span> <span class="kw">if</span> <span class="ident">name</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="string">&quot;link&quot;</span>) { <span class="prelude-val">Ok</span>(<span class="ident">Link</span>) }
@@ -398,7 +456,11 @@
         <span class="kw">else</span> <span class="kw">if</span> <span class="ident">name</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="string">&quot;disabled&quot;</span>) { <span class="prelude-val">Ok</span>(<span class="ident">Disabled</span>) }
         <span class="kw">else</span> <span class="kw">if</span> <span class="ident">name</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="string">&quot;checked&quot;</span>) { <span class="prelude-val">Ok</span>(<span class="ident">Checked</span>) }
         <span class="kw">else</span> <span class="kw">if</span> <span class="ident">name</span>.<span class="ident">eq_ignore_ascii_case</span>(<span class="string">&quot;indeterminate&quot;</span>) { <span class="prelude-val">Ok</span>(<span class="ident">Indeterminate</span>) }
-        <span class="kw">else</span> { <span class="prelude-val">Err</span>(()) }
+        <span class="kw">else</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">location</span>.<span class="ident">new_custom_error</span>(
+                <span class="ident">SelectorParseErrorKind</span>::<span class="ident">UnsupportedPseudoClassOrElement</span>(<span class="ident">name</span>)
+            ))
+        }
     }
 }
 
@@ -433,15 +495,6 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">selectors</span>::<span class="ident">parser</span>::<span class="ident">SelectorMethods</span> <span class="kw">for</span> <span class="ident">PseudoClass</span> {
-    <span class="kw">type</span> <span class="ident">Impl</span> <span class="op">=</span> <span class="ident">KuchikiSelectors</span>;
-
-    <span class="kw">fn</span> <span class="ident">visit</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
-        <span class="kw">where</span> <span class="ident">V</span>: <span class="ident">selectors</span>::<span class="ident">visitor</span>::<span class="ident">SelectorVisitor</span><span class="op">&lt;</span><span class="ident">Impl</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Impl</span><span class="op">&gt;</span> {
-        <span class="bool-val">true</span>
-    }
-}
-
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Hash</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PseudoElement</span> {}
 
@@ -458,6 +511,12 @@
 
 <span class="kw">impl</span> <span class="ident">selectors</span>::<span class="ident">Element</span> <span class="kw">for</span> <span class="ident">NodeDataRef</span><span class="op">&lt;</span><span class="ident">ElementData</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Impl</span> <span class="op">=</span> <span class="ident">KuchikiSelectors</span>;
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">opaque</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">OpaqueElement</span> {
+        <span class="kw">let</span> <span class="ident">node</span>: <span class="kw-2">&amp;</span><span class="ident">Node</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_node</span>();
+        <span class="ident">OpaqueElement</span>::<span class="ident">new</span>(<span class="ident">node</span>)
+    }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">parent_element</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
@@ -500,18 +559,33 @@
         <span class="comment">// FIXME: Have a notion of HTML document v.s. XML document?</span>
         <span class="self">self</span>.<span class="ident">name</span>.<span class="ident">ns</span> <span class="op">==</span> <span class="macro">ns</span><span class="macro">!</span>(<span class="ident">html</span>)
     }
+
     <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">get_local_name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">LocalName</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">name</span>.<span class="ident">local</span> }
     <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">get_namespace</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Namespace</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">name</span>.<span class="ident">ns</span> }
+
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">get_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LocalName</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">borrow</span>().<span class="ident">get</span>(<span class="macro">local_name</span><span class="macro">!</span>(<span class="string">&quot;id&quot;</span>)).<span class="ident">map</span>(<span class="ident">LocalName</span>::<span class="ident">from</span>)
+    <span class="kw">fn</span> <span class="ident">is_link</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">name</span>.<span class="ident">ns</span> <span class="op">==</span> <span class="macro">ns</span><span class="macro">!</span>(<span class="ident">html</span>) <span class="op">&amp;&amp;</span>
+        <span class="macro">matches</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">name</span>.<span class="ident">local</span>, <span class="macro">local_name</span><span class="macro">!</span>(<span class="string">&quot;a&quot;</span>) <span class="op">|</span> <span class="macro">local_name</span><span class="macro">!</span>(<span class="string">&quot;area&quot;</span>) <span class="op">|</span> <span class="macro">local_name</span><span class="macro">!</span>(<span class="string">&quot;link&quot;</span>)) <span class="op">&amp;&amp;</span>
+        <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">borrow</span>().<span class="ident">map</span>.<span class="ident">contains_key</span>(
+            <span class="kw-2">&amp;</span><span class="ident">ExpandedName</span>::<span class="ident">new</span>(<span class="macro">ns</span><span class="macro">!</span>(), <span class="macro">local_name</span><span class="macro">!</span>(<span class="string">&quot;href&quot;</span>))
+        )
     }
+
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">has_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">LocalName</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">has_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="ident">LocalName</span>, <span class="ident">case_sensitivity</span>: <span class="ident">CaseSensitivity</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">borrow</span>().<span class="ident">get</span>(<span class="macro">local_name</span><span class="macro">!</span>(<span class="string">&quot;id&quot;</span>)).<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">id_attr</span><span class="op">|</span> {
+            <span class="ident">case_sensitivity</span>.<span class="ident">eq</span>(<span class="ident">id</span>.<span class="ident">as_bytes</span>(), <span class="ident">id_attr</span>.<span class="ident">as_bytes</span>())
+        })
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">has_class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">LocalName</span>, <span class="ident">case_sensitivity</span>: <span class="ident">CaseSensitivity</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">as_bytes</span>();
         <span class="op">!</span><span class="ident">name</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span>
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">class_attr</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">borrow</span>().<span class="ident">get</span>(<span class="macro">local_name</span><span class="macro">!</span>(<span class="string">&quot;class&quot;</span>)) {
             <span class="ident">class_attr</span>.<span class="ident">split</span>(<span class="ident">SELECTOR_WHITESPACE</span>)
-            .<span class="ident">any</span>(<span class="op">|</span><span class="ident">class</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">name</span> <span class="op">==</span> <span class="ident">class</span> )
+            .<span class="ident">any</span>(<span class="op">|</span><span class="ident">class</span><span class="op">|</span> <span class="ident">case_sensitivity</span>.<span class="ident">eq</span>(<span class="ident">class</span>.<span class="ident">as_bytes</span>(), <span class="ident">name</span>))
         } <span class="kw">else</span> {
             <span class="bool-val">false</span>
         }
@@ -523,23 +597,32 @@
                     <span class="ident">local_name</span>: <span class="kw-2">&amp;</span><span class="ident">LocalName</span>,
                     <span class="ident">operation</span>: <span class="kw-2">&amp;</span><span class="ident">AttrSelectorOperation</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">String</span><span class="op">&gt;</span>)
                     <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">borrow</span>().<span class="ident">map</span>.<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span>(<span class="ident">key</span>, <span class="ident">value</span>)<span class="op">|</span> {
-            <span class="op">!</span><span class="macro">matches</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">ns</span>, <span class="ident">NamespaceConstraint</span>::<span class="ident">Specific</span>(<span class="ident">url</span>) <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">url</span> <span class="op">!=</span> <span class="ident">key</span>.<span class="ident">ns</span>) <span class="op">&amp;&amp;</span>
-            <span class="ident">key</span>.<span class="ident">local</span> <span class="op">==</span> <span class="kw-2">*</span><span class="ident">local_name</span> <span class="op">&amp;&amp;</span>
-            <span class="ident">operation</span>.<span class="ident">eval_str</span>(<span class="ident">value</span>)
-        })
+        <span class="kw">let</span> <span class="ident">attrs</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">attributes</span>.<span class="ident">borrow</span>();
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">ns</span> {
+            <span class="ident">NamespaceConstraint</span>::<span class="ident">Any</span> <span class="op">=&gt;</span> {
+                <span class="ident">attrs</span>.<span class="ident">map</span>.<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span>(<span class="ident">name</span>, <span class="ident">attr</span>)<span class="op">|</span> {
+                    <span class="ident">name</span>.<span class="ident">local</span> <span class="op">==</span> <span class="kw-2">*</span><span class="ident">local_name</span> <span class="op">&amp;&amp;</span>
+                    <span class="ident">operation</span>.<span class="ident">eval_str</span>(<span class="kw-2">&amp;</span><span class="ident">attr</span>.<span class="ident">value</span>)
+                })
+            }
+            <span class="ident">NamespaceConstraint</span>::<span class="ident">Specific</span>(<span class="kw-2">ref</span> <span class="ident">ns_url</span>) <span class="op">=&gt;</span> {
+                <span class="ident">attrs</span>.<span class="ident">map</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">ExpandedName</span>::<span class="ident">new</span>(<span class="ident">ns_url</span>.<span class="ident">clone</span>(), <span class="ident">local_name</span>.<span class="ident">clone</span>()))
+                    .<span class="ident">map_or</span>(<span class="bool-val">false</span>, <span class="op">|</span><span class="ident">attr</span><span class="op">|</span> <span class="ident">operation</span>.<span class="ident">eval_str</span>(<span class="kw-2">&amp;</span><span class="ident">attr</span>.<span class="ident">value</span>))
+            }
+        }
     }
 
     <span class="kw">fn</span> <span class="ident">match_pseudo_element</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
                             <span class="ident">pseudo</span>: <span class="kw-2">&amp;</span><span class="ident">PseudoElement</span>,
-                            <span class="ident">_context</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">matching</span>::<span class="ident">MatchingContext</span>)
+                            <span class="ident">_context</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">matching</span>::<span class="ident">MatchingContext</span><span class="op">&lt;</span><span class="ident">KuchikiSelectors</span><span class="op">&gt;</span>)
                             <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">pseudo</span> {}
     }
 
     <span class="kw">fn</span> <span class="ident">match_non_ts_pseudo_class</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
                                     <span class="ident">pseudo</span>: <span class="kw-2">&amp;</span><span class="ident">PseudoClass</span>,
-                                    <span class="ident">_context</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">matching</span>::<span class="ident">MatchingContext</span>,
+                                    <span class="ident">_context</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">matching</span>::<span class="ident">MatchingContext</span><span class="op">&lt;</span><span class="ident">KuchikiSelectors</span><span class="op">&gt;</span>,
+                                    <span class="ident">_visited_handling</span>: <span class="ident">VisitedHandlingMode</span>,
                                     <span class="ident">_flags_setter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
         <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">matching</span>::<span class="ident">ElementSelectorFlags</span>)
     {
@@ -574,9 +657,11 @@
     <span class="doccomment">/// Compile a list of selectors. This may fail on syntax errors or unsupported selectors.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compile</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Selectors</span>, ()<span class="op">&gt;</span> {
-        <span class="ident">SelectorList</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="ident">KuchikiParser</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cssparser</span>::<span class="ident">Parser</span>::<span class="ident">new</span>(<span class="ident">s</span>)).<span class="ident">map</span>(<span class="op">|</span><span class="ident">list</span><span class="op">|</span> {
-            <span class="ident">Selectors</span>(<span class="ident">list</span>.<span class="number">0</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">Selector</span>).<span class="ident">collect</span>())
-        })
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">cssparser</span>::<span class="ident">ParserInput</span>::<span class="ident">new</span>(<span class="ident">s</span>);
+        <span class="kw">match</span> <span class="ident">SelectorList</span>::<span class="ident">parse</span>(<span class="kw-2">&amp;</span><span class="ident">KuchikiParser</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cssparser</span>::<span class="ident">Parser</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">input</span>)) {
+            <span class="prelude-val">Ok</span>(<span class="ident">list</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Selectors</span>(<span class="ident">list</span>.<span class="number">0</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">Selector</span>).<span class="ident">collect</span>())),
+            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(()),
+        }
     }
 
     <span class="doccomment">/// Returns whether the given element matches this list of selectors.</span>
@@ -600,8 +685,13 @@
     <span class="doccomment">/// Returns whether the given element matches this selector.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matches</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">element</span>: <span class="kw-2">&amp;</span><span class="ident">NodeDataRef</span><span class="op">&lt;</span><span class="ident">ElementData</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">matching</span>::<span class="ident">MatchingContext</span>::<span class="ident">new</span>(<span class="ident">matching</span>::<span class="ident">MatchingMode</span>::<span class="ident">Normal</span>, <span class="prelude-val">None</span>);
-        <span class="ident">matching</span>::<span class="ident">matches_selector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>.<span class="ident">inner</span>, <span class="ident">element</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">context</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="op">|</span>_, _<span class="op">|</span> {})
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">matching</span>::<span class="ident">MatchingContext</span>::<span class="ident">new</span>(
+            <span class="ident">matching</span>::<span class="ident">MatchingMode</span>::<span class="ident">Normal</span>,
+            <span class="prelude-val">None</span>,
+            <span class="prelude-val">None</span>,
+            <span class="ident">QuirksMode</span>::<span class="ident">NoQuirks</span>,
+        );
+        <span class="ident">matching</span>::<span class="ident">matches_selector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="ident">element</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">context</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="op">|</span>_, _<span class="op">|</span> {})
     }
 
     <span class="doccomment">/// Return the specificity of this selector.</span>

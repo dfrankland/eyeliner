@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/git/checkouts/serde-d1613ca201b9dd54/fc61173/serde/src/de/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.27/src/de/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -2086,6 +2086,8 @@
 <span id="2040">2040</span>
 <span id="2041">2041</span>
 <span id="2042">2042</span>
+<span id="2043">2043</span>
+<span id="2044">2044</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -2607,19 +2609,19 @@
     <span class="doccomment">/// when the next deserialization occurs.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// If you manually implement this, your recursive deserializations should</span>
-    <span class="doccomment">/// use `deserialize_from`.</span>
+    <span class="doccomment">/// use `deserialize_in_place`.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// TODO: example</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// // Something with a loop that returns on error.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">deserialize_from</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>
+    <span class="doccomment">/// This method is stable and an official public API, but hidden from the</span>
+    <span class="doccomment">/// documentation because it is almost never what newbies are looking for.</span>
+    <span class="doccomment">/// Showing it in rustdoc would cause it to be featured more prominently</span>
+    <span class="doccomment">/// than it deserves.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">deserialize_in_place</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>, <span class="ident">place</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
         <span class="comment">// Default implementation just delegates to `deserialize` impl.</span>
-        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">Deserialize</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>)<span class="question-mark">?</span>;
+        <span class="kw-2">*</span><span class="ident">place</span> <span class="op">=</span> <span class="ident">Deserialize</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 }
@@ -3196,7 +3198,9 @@
     <span class="doccomment">/// change, as a value serialized in human-readable mode is not required to</span>
     <span class="doccomment">/// deserialize from the same data in compact mode.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_human_readable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { <span class="bool-val">true</span> }
+    <span class="kw">fn</span> <span class="ident">is_human_readable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="bool-val">true</span>
+    }
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////</span>

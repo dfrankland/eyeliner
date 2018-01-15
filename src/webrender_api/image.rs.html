@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/git/checkouts/webrender-c3596abe1cf4f320/3db4c46/webrender_api/src/image.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/git/checkouts/webrender-c3596abe1cf4f320/9e6cbad/webrender_api/src/image.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>image.rs.html -- source</title>
@@ -246,8 +246,6 @@
 <span id="200">200</span>
 <span id="201">201</span>
 <span id="202">202</span>
-<span id="203">203</span>
-<span id="204">204</span>
 </pre><pre class="rust ">
 <span class="comment">/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -302,8 +300,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Serialize</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ImageFormat</span> {
     <span class="ident">Invalid</span> <span class="op">=</span> <span class="number">0</span>,
-    <span class="ident">A8</span> <span class="op">=</span> <span class="number">1</span>,
-    <span class="ident">RGB8</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="ident">R8</span> <span class="op">=</span> <span class="number">1</span>,
     <span class="ident">BGRA8</span> <span class="op">=</span> <span class="number">3</span>,
     <span class="ident">RGBAF32</span> <span class="op">=</span> <span class="number">4</span>,
     <span class="ident">RG8</span> <span class="op">=</span> <span class="number">5</span>,
@@ -312,8 +309,7 @@
 <span class="kw">impl</span> <span class="ident">ImageFormat</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bytes_per_pixel</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">ImageFormat</span>::<span class="ident">A8</span> <span class="op">=&gt;</span> <span class="number">1</span>,
-            <span class="ident">ImageFormat</span>::<span class="ident">RGB8</span> <span class="op">=&gt;</span> <span class="number">3</span>,
+            <span class="ident">ImageFormat</span>::<span class="ident">R8</span> <span class="op">=&gt;</span> <span class="number">1</span>,
             <span class="ident">ImageFormat</span>::<span class="ident">BGRA8</span> <span class="op">=&gt;</span> <span class="number">4</span>,
             <span class="ident">ImageFormat</span>::<span class="ident">RGBAF32</span> <span class="op">=&gt;</span> <span class="number">16</span>,
             <span class="ident">ImageFormat</span>::<span class="ident">RG8</span> <span class="op">=&gt;</span> <span class="number">2</span>,

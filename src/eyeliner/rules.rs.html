@@ -62,19 +62,31 @@
 <span id="16">16</span>
 <span id="17">17</span>
 <span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">servo_css_parser</span>::<span class="ident">style</span>::<span class="ident">properties</span>::<span class="ident">declaration_block</span>::<span class="ident">PropertyDeclarationBlock</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EyelinerRules</span> {
+<span class="doccomment">/// Data collected from the CSS stylesheet.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Rules</span> {
+    <span class="doccomment">/// Style rules.</span>
     <span class="kw">pub</span> <span class="ident">style</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">PropertyDeclarationBlock</span>)<span class="op">&gt;</span>,
+
+    <span class="doccomment">/// `@media` rules.</span>
     <span class="kw">pub</span> <span class="ident">media</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+
+    <span class="doccomment">/// `@font-face` rules.</span>
     <span class="kw">pub</span> <span class="ident">font_face</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">EyelinerRules</span> {
+<span class="kw">impl</span> <span class="ident">Rules</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">EyelinerRules</span> {
+        <span class="self">Self</span> {
             <span class="ident">style</span>: <span class="macro">vec</span><span class="macro">!</span>[],
             <span class="ident">media</span>: <span class="macro">vec</span><span class="macro">!</span>[],
             <span class="ident">font_face</span>: <span class="macro">vec</span><span class="macro">!</span>[],

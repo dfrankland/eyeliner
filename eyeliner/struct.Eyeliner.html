@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Eyeliner` struct in crate `eyeliner`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Eyeliner">
+
+    <title>eyeliner::Eyeliner - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Struct Eyeliner</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.document">document</a><a href="#structfield.stylesheet">stylesheet</a><a href="#structfield.options">options</a><a href="#structfield.settings">settings</a><a href="#structfield.node_style_map">node_style_map</a><a href="#structfield.rules">rules</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-Debug">Debug</a><a href="#impl-CollectRules">CollectRules</a><a href="#impl-ApplyRules">ApplyRules</a><a href="#impl-ApplyAttributes">ApplyAttributes</a><a href="#impl-ApplyWidthAttributes">ApplyWidthAttributes</a><a href="#impl-ApplyHeightAttributes">ApplyHeightAttributes</a><a href="#impl-ApplyTableElementAttributes">ApplyTableElementAttributes</a><a href="#impl-InsertPreservedCss">InsertPreservedCss</a><a href="#impl-ToString">ToString</a></div></div><p class='location'><a href='index.html'>eyeliner</a></p><script>window.sidebarCurrent = {name: 'Eyeliner', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>eyeliner</a>::<wbr><a class="struct" href=''>Eyeliner</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#75-93' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Eyeliner&lt;'a&gt; {
+    pub document: <a class="struct" href="../kuchiki/tree/struct.NodeRef.html" title="struct kuchiki::tree::NodeRef">NodeRef</a>,
+    pub stylesheet: <a class="struct" href="../style/stylesheets/stylesheet/struct.Stylesheet.html" title="struct style::stylesheets::stylesheet::Stylesheet">Stylesheet</a>,
+    pub options: <a class="struct" href="../eyeliner/struct.OptionsRequired.html" title="struct eyeliner::OptionsRequired">Options</a>&lt;'a&gt;,
+    pub settings: <a class="struct" href="../eyeliner/struct.SettingsRequired.html" title="struct eyeliner::SettingsRequired">Settings</a>&lt;'a&gt;,
+    pub node_style_map: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;<a class="struct" href="../eyeliner/struct.HashableNodeRef.html" title="struct eyeliner::HashableNodeRef">HashableNodeRef</a>, <a class="struct" href="../style/properties/declaration_block/struct.PropertyDeclarationBlock.html" title="struct style::properties::declaration_block::PropertyDeclarationBlock">PropertyDeclarationBlock</a>&gt;,
+    pub rules: <a class="struct" href="../eyeliner/struct.Rules.html" title="struct eyeliner::Rules">Rules</a>,
+}</pre><div class='docblock'><p>Data and methods related to modifying HTML with CSS.</p>
+</div><h2 id='fields' class='fields small-section-header'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.document" class="structfield small-section-header">
+                           <a href="#structfield.document" class="anchor field"></a>
+                           <span id="document.v" class='invisible'>
+                           <code>document: <a class="struct" href="../kuchiki/tree/struct.NodeRef.html" title="struct kuchiki::tree::NodeRef">NodeRef</a></code>
+                           </span></span><div class='docblock'><p>A strong reference to the root node of the HTML document.</p>
+</div><span id="structfield.stylesheet" class="structfield small-section-header">
+                           <a href="#structfield.stylesheet" class="anchor field"></a>
+                           <span id="stylesheet.v" class='invisible'>
+                           <code>stylesheet: <a class="struct" href="../style/stylesheets/stylesheet/struct.Stylesheet.html" title="struct style::stylesheets::stylesheet::Stylesheet">Stylesheet</a></code>
+                           </span></span><div class='docblock'><p>A structure representing the CSS stylesheet.</p>
+</div><span id="structfield.options" class="structfield small-section-header">
+                           <a href="#structfield.options" class="anchor field"></a>
+                           <span id="options.v" class='invisible'>
+                           <code>options: <a class="struct" href="../eyeliner/struct.OptionsRequired.html" title="struct eyeliner::OptionsRequired">Options</a>&lt;'a&gt;</code>
+                           </span></span><div class='docblock'><p>Options for ways to modify the HTML document using CSS.</p>
+</div><span id="structfield.settings" class="structfield small-section-header">
+                           <a href="#structfield.settings" class="anchor field"></a>
+                           <span id="settings.v" class='invisible'>
+                           <code>settings: <a class="struct" href="../eyeliner/struct.SettingsRequired.html" title="struct eyeliner::SettingsRequired">Settings</a>&lt;'a&gt;</code>
+                           </span></span><div class='docblock'><p>Settings referenced by features enabled through options.</p>
+</div><span id="structfield.node_style_map" class="structfield small-section-header">
+                           <a href="#structfield.node_style_map" class="anchor field"></a>
+                           <span id="node_style_map.v" class='invisible'>
+                           <code>node_style_map: <a class="struct" href="https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html" title="struct std::collections::hash::map::HashMap">HashMap</a>&lt;<a class="struct" href="../eyeliner/struct.HashableNodeRef.html" title="struct eyeliner::HashableNodeRef">HashableNodeRef</a>, <a class="struct" href="../style/properties/declaration_block/struct.PropertyDeclarationBlock.html" title="struct style::properties::declaration_block::PropertyDeclarationBlock">PropertyDeclarationBlock</a>&gt;</code>
+                           </span></span><div class='docblock'><p>A hashmap of HTML elements to CSS style.</p>
+</div><span id="structfield.rules" class="structfield small-section-header">
+                           <a href="#structfield.rules" class="anchor field"></a>
+                           <span id="rules.v" class='invisible'>
+                           <code>rules: <a class="struct" href="../eyeliner/struct.Rules.html" title="struct eyeliner::Rules">Rules</a></code>
+                           </span></span><div class='docblock'><p>Data collected from the CSS stylesheet.</p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#95-139' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;html: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;css: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../eyeliner/struct.Options.html" title="struct eyeliner::Options">Options</a>&lt;'a&gt;&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;settings: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../eyeliner/struct.Settings.html" title="struct eyeliner::Settings">Settings</a>&lt;'a&gt;&gt;<br>) -&gt; Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#103-138' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Create a new instance to inline HTML with CSS, using concreate options and settings.</p>
+
+<ol>
+<li><p>Opitionally extracts the CSS in <code>&lt;style /&gt;</code> tags from the HTML document. Then,
+optionally removes the <code>&lt;style /&gt;</code> tag from the HTML document.</p></li>
+<li><p>Any CSS extraced gets appended to the <code>css</code> argument.</p></li>
+</ol>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+        <h3 id='impl-Clone' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-Clone' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#74' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#74' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self)</code></span><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/clone.rs.html#112-114' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 id='impl-Debug' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-Debug' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#74' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#74' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
+</div></div><h3 id='impl-CollectRules' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="../eyeliner/traits/trait.CollectRules.html" title="trait eyeliner::traits::CollectRules">CollectRules</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-CollectRules' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#141-192' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.collect_rules' class="method"><span id='collect_rules.v' class='invisible'><code>fn <a href='../eyeliner/traits/trait.CollectRules.html#tymethod.collect_rules' class='fnname'>collect_rules</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#145-191' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Collects CSS rules from the CSS stylesheet for other methods to use.
+Optionally removes any excluded CSS properties.
+Optionally preserves <code>@media</code> and <code>@font-face</code> rules.</p>
+</div></div><h3 id='impl-ApplyRules' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="../eyeliner/traits/trait.ApplyRules.html" title="trait eyeliner::traits::ApplyRules">ApplyRules</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-ApplyRules' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#194-253' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.apply_rules' class="method"><span id='apply_rules.v' class='invisible'><code>fn <a href='../eyeliner/traits/trait.ApplyRules.html#tymethod.apply_rules' class='fnname'>apply_rules</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#203-252' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Inlines the CSS rules extracted from the CSS stylesheet into the HTML document.</p>
+
+<ol>
+<li><p>For each CSS rule selector (excluding pseudo-selectors), find the matching nodes in the
+HTML document. Skips any non-visual elements.</p></li>
+<li><p>Each elements style is hashmapped. If any element has a <code>style</code> attribute is is
+extended by each of the CSS rules that apply to it. Optionally preserves <code>!important</code>.</p></li>
+</ol>
+</div></div><h3 id='impl-ApplyAttributes' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="../eyeliner/traits/trait.ApplyAttributes.html" title="trait eyeliner::traits::ApplyAttributes">ApplyAttributes</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-ApplyAttributes' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#255-293' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.apply_attributes' class="method"><span id='apply_attributes.v' class='invisible'><code>fn <a href='../eyeliner/traits/trait.ApplyAttributes.html#tymethod.apply_attributes' class='fnname'>apply_attributes</a>(&amp;self, property: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#258-292' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Iterates over all elements and applies a matching attribute if it has the given CSS
+property.</p>
+</div></div><h3 id='impl-ApplyWidthAttributes' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="../eyeliner/traits/trait.ApplyWidthAttributes.html" title="trait eyeliner::traits::ApplyWidthAttributes">ApplyWidthAttributes</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-ApplyWidthAttributes' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#295-305' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.apply_width_attributes' class="method"><span id='apply_width_attributes.v' class='invisible'><code>fn <a href='../eyeliner/traits/trait.ApplyWidthAttributes.html#tymethod.apply_width_attributes' class='fnname'>apply_width_attributes</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#298-304' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Optionally iterates over all elements and applies a <code>width</code> attribute if it has a <code>width</code>
+CSS property applied to it.</p>
+</div></div><h3 id='impl-ApplyHeightAttributes' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="../eyeliner/traits/trait.ApplyHeightAttributes.html" title="trait eyeliner::traits::ApplyHeightAttributes">ApplyHeightAttributes</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-ApplyHeightAttributes' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#307-317' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.apply_height_attributes' class="method"><span id='apply_height_attributes.v' class='invisible'><code>fn <a href='../eyeliner/traits/trait.ApplyHeightAttributes.html#tymethod.apply_height_attributes' class='fnname'>apply_height_attributes</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#310-316' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Optionally iterates over all elements and applies a <code>height</code> attribute if it has a <code>height</code>
+CSS property applied to it.</p>
+</div></div><h3 id='impl-ApplyTableElementAttributes' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="../eyeliner/traits/trait.ApplyTableElementAttributes.html" title="trait eyeliner::traits::ApplyTableElementAttributes">ApplyTableElementAttributes</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-ApplyTableElementAttributes' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#319-362' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.apply_table_element_attributes' class="method"><span id='apply_table_element_attributes.v' class='invisible'><code>fn <a href='../eyeliner/traits/trait.ApplyTableElementAttributes.html#tymethod.apply_table_element_attributes' class='fnname'>apply_table_element_attributes</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#327-361' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Applies attributes to table elements.</p>
+
+<ol>
+<li><p>Iterates over all elements and matches those that are specified table elements.</p></li>
+<li><p>If elements have style properties that are mapped to attributes, then their mapped
+attributes are applied.</p></li>
+</ol>
+</div></div><h3 id='impl-InsertPreservedCss' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="../eyeliner/traits/trait.InsertPreservedCss.html" title="trait eyeliner::traits::InsertPreservedCss">InsertPreservedCss</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-InsertPreservedCss' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#364-393' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.insert_preserved_css' class="method"><span id='insert_preserved_css.v' class='invisible'><code>fn <a href='../eyeliner/traits/trait.InsertPreservedCss.html#tymethod.insert_preserved_css' class='fnname'>insert_preserved_css</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#367-392' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Tries to insert any <code>@media</code> or <code>@font-face</code> rules collected into the locations specified</p>
+</div></div><h3 id='impl-ToString' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html" title="trait alloc::string::ToString">ToString</a> for <a class="struct" href="../eyeliner/struct.Eyeliner.html" title="struct eyeliner::Eyeliner">Eyeliner</a>&lt;'a&gt;</code><a href='#impl-ToString' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#395-399' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.to_string' class="method"><span id='to_string.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html#tymethod.to_string' class='fnname'>to_string</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/eyeliner/eyeliner.rs.html#396-398' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Converts the given value to a <code>String</code>. <a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html#tymethod.to_string">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "eyeliner";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

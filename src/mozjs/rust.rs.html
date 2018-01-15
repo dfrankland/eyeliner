@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/mozjs-0.1.9/src/rust.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/mozjs-0.1.10/src/rust.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>rust.rs.html -- source</title>
@@ -2146,7 +2146,7 @@
 <span class="doccomment">/// The underlying data can be accessed through this guard via its Deref and</span>
 <span class="doccomment">/// DerefMut implementations.</span>
 <span class="doccomment">/// This structure is created by `root` method on `CustomAutoRooter` or</span>
-<span class="doccomment">/// by an appropriate macro (e.g. `rooted_vec!` for `SequenceRooter` alias).</span>
+<span class="doccomment">/// by the `auto_root!` macro.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CustomAutoRooterGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">CustomTrace</span><span class="op">&gt;</span> {
     <span class="ident">rooter</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">CustomAutoRooter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 }

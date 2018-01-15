@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/dylan/.cargo/registry/src/github.com-1ecc6299db9ec823/kuchiki-0.6.0/src/tree.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/dylan/Github/kuchiki/src/tree.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>tree.rs.html -- source</title>
@@ -511,9 +511,9 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Deref</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::{<span class="ident">Rc</span>, <span class="ident">Weak</span>};
 <span class="kw">use</span> <span class="ident">html5ever</span>::<span class="ident">tree_builder</span>::<span class="ident">QuirksMode</span>;
-<span class="kw">use</span> <span class="ident">html5ever</span>::{<span class="ident">QualName</span>, <span class="ident">ExpandedName</span>};
+<span class="kw">use</span> <span class="ident">html5ever</span>::<span class="ident">QualName</span>;
 
-<span class="kw">use</span> <span class="ident">attributes</span>::<span class="ident">Attributes</span>;
+<span class="kw">use</span> <span class="ident">attributes</span>::{<span class="ident">Attributes</span>, <span class="ident">ExpandedName</span>, <span class="ident">Attribute</span>};
 <span class="kw">use</span> <span class="ident">iter</span>::<span class="ident">NodeIterator</span>;
 
 
@@ -717,7 +717,7 @@
     <span class="doccomment">/// Create a new element node.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_element</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="ident">QualName</span>, <span class="ident">attributes</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">NodeRef</span>
-                          <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(<span class="ident">QualName</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
+                          <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span>(<span class="ident">ExpandedName</span>, <span class="ident">Attribute</span>)<span class="op">&gt;</span> {
         <span class="ident">NodeRef</span>::<span class="ident">new</span>(<span class="ident">NodeData</span>::<span class="ident">Element</span>(<span class="ident">ElementData</span> {
             <span class="ident">template_contents</span>: <span class="kw">if</span> <span class="ident">name</span>.<span class="ident">expanded</span>() <span class="op">==</span> <span class="macro">expanded_name</span><span class="macro">!</span>(<span class="ident">html</span> <span class="string">&quot;template&quot;</span>) {
                 <span class="prelude-val">Some</span>(<span class="ident">NodeRef</span>::<span class="ident">new</span>(<span class="ident">NodeData</span>::<span class="ident">DocumentFragment</span>))
