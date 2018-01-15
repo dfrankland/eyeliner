@@ -117,8 +117,8 @@ impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclaratio
     }
 }
 
-impl<'a> GetStylesheetAsRules for Eyeliner<'a> {
-    fn get_stylesheet_as_rules(self: &mut Self) -> &mut Self {
+impl<'a> CollectRules for Eyeliner<'a> {
+    fn collect_rules(self: &mut Self) -> &mut Self {
         {
             let read_guard = &self.stylesheet.shared_lock.read();
             for css_rule in &self.stylesheet.contents.rules.as_ref().read_with(read_guard).0 {
@@ -167,8 +167,8 @@ impl<'a> GetStylesheetAsRules for Eyeliner<'a> {
     }
 }
 
-impl<'a> InlineStylesheetAndDocument for Eyeliner<'a> {
-    fn inline_stylesheet_and_document(self: &mut Self) -> &mut Self {
+impl<'a> ApplyRules for Eyeliner<'a> {
+    fn apply_rules(self: &mut Self) -> &mut Self {
         for (selector, block) in self.rules.style.clone() {
 
             // TODO: using `::` seems to break things.

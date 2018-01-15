@@ -1,9 +1,9 @@
-pub trait GetStylesheetAsRules {
-    fn get_stylesheet_as_rules(self: &mut Self) -> &mut Self;
+pub trait CollectRules {
+    fn collect_rules(self: &mut Self) -> &mut Self;
 }
 
-pub trait InlineStylesheetAndDocument {
-    fn inline_stylesheet_and_document(self: &mut Self) -> &mut Self;
+pub trait ApplyRules {
+    fn apply_rules(self: &mut Self) -> &mut Self;
 }
 
 pub trait ApplyWidthAttributes {
