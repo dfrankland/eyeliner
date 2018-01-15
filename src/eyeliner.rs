@@ -280,7 +280,7 @@ impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
 
 impl<'a> ApplyTableElementAttributes for Eyeliner<'a> {
     fn apply_table_element_attributes(self: &Self) -> &Self {
-        if !self.options.apply_attributes_table_elements {
+        if !self.options.apply_table_element_attributes {
             return self;
         }
 

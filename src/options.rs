@@ -1,6 +1,6 @@
 pub mod default {
     pub struct Options<'a> {
-        pub apply_attributes_table_elements: Option<bool>,
+        pub apply_table_element_attributes: Option<bool>,
         pub apply_height_attributes: Option<bool>,
         pub apply_style_tags: Option<bool>,
         pub apply_width_attributes: Option<bool>,
@@ -15,7 +15,7 @@ pub mod default {
     impl<'a> Default for Options<'a> {
         fn default() -> Self {
             Self {
-                apply_attributes_table_elements: None,
+                apply_table_element_attributes: None,
                 apply_height_attributes: None,
                 apply_style_tags: None,
                 apply_width_attributes: None,
@@ -30,7 +30,7 @@ pub mod default {
 }
 
 pub struct Options<'a> {
-    pub apply_attributes_table_elements: bool,
+    pub apply_table_element_attributes: bool,
     pub apply_height_attributes: bool,
     pub apply_style_tags: bool,
     pub apply_width_attributes: bool,
@@ -45,7 +45,7 @@ pub struct Options<'a> {
 impl<'a> Options<'a> {
     pub fn new(opt: default::Options<'a>) -> Self {
         Self {
-            apply_attributes_table_elements: opt.apply_attributes_table_elements.unwrap_or(true),
+            apply_table_element_attributes: opt.apply_table_element_attributes.unwrap_or(true),
             apply_height_attributes: opt.apply_height_attributes.unwrap_or(true),
             apply_style_tags: opt.apply_style_tags.unwrap_or(true),
             apply_width_attributes: opt.apply_width_attributes.unwrap_or(true),
