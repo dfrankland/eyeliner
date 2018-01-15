@@ -347,8 +347,6 @@ impl<'a> InsertPreservedCss for Eyeliner<'a> {
 
 impl<'a> ToString for Eyeliner<'a> {
     fn to_string(self: &Self) -> String {
-        let mut writer = vec![];
-        self.document.serialize(&mut writer).unwrap();
-        String::from_utf8_lossy(&writer).into_owned()
+        self.document.to_string()
     }
 }
