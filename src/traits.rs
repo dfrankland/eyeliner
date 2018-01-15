@@ -25,7 +25,3 @@ pub trait ApplyTableElementAttributes {
 pub trait InsertPreservedCss {
     fn insert_preserved_css(self: &Self) -> &Self;
 }
-
-pub trait ToString {
-    fn to_string(self: &Self) -> String;
-}

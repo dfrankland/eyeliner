@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::collections::hash_map::Entry::{Occupied, Vacant};
+use std::string::ToString;
 
 use kuchiki::traits::*;
 use kuchiki::{parse_html, NodeRef};
