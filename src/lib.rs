@@ -1,16 +1,24 @@
+//! A CSS inliner for making emails.
+
 extern crate kuchiki;
 extern crate servo_css_parser;
 #[macro_use] extern crate html5ever;
 #[macro_use] extern crate maplit;
 
 mod rules;
+pub use rules::*;
+
 mod hash;
+pub use hash::*;
+
 mod property_declaration_value;
 
 mod options;
+pub use options::Options as OptionsRequired;
 pub use options::default::*;
 
 mod settings;
+pub use settings::Settings as SettingsRequired;
 pub use settings::default::*;
 
 mod eyeliner;
@@ -26,7 +34,7 @@ use traits::*;
 /// *   `html` - A string of HTML to have CSS inlined into. Any `<style />` tags will have their
 ///     styles parsed and processed.
 ///
-/// *   `css` - An optional string of additional CSS to be inlined that is added _after_ the
+/// *   `css` - An optional string of additional CSS to be inlined that is added _before_ the
 ///     `<style />` tags in the `html` are parsed.
 ///
 /// *   `options` - An optional instance of `Options`.

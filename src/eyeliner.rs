@@ -70,17 +70,36 @@ impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclaratio
     }
 }
 
+/// Data and methods related to modifying HTML with CSS.
 #[derive(Clone, Debug)]
 pub struct Eyeliner<'a> {
+    /// A strong reference to the root node of the HTML document.
     pub document: NodeRef,
+
+    /// A structure representing the CSS stylesheet.
     pub stylesheet: Stylesheet,
+
+    /// Options for ways to modify the HTML document using CSS.
     pub options: Options<'a>,
+
+    /// Settings referenced by features enabled through options.
     pub settings: Settings<'a>,
+
+    /// A hashmap of HTML elements to CSS style.
     pub node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock>,
+
+    /// Data collected from the CSS stylesheet.
     pub rules: Rules,
 }
 
 impl<'a> Eyeliner<'a> {
+    /// Create a new instance to inline HTML with CSS, using concreate options and settings.
+    ///
+    /// 1.  Opitionally extracts the CSS in `<style />` tags from the HTML document. Then,
+    ///     optionally removes the `<style />` tag from the HTML document.
+    ///
+    /// 2.  Any CSS extraced gets appended to the `css` argument.
+    ///
     pub fn new(
         html: &str,
         css: Option<&str>,
@@ -120,6 +139,9 @@ impl<'a> Eyeliner<'a> {
 }
 
 impl<'a> CollectRules for Eyeliner<'a> {
+    /// Collects CSS rules from the CSS stylesheet for other methods to use.
+    /// Optionally removes any excluded CSS properties.
+    /// Optionally preserves `@media` and `@font-face` rules.
     fn collect_rules(self: &mut Self) -> &mut Self {
         {
             let read_guard = &self.stylesheet.shared_lock.read();
@@ -170,6 +192,14 @@ impl<'a> CollectRules for Eyeliner<'a> {
 }
 
 impl<'a> ApplyRules for Eyeliner<'a> {
+    /// Inlines the CSS rules extracted from the CSS stylesheet into the HTML document.
+    ///
+    /// 1.  For each CSS rule selector (excluding pseudo-selectors), find the matching nodes in the
+    ///     HTML document. Skips any non-visual elements.
+    ///
+    /// 2.  Each elements style is hashmapped. If any element has a `style` attribute is is
+    ///     extended by each of the CSS rules that apply to it. Optionally preserves `!important`.
+    ///
     fn apply_rules(self: &mut Self) -> &mut Self {
         for (selector, block) in self.rules.style.clone() {
             // TODO: using `::` seems to break things.
@@ -223,6 +253,8 @@ impl<'a> ApplyRules for Eyeliner<'a> {
 }
 
 impl<'a> ApplyAttributes for Eyeliner<'a> {
+    /// Iterates over all elements and applies a matching attribute if it has the given CSS
+    /// property.
     fn apply_attributes(self: &Self, property: &str) -> &Self {
         for (hash, block) in &self.node_style_map {
             let property_declaration = block.get(
@@ -261,6 +293,8 @@ impl<'a> ApplyAttributes for Eyeliner<'a> {
 }
 
 impl<'a> ApplyWidthAttributes for Eyeliner<'a> {
+    /// Optionally iterates over all elements and applies a `width` attribute if it has a `width`
+    /// CSS property applied to it.
     fn apply_width_attributes(self: &Self) -> &Self {
         if !self.options.apply_width_attributes {
             return self;
@@ -271,6 +305,8 @@ impl<'a> ApplyWidthAttributes for Eyeliner<'a> {
 }
 
 impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
+    /// Optionally iterates over all elements and applies a `height` attribute if it has a `height`
+    /// CSS property applied to it.
     fn apply_height_attributes(self: &Self) -> &Self {
         if !self.options.apply_height_attributes {
             return self;
@@ -281,6 +317,13 @@ impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
 }
 
 impl<'a> ApplyTableElementAttributes for Eyeliner<'a> {
+    /// Applies attributes to table elements.
+    ///
+    /// 1.  Iterates over all elements and matches those that are specified table elements.
+    ///
+    /// 2.  If elements have style properties that are mapped to attributes, then their mapped
+    ///     attributes are applied.
+    ///
     fn apply_table_element_attributes(self: &Self) -> &Self {
         if !self.options.apply_table_element_attributes {
             return self;
@@ -319,6 +362,8 @@ impl<'a> ApplyTableElementAttributes for Eyeliner<'a> {
 }
 
 impl<'a> InsertPreservedCss for Eyeliner<'a> {
+    /// Tries to insert any `@media` or `@font-face` rules collected into the locations specified
+    // in the HTML document.
     fn insert_preserved_css(self: &Self) -> &Self {
         for node_to_insert_style_into in &self.options.insert_preserved_css {
             let nodes = self.document.select(node_to_insert_style_into);

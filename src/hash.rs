@@ -2,6 +2,7 @@ use std::hash::{Hash, Hasher};
 
 use kuchiki::{NodeDataRef, ElementData, NodeRef, Node};
 
+/// Wraps nodes from Kuchiki to make them hashable.
 #[derive(Clone, Debug)]
 pub struct HashableNodeRef {
     pub node: NodeRef,
