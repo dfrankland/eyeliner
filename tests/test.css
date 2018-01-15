@@ -49,3 +49,7 @@ heart { /* stylelint-disable-line selector-type-no-unknown */
   width: 100%;
   height: 500px;
 }
+
+.big-table td {
+  vertical-align: top;
+}
