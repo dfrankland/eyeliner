@@ -3,6 +3,7 @@ use std::collections::HashMap;
 pub mod default {
     use std::collections::HashMap;
 
+    #[derive(Clone, Debug)]
     pub struct Settings<'a> {
         pub width_elements: Option<Vec<&'a str>>,
         pub height_elements: Option<Vec<&'a str>>,
@@ -26,6 +27,7 @@ pub mod default {
     }
 }
 
+#[derive(Clone, Debug)]
 pub struct Settings<'a> {
     pub width_elements: Vec<&'a str>,
     pub height_elements: Vec<&'a str>,

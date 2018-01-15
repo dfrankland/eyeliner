@@ -1,4 +1,5 @@
 pub mod default {
+    #[derive(Clone, Debug)]
     pub struct Options<'a> {
         pub apply_table_element_attributes: Option<bool>,
         pub apply_height_attributes: Option<bool>,
@@ -29,6 +30,7 @@ pub mod default {
     }
 }
 
+#[derive(Clone, Debug)]
 pub struct Options<'a> {
     pub apply_table_element_attributes: bool,
     pub apply_height_attributes: bool,

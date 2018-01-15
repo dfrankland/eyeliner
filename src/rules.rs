@@ -1,6 +1,6 @@
 use servo_css_parser::style::properties::declaration_block::PropertyDeclarationBlock;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Rules {
     pub style: Vec<(String, PropertyDeclarationBlock)>,
     pub media: Vec<String>,

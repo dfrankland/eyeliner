@@ -69,6 +69,7 @@ impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclaratio
     }
 }
 
+#[derive(Clone, Debug)]
 pub struct Eyeliner<'a> {
     pub document: NodeRef,
     pub stylesheet: Stylesheet,
