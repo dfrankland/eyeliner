@@ -11,6 +11,10 @@ html {
   font-family: 'Roboto', Helvetica, sans-serif;
 }
 
+#bazz {
+  font-weight: normal;
+}
+
 .foo {
   color: black;
 }
@@ -21,16 +25,27 @@ heart { /* stylelint-disable-line selector-type-no-unknown */
   font-weight: bold;
 }
 
+heart { /* stylelint-disable-line selector-type-no-unknown */
+  display: inline-block;
+}
+
 .foo.bar {
   text-decoration: underline !important;
 }
 
 .foo.bar { /* stylelint-disable-line no-duplicate-selectors */
   text-decoration: inherit;
+  width: 50%;
+  height: 50px;
 }
 
 @media (max-width: 800px) {
   .foo {
-    color: green;
+    color: green !important;
   }
+}
+
+.big-table {
+  width: 100%;
+  height: 500px;
 }

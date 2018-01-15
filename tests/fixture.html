@@ -1,11 +1,40 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html style="font-size: 16px; font-family: &quot;Roboto&quot;, Helvetica, sans-serif;">
+
   <head>
     <title>Hello, world!</title>
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+      @font-face {
+        font-family: "Roboto";
+        src: local("Roboto"), local("Roboto-Regular"), url("https://fonts.gstatic.com/s/roboto/v18/oMMgfZMQthOryQo9n22dcuvvDin1pK8aKteLpeZ5c0A.woff2");
+      }
+
+      @media (max-width: 800px) {
+        .foo {
+          color: green !important;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <h1 style="color: purple;">Hello, world!</h1>
-    <p id="test1" class="foo bar" style="color: red; font-weight: bold; text-decoration: underline;">I love HTML</p>
-    <heart id="test2" style="transform: rotate(90deg); color: red; font-weight: bold;">&lt;3</heart>
+    <p style="color: red; font-weight: bold; text-decoration: underline; width: 50%; height: 50px;" class="foo bar" height="50" id="bazz">HTML + CSS + Eyeliner = Easy Emails</p>
+    <table width="100%" class="big-table" height="500" style="width: 100%; height: 500px;">
+      <tbody>
+        <tr>
+          <td style="vertical-align: top">
+            <span>Emails</span>
+            <heart id="test2" style="transform: rotate(-90deg); color: red; font-weight: bold; display: inline-block;">&lt;3</heart>
+            <span>Tables</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
   </body>
+
 </html>

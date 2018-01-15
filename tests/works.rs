@@ -17,6 +17,13 @@ fn test() {
         )
     );
 
+    println!("{}", inline(
+        include_str!("./test.html"),
+        Some(include_str!("./test.css")),
+        None,
+        None,
+    ));
+
     let selector = "#test1, #test2";
     let expected_select = expected_document.select(selector).unwrap();
     let result_select = result_document.select(selector).unwrap();
