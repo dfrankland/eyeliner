@@ -10,8 +10,7 @@ use servo_css_parser::parse;
 use servo_css_parser::types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet};
 use servo_css_parser::style::stylesheets::{CssRule, StyleRule};
 use servo_css_parser::style::properties::declaration_block::{parse_style_attribute, PropertyDeclarationBlock, DeclarationSource, Importance};
-use servo_css_parser::style::properties::{PropertyDeclaration, PropertyDeclarationId, PropertyId};
-use servo_css_parser::style::values::specified::length::LengthOrPercentageOrAuto;
+use servo_css_parser::style::properties::{PropertyDeclarationId, PropertyId};
 use servo_css_parser::style::error_reporting::RustLogReporter;
 
 use traits::*;
@@ -236,7 +235,9 @@ impl<'a> ApplyWidthAttributes for Eyeliner<'a> {
 
         for (hash, block) in &self.node_style_map {
             let width = block.get(
-                PropertyDeclaration::Width(LengthOrPercentageOrAuto::zero()).id()
+                PropertyDeclarationId::Longhand(
+                    PropertyId::parse("width").unwrap().longhand_id().unwrap()
+                )
             );
 
             if width.is_none() {
@@ -273,7 +274,9 @@ impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
 
         for (hash, block) in &self.node_style_map {
             let height = block.get(
-                PropertyDeclaration::Height(LengthOrPercentageOrAuto::zero()).id()
+                PropertyDeclarationId::Longhand(
+                    PropertyId::parse("height").unwrap().longhand_id().unwrap()
+                )
             );
 
             if height.is_none() {
