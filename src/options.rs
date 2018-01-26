@@ -85,7 +85,7 @@ impl<'a> Options<'a> {
             apply_height_attributes: opt.apply_height_attributes.unwrap_or(true),
             apply_style_tags: opt.apply_style_tags.unwrap_or(true),
             apply_width_attributes: opt.apply_width_attributes.unwrap_or(true),
-            insert_preserved_css: opt.insert_preserved_css.unwrap_or(vec!["head", "body", "html"]),
+            insert_preserved_css: opt.insert_preserved_css.unwrap_or_else(|| vec!["head", "body", "html"]),
             preserve_font_faces: opt.preserve_font_faces.unwrap_or(true),
             preserve_important: opt.preserve_important.unwrap_or(false),
             preserve_media_queries: opt.preserve_media_queries.unwrap_or(true),

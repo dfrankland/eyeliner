@@ -1,5 +1,6 @@
 use servo_css_parser::style::properties::declaration_block::PropertyDeclarationBlock;
 
+
 /// Data collected from the CSS stylesheet.
 #[derive(Clone, Debug)]
 pub struct Rules {
@@ -13,8 +14,8 @@ pub struct Rules {
     pub font_face: Vec<String>,
 }
 
-impl Rules {
-    pub fn new() -> Self {
+impl Default for Rules {
+    fn default() -> Self {
         Self {
             style: vec![],
             media: vec![],

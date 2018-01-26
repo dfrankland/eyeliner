@@ -53,17 +53,14 @@ impl RemoveImportanceFromPropertyDeclarationBlock for PropertyDeclarationBlock {
 }
 
 trait RemoveExcludedPropertiesFromPropertyDeclarationBlock {
-    fn remove_excluded_properties(self: &mut Self, properties: &Vec<&str>) -> &mut Self;
+    fn remove_excluded_properties(self: &mut Self, properties: &[&str]) -> &mut Self;
 }
 impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclarationBlock {
-    fn remove_excluded_properties(self: &mut Self, properties: &Vec<&str>) -> &mut Self {
+    fn remove_excluded_properties(self: &mut Self, properties: &[&str]) -> &mut Self {
         for property_id in properties.iter() {
-            match PropertyId::parse(property_id) {
-                Ok(ref id) => {
-                    self.remove_property(id);
-                },
-                _ => (),
-            };
+            if let Ok(ref id) = PropertyId::parse(property_id) {
+                self.remove_property(id);
+            }
         }
 
         self
@@ -106,17 +103,29 @@ impl<'a> Eyeliner<'a> {
         options: Option<default_options::Options<'a>>,
         settings: Option<default_settings::Settings<'a>>,
     ) -> Self {
-        let options = Options::new(options.unwrap_or(default_options::Options::default()));
-        let settings = Settings::new(settings.unwrap_or(default_settings::Settings::default()));
+        let options = Options::new(
+            match options {
+                Some(o) => o,
+                None => default_options::Options::default(),
+            }
+        );
+        let settings = Settings::new(
+            match settings {
+                Some(s) => s,
+                None => default_settings::Settings::default(),
+            }
+        );
 
         let mut css = css.unwrap_or("").to_owned();
         let document = parse_html().one(html);
 
         if options.apply_style_tags {
-            for node in document.select("style").unwrap() {
-                css += &node.text_contents();
-                if options.remove_style_tags {
-                    node.as_node().detach();
+            if let Ok(nodes) = document.select("style") {
+                for node in nodes {
+                    css += &node.text_contents();
+                    if options.remove_style_tags {
+                        node.as_node().detach();
+                    }
                 }
             }
         }
@@ -133,7 +142,7 @@ impl<'a> Eyeliner<'a> {
             options: options,
             settings: settings,
             node_style_map: HashMap::new(),
-            rules: Rules::new(),
+            rules: Rules::default(),
         }
     }
 }
@@ -208,7 +217,12 @@ impl<'a> ApplyRules for Eyeliner<'a> {
                 continue;
             }
 
-            for node in self.document.select(&selector).unwrap() {
+            let nodes = match self.document.select(&selector) {
+                Ok(n) => n,
+                _ => continue,
+            };
+
+            for node in nodes {
                 if
                     self.settings.non_visual_elements.contains(
                         &node.name.local.chars().as_str().to_lowercase().as_str()
@@ -223,7 +237,7 @@ impl<'a> ApplyRules for Eyeliner<'a> {
                     },
                     Vacant(entry) => {
                         let mut exisiting_style = parse_style_attribute(
-                            &node.attributes.borrow_mut().get("style").unwrap_or(""),
+                            node.attributes.borrow_mut().get("style").unwrap_or(""),
                             &self.stylesheet.contents.url_data.read(),
                             &RustLogReporter {},
                             QuirksMode::NoQuirks,
@@ -242,10 +256,12 @@ impl<'a> ApplyRules for Eyeliner<'a> {
             }
 
             use servo_css_parser::style_traits::values::ToCss;
-            hash.node.as_element().unwrap().attributes.borrow_mut().insert(
-                "style",
-                cloned_block.to_css_string(),
-            );
+            if let Some(element) = hash.node.as_element() {
+                element.attributes.borrow_mut().insert(
+                    "style",
+                    cloned_block.to_css_string(),
+                );
+            }
         }
 
         self
@@ -279,7 +295,7 @@ impl<'a> ApplyAttributes for Eyeliner<'a> {
             }
 
             if
-                value.ends_with("%") &&
+                value.ends_with('%') &&
                 self.settings.table_elements.contains(
                     &element.name.local.chars().as_str().to_lowercase().as_str()
                 )
@@ -316,6 +332,7 @@ impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
     }
 }
 
+#[cfg_attr(feature = "cargo-clippy", allow(clone_double_ref))]
 impl<'a> ApplyTableElementAttributes for Eyeliner<'a> {
     /// Applies attributes to table elements.
     ///
@@ -366,26 +383,28 @@ impl<'a> InsertPreservedCss for Eyeliner<'a> {
     // in the HTML document.
     fn insert_preserved_css(self: &Self) -> &Self {
         for node_to_insert_style_into in &self.options.insert_preserved_css {
-            let nodes = self.document.select(node_to_insert_style_into);
+            let mut nodes = match self.document.select(node_to_insert_style_into) {
+                Ok(n) => n,
+                _ => continue,
+            };
 
-            if !nodes.is_ok() {
-                continue;
-            }
+            let node = match nodes.next() {
+                Some(n) => n,
+                None => continue,
+            };
 
-            for node in nodes.unwrap() {
-                let mut preserved_css = vec![];
-                preserved_css.extend_from_slice(&self.rules.font_face);
-                preserved_css.extend_from_slice(&self.rules.media);
+            let mut preserved_css = vec![];
+            preserved_css.extend_from_slice(&self.rules.font_face);
+            preserved_css.extend_from_slice(&self.rules.media);
 
-                let text_node = NodeRef::new_text(preserved_css.join("\n"));
-                let style_node = NodeRef::new_element(
-                    QualName { prefix: None, ns: ns!(), local: local_name!("style") },
-                    vec![]
-                );
-                style_node.append(text_node);
-                node.as_node().append(style_node);
-                return self;
-            }
+            let text_node = NodeRef::new_text(preserved_css.join("\n"));
+            let style_node = NodeRef::new_element(
+                QualName { prefix: None, ns: ns!(), local: local_name!("style") },
+                vec![]
+            );
+            style_node.append(text_node);
+            node.as_node().append(style_node);
+            return self;
         }
 
         self

@@ -136,21 +136,21 @@ impl<'a> Settings<'a> {
     /// Takes the other `Settings` and uses any fields set on it or defaults to another value.
     pub fn new(opt: default::Settings<'a>) -> Self {
         Self {
-            width_elements: opt.width_elements.unwrap_or(
+            width_elements: opt.width_elements.unwrap_or_else(||
                 vec![
                     "table",
                     "td",
                     "img",
                 ]
             ),
-            height_elements: opt.height_elements.unwrap_or(
+            height_elements: opt.height_elements.unwrap_or_else(||
                 vec![
                     "table",
                     "td",
                     "img",
                 ]
             ),
-            table_elements: opt.table_elements.unwrap_or(
+            table_elements: opt.table_elements.unwrap_or_else(||
                 vec![
                     "table",
                     "td",
@@ -173,7 +173,7 @@ impl<'a> Settings<'a> {
                     "vertical-align" => "valign",
                 }
             ),
-            non_visual_elements: opt.non_visual_elements.unwrap_or(
+            non_visual_elements: opt.non_visual_elements.unwrap_or_else(||
                 vec![
                     "head",
                     "title",
@@ -185,7 +185,7 @@ impl<'a> Settings<'a> {
                     "noscript",
                 ]
             ),
-            excluded_properties: opt.excluded_properties.unwrap_or(vec![]),
+            excluded_properties: opt.excluded_properties.unwrap_or_else(|| vec![]),
         }
     }
 }
