@@ -53,11 +53,11 @@ impl RemoveImportanceFromPropertyDeclarationBlock for PropertyDeclarationBlock {
 }
 
 trait RemoveExcludedPropertiesFromPropertyDeclarationBlock {
-    fn remove_excluded_properties(self: &mut Self, properties: &[&str]) -> &mut Self;
+    fn remove_excluded_properties(self: &mut Self, properties: &[String]) -> &mut Self;
 }
 impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclarationBlock {
-    fn remove_excluded_properties(self: &mut Self, properties: &[&str]) -> &mut Self {
-        for property_id in properties.iter() {
+    fn remove_excluded_properties(self: &mut Self, properties: &[String]) -> &mut Self {
+        for property_id in properties {
             if let Ok(ref id) = PropertyId::parse(property_id) {
                 self.remove_property(id);
             }
@@ -69,7 +69,7 @@ impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclaratio
 
 /// Data and methods related to modifying HTML with CSS.
 #[derive(Clone, Debug)]
-pub struct Eyeliner<'a> {
+pub struct Eyeliner {
     /// A strong reference to the root node of the HTML document.
     pub document: NodeRef,
 
@@ -77,10 +77,10 @@ pub struct Eyeliner<'a> {
     pub stylesheet: Stylesheet,
 
     /// Options for ways to modify the HTML document using CSS.
-    pub options: Options<'a>,
+    pub options: Options,
 
     /// Settings referenced by features enabled through options.
-    pub settings: Settings<'a>,
+    pub settings: Settings,
 
     /// A hashmap of HTML elements to CSS style.
     pub node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock>,
@@ -89,7 +89,7 @@ pub struct Eyeliner<'a> {
     pub rules: Rules,
 }
 
-impl<'a> Eyeliner<'a> {
+impl Eyeliner {
     /// Create a new instance to inline HTML with CSS, using concreate options and settings.
     ///
     /// 1.  Opitionally extracts the CSS in `<style />` tags from the HTML document. Then,
@@ -99,9 +99,9 @@ impl<'a> Eyeliner<'a> {
     ///
     pub fn new(
         html: &str,
-        css: Option<&str>,
-        options: Option<default_options::Options<'a>>,
-        settings: Option<default_settings::Settings<'a>>,
+        css: Option<String>,
+        options: Option<default_options::Options>,
+        settings: Option<default_settings::Settings>,
     ) -> Self {
         let options = Options::new(
             match options {
@@ -116,7 +116,7 @@ impl<'a> Eyeliner<'a> {
             }
         );
 
-        let mut css = css.unwrap_or("").to_owned();
+        let mut css = css.unwrap_or_else(String::new);
         let document = parse_html().one(html);
 
         if options.apply_style_tags {
@@ -147,7 +147,7 @@ impl<'a> Eyeliner<'a> {
     }
 }
 
-impl<'a> CollectRules for Eyeliner<'a> {
+impl CollectRules for Eyeliner {
     /// Collects CSS rules from the CSS stylesheet for other methods to use.
     /// Optionally removes any excluded CSS properties.
     /// Optionally preserves `@media` and `@font-face` rules.
@@ -200,7 +200,7 @@ impl<'a> CollectRules for Eyeliner<'a> {
     }
 }
 
-impl<'a> ApplyRules for Eyeliner<'a> {
+impl ApplyRules for Eyeliner {
     /// Inlines the CSS rules extracted from the CSS stylesheet into the HTML document.
     ///
     /// 1.  For each CSS rule selector (excluding pseudo-selectors), find the matching nodes in the
@@ -225,7 +225,7 @@ impl<'a> ApplyRules for Eyeliner<'a> {
             for node in nodes {
                 if
                     self.settings.non_visual_elements.contains(
-                        &node.name.local.chars().as_str().to_lowercase().as_str()
+                        &node.name.local.chars().as_str().to_lowercase()
                     )
                 {
                     continue;
@@ -268,7 +268,7 @@ impl<'a> ApplyRules for Eyeliner<'a> {
     }
 }
 
-impl<'a> ApplyAttributes for Eyeliner<'a> {
+impl ApplyAttributes for Eyeliner {
     /// Iterates over all elements and applies a matching attribute if it has the given CSS
     /// property.
     fn apply_attributes(self: &Self, property: &str) -> &Self {
@@ -297,7 +297,7 @@ impl<'a> ApplyAttributes for Eyeliner<'a> {
             if
                 value.ends_with('%') &&
                 self.settings.table_elements.contains(
-                    &element.name.local.chars().as_str().to_lowercase().as_str()
+                    &element.name.local.chars().as_str().to_lowercase()
                 )
             {
                 attributes.insert(property, value);
@@ -308,7 +308,7 @@ impl<'a> ApplyAttributes for Eyeliner<'a> {
     }
 }
 
-impl<'a> ApplyWidthAttributes for Eyeliner<'a> {
+impl ApplyWidthAttributes for Eyeliner {
     /// Optionally iterates over all elements and applies a `width` attribute if it has a `width`
     /// CSS property applied to it.
     fn apply_width_attributes(self: &Self) -> &Self {
@@ -320,7 +320,7 @@ impl<'a> ApplyWidthAttributes for Eyeliner<'a> {
     }
 }
 
-impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
+impl ApplyHeightAttributes for Eyeliner {
     /// Optionally iterates over all elements and applies a `height` attribute if it has a `height`
     /// CSS property applied to it.
     fn apply_height_attributes(self: &Self) -> &Self {
@@ -333,7 +333,7 @@ impl<'a> ApplyHeightAttributes for Eyeliner<'a> {
 }
 
 #[cfg_attr(feature = "cargo-clippy", allow(clone_double_ref))]
-impl<'a> ApplyTableElementAttributes for Eyeliner<'a> {
+impl ApplyTableElementAttributes for Eyeliner {
     /// Applies attributes to table elements.
     ///
     /// 1.  Iterates over all elements and matches those that are specified table elements.
@@ -351,7 +351,7 @@ impl<'a> ApplyTableElementAttributes for Eyeliner<'a> {
 
             if
                 !self.settings.table_elements.contains(
-                    &element.name.local.chars().as_str().to_lowercase().as_str()
+                    &element.name.local.chars().as_str().to_lowercase()
                 )
             {
                 continue;
@@ -378,7 +378,7 @@ impl<'a> ApplyTableElementAttributes for Eyeliner<'a> {
     }
 }
 
-impl<'a> InsertPreservedCss for Eyeliner<'a> {
+impl InsertPreservedCss for Eyeliner {
     /// Tries to insert any `@media` or `@font-face` rules collected into the locations specified
     // in the HTML document.
     fn insert_preserved_css(self: &Self) -> &Self {
@@ -411,7 +411,7 @@ impl<'a> InsertPreservedCss for Eyeliner<'a> {
     }
 }
 
-impl<'a> ToString for Eyeliner<'a> {
+impl ToString for Eyeliner {
     fn to_string(self: &Self) -> String {
         self.document.to_string()
     }

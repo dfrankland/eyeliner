@@ -11,7 +11,7 @@ fn test() {
     let result_document = parse_html().one(
         inline(
             include_str!("./test.html"),
-            Some(include_str!("./test.css")),
+            Some(include_str!("./test.css").to_owned()),
             None,
             None,
         )
@@ -19,7 +19,7 @@ fn test() {
 
     println!("{}", inline(
         include_str!("./test.html"),
-        Some(include_str!("./test.css")),
+        Some(include_str!("./test.css").to_owned()),
         None,
         None,
     ));

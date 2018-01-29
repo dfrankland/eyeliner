@@ -10,12 +10,12 @@ use eyeliner::{inline, Options, Settings};
 fn bench_dashboard(b: &mut Bencher) {
     let html = include_str!("./bootstrap/docs/4.0/examples/dashboard/index.html");
     let css = include_str!("./bootstrap/dist/css/bootstrap.min.css");
-    b.iter(|| inline(html, Some(css), None, None))
+    b.iter(|| inline(html, Some(css.to_owned()), None, None))
 }
 
 #[bench]
 fn bench_navbar(b: &mut Bencher) {
     let html = include_str!("./bootstrap/docs/4.0/examples/navbars/index.html");
     let css = include_str!("./bootstrap/dist/css/bootstrap.min.css");
-    b.iter(|| inline(html, Some(css), None, None))
+    b.iter(|| inline(html, Some(css.to_owned()), None, None))
 }

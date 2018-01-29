@@ -84,10 +84,10 @@ use traits::*;
 ///
 ///   assert_eq!(
 ///     inline(fixture, None, None, None), // Just used to format the HTML the same way
-///     inline(html, Some(css), None, None),
+///     inline(html, Some(css.to_owned()), None, None),
 ///   );
 /// ```
-pub fn inline(html: &str, css: Option<&str>, options: Option<Options>, settings: Option<Settings>) -> String {
+pub fn inline(html: &str, css: Option<String>, options: Option<Options>, settings: Option<Settings>) -> String {
     Eyeliner::new(html, css, options, settings)
         .collect_rules()
         .apply_rules()

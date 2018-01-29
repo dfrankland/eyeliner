@@ -1,7 +1,7 @@
 pub mod default {
     /// Options for ways to modify the HTML document using CSS.
     #[derive(Clone, Debug)]
-    pub struct Options<'a> {
+    pub struct Options {
         /// Whether attributes specified in `Settings.style_to_attribute` get applied to table
         /// elements in `Settings.table_elements`.
         /// Defaults to `true`.
@@ -24,7 +24,7 @@ pub mod default {
         /// List of elements to try to inline preserved `@media` and `@font-face` CSS rules into.
         /// Give an empty list to prevent inlining preserved CSS.
         /// Defaults to `["head", "body", "html"]`.
-        pub insert_preserved_css: Option<Vec<&'a str>>,
+        pub insert_preserved_css: Option<Vec<String>>,
 
         /// Whether to preserve `@font-face` CSS rules.
         /// Defaults to `true`.
@@ -45,7 +45,7 @@ pub mod default {
         // TODO: pub web_resources: Option<OptionsForHttpClientToInlineRemoteResources>,
     }
 
-    impl<'a> Default for Options<'a> {
+    impl Default for Options {
         fn default() -> Self {
             Self {
                 apply_table_element_attributes: None,
@@ -64,12 +64,12 @@ pub mod default {
 
 /// The required options to inline HTML and CSS. Use the other `Options`, it is has nice defaults.
 #[derive(Clone, Debug)]
-pub struct Options<'a> {
+pub struct Options {
     pub apply_table_element_attributes: bool,
     pub apply_height_attributes: bool,
     pub apply_style_tags: bool,
     pub apply_width_attributes: bool,
-    pub insert_preserved_css: Vec<&'a str>,
+    pub insert_preserved_css: Vec<String>,
     pub preserve_font_faces: bool,
     pub preserve_important: bool,
     pub preserve_media_queries: bool,
@@ -77,15 +77,17 @@ pub struct Options<'a> {
     // TODO: pub web_resources: OptionsForHttpClientToInlineRemoteResources,
 }
 
-impl<'a> Options<'a> {
+impl Options {
     /// Takes the other `Options` and uses any fields set on it or defaults to another value.
-    pub fn new(opt: default::Options<'a>) -> Self {
+    pub fn new(opt: default::Options) -> Self {
         Self {
             apply_table_element_attributes: opt.apply_table_element_attributes.unwrap_or(true),
             apply_height_attributes: opt.apply_height_attributes.unwrap_or(true),
             apply_style_tags: opt.apply_style_tags.unwrap_or(true),
             apply_width_attributes: opt.apply_width_attributes.unwrap_or(true),
-            insert_preserved_css: opt.insert_preserved_css.unwrap_or_else(|| vec!["head", "body", "html"]),
+            insert_preserved_css: opt.insert_preserved_css.unwrap_or_else(
+                || vec!["head".to_owned(), "body".to_owned(), "html".to_owned()]
+            ),
             preserve_font_faces: opt.preserve_font_faces.unwrap_or(true),
             preserve_important: opt.preserve_important.unwrap_or(false),
             preserve_media_queries: opt.preserve_media_queries.unwrap_or(true),
@@ -94,7 +96,7 @@ impl<'a> Options<'a> {
     }
 }
 
-impl<'a> Default for Options<'a> {
+impl Default for Options {
     fn default() -> Self {
         Self::new(default::Options::default())
     }
