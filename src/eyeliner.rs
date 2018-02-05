@@ -17,8 +17,8 @@ use servo_css_parser::style::error_reporting::RustLogReporter;
 use traits::*;
 use hash::HashableNodeRef;
 use rules::Rules;
-use options::{Options, default as default_options};
-use settings::{Settings, default as default_settings};
+use options::ConcreteOptions;
+use settings::ConcreteSettings;
 use property_declaration_value::property_declaration_value_to_css_string;
 
 trait ExtendFromPropertyDeclarationBlock {
@@ -77,10 +77,10 @@ pub struct Eyeliner {
     pub stylesheet: Stylesheet,
 
     /// Options for ways to modify the HTML document using CSS.
-    pub options: Options,
+    pub options: ConcreteOptions,
 
     /// Settings referenced by features enabled through options.
-    pub settings: Settings,
+    pub settings: ConcreteSettings,
 
     /// A hashmap of HTML elements to CSS style.
     pub node_style_map: HashMap<HashableNodeRef, PropertyDeclarationBlock>,
@@ -97,24 +97,20 @@ impl Eyeliner {
     ///
     /// 2.  Any CSS extraced gets appended to the `css` argument.
     ///
-    pub fn new(
+    pub fn new<T: Into<ConcreteOptions>, U: Into<ConcreteSettings>>(
         html: &str,
         css: Option<String>,
-        options: Option<default_options::Options>,
-        settings: Option<default_settings::Settings>,
+        options: Option<T>,
+        settings: Option<U>,
     ) -> Self {
-        let options = Options::new(
-            match options {
-                Some(o) => o,
-                None => default_options::Options::default(),
-            }
-        );
-        let settings = Settings::new(
-            match settings {
-                Some(s) => s,
-                None => default_settings::Settings::default(),
-            }
-        );
+        let options = match options {
+            Some(o) => o.into(),
+            None => ConcreteOptions::default(),
+        };
+        let settings = match settings {
+            Some(s) => s.into(),
+            None => ConcreteSettings::default(),
+        };
 
         let mut css = css.unwrap_or_else(String::new);
         let document = parse_html().one(html);

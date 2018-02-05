@@ -4,7 +4,7 @@ extern crate test;
 extern crate eyeliner;
 
 use test::Bencher;
-use eyeliner::{inline, Options, Settings};
+use eyeliner::inline;
 
 #[bench]
 fn bench_dashboard(b: &mut Bencher) {

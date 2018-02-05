@@ -14,12 +14,10 @@ pub use hash::*;
 mod property_declaration_value;
 
 mod options;
-pub use options::Options as OptionsRequired;
-pub use options::default::*;
+pub use options::*;
 
 mod settings;
-pub use settings::Settings as SettingsRequired;
-pub use settings::default::*;
+pub use settings::*;
 
 mod eyeliner;
 pub use eyeliner::*;
@@ -87,7 +85,12 @@ use traits::*;
 ///     inline(html, Some(css.to_owned()), None, None),
 ///   );
 /// ```
-pub fn inline(html: &str, css: Option<String>, options: Option<Options>, settings: Option<Settings>) -> String {
+pub fn inline(
+    html: &str,
+    css: Option<String>,
+    options: Option<AbstractOptions>,
+    settings: Option<AbstractSettings>
+) -> String {
     Eyeliner::new(html, css, options, settings)
         .collect_rules()
         .apply_rules()

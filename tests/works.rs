@@ -1,7 +1,7 @@
 extern crate eyeliner;
 extern crate kuchiki;
 
-use eyeliner::{inline, Options, Settings};
+use eyeliner::inline;
 use kuchiki::traits::*;
 use kuchiki::parse_html;
 
@@ -11,7 +11,7 @@ fn test() {
     let result_document = parse_html().one(
         inline(
             include_str!("./test.html"),
-            Some(include_str!("./test.css").to_owned()),
+            Some(include_str!("./test.css").to_string()),
             None,
             None,
         )
@@ -19,7 +19,7 @@ fn test() {
 
     println!("{}", inline(
         include_str!("./test.html"),
-        Some(include_str!("./test.css").to_owned()),
+        Some(include_str!("./test.css").to_string()),
         None,
         None,
     ));

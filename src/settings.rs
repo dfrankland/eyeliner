@@ -1,121 +1,130 @@
 use std::collections::HashMap;
 
-pub mod default {
-    use std::collections::HashMap;
+/// Settings referenced by features enabled through `Options`.
+#[derive(Clone, Debug)]
+pub struct AbstractSettings {
+    /// List of HTML elements that can receive `width` attributes.
+    ///
+    /// Defaults to:
+    ///
+    /// ```
+    /// vec![
+    ///     "table",
+    ///     "td",
+    ///     "img",
+    /// ];
+    /// ```
+    ///
+    pub width_elements: Option<Vec<String>>,
 
-    /// Settings referenced by features enabled through `Options`.
-    #[derive(Clone, Debug)]
-    pub struct Settings {
-        /// List of HTML elements that can receive `width` attributes.
-        ///
-        /// Defaults to:
-        ///
-        /// ```
-        /// vec![
-        ///     "table",
-        ///     "td",
-        ///     "img",
-        /// ];
-        /// ```
-        ///
-        pub width_elements: Option<Vec<String>>,
+    /// List of HTML elements that can receive `height` attributes.
+    ///
+    /// Defaults to:
+    ///
+    /// ```
+    /// vec![
+    ///     "table",
+    ///     "td",
+    ///     "img",
+    /// ];
+    /// ```
+    ///
+    pub height_elements: Option<Vec<String>>,
 
-        /// List of HTML elements that can receive `height` attributes.
-        ///
-        /// Defaults to:
-        ///
-        /// ```
-        /// vec![
-        ///     "table",
-        ///     "td",
-        ///     "img",
-        /// ];
-        /// ```
-        ///
-        pub height_elements: Option<Vec<String>>,
+    /// Map of style property names to their respective attribute names.
+    ///
+    /// Defaults to:
+    ///
+    /// ```
+    /// # #[macro_use] extern crate maplit;
+    /// # fn main() {
+    /// hashmap!{
+    ///     "background-color" => "bgcolor",
+    ///     "background-image" => "background",
+    ///     "text-align" => "align",
+    ///     "vertical-align" => "valign",
+    /// };
+    /// # }
+    /// ```
+    ///
+    pub style_to_attribute: Option<HashMap<String, String>>,
 
-        /// Map of style property names to their respective attribute names.
-        ///
-        /// Defaults to:
-        ///
-        /// ```
-        /// # #[macro_use] extern crate maplit;
-        /// # fn main() {
-        /// hashmap!{
-        ///     "background-color" => "bgcolor",
-        ///     "background-image" => "background",
-        ///     "text-align" => "align",
-        ///     "vertical-align" => "valign",
-        /// };
-        /// # }
-        /// ```
-        ///
-        pub style_to_attribute: Option<HashMap<String, String>>,
+    /// List of table HTML elements that can receive attributes defined in
+    /// `Settings.style_to_attribute`.
+    ///
+    /// Defaults to:
+    ///
+    /// ```
+    /// vec![
+    ///     "table",
+    ///     "td",
+    ///     "th",
+    ///     "tr",
+    ///     "td",
+    ///     "caption",
+    ///     "colgroup",
+    ///     "col",
+    ///     "thead",
+    ///     "tbody",
+    ///     "tfoot",
+    /// ];
+    /// ```
+    ///
+    pub table_elements: Option<Vec<String>>,
 
-        /// List of table HTML elements that can receive attributes defined in
-        /// `Settings.style_to_attribute`.
-        ///
-        /// Defaults to:
-        ///
-        /// ```
-        /// vec![
-        ///     "table",
-        ///     "td",
-        ///     "th",
-        ///     "tr",
-        ///     "td",
-        ///     "caption",
-        ///     "colgroup",
-        ///     "col",
-        ///     "thead",
-        ///     "tbody",
-        ///     "tfoot",
-        /// ];
-        /// ```
-        ///
-        pub table_elements: Option<Vec<String>>,
+    /// List of elements that will not have styles inlined because they are not intended to
+    /// render.
+    ///
+    /// Defaults to:
+    ///
+    /// ```
+    /// vec![
+    ///     "head",
+    ///     "title",
+    ///     "base",
+    ///     "link",
+    ///     "style",
+    ///     "meta",
+    ///     "script",
+    ///     "noscript",
+    /// ];
+    /// ```
+    ///
+    pub non_visual_elements: Option<Vec<String>>,
 
-        /// List of elements that will not have styles inlined because they are not intended to
-        /// render.
-        ///
-        /// Defaults to:
-        ///
-        /// ```
-        /// vec![
-        ///     "head",
-        ///     "title",
-        ///     "base",
-        ///     "link",
-        ///     "style",
-        ///     "meta",
-        ///     "script",
-        ///     "noscript",
-        /// ];
-        /// ```
-        ///
-        pub non_visual_elements: Option<Vec<String>>,
+    /// List of CSS style properties that will not be inlined.
+    ///
+    /// Defaults to:
+    ///
+    /// ```
+    /// Vec::<&str>::new();
+    /// ```
+    ///
+    pub excluded_properties: Option<Vec<String>>,
+}
 
-        /// List of CSS style properties that will not be inlined.
-        ///
-        /// Defaults to:
-        ///
-        /// ```
-        /// Vec::<&str>::new();
-        /// ```
-        ///
-        pub excluded_properties: Option<Vec<String>>,
+impl Default for AbstractSettings {
+    fn default() -> Self {
+        Self {
+            width_elements: None,
+            height_elements: None,
+            style_to_attribute: None,
+            table_elements: None,
+            non_visual_elements: None,
+            excluded_properties: None,
+        }
     }
+}
 
-    impl<'a> Default for Settings {
-        fn default() -> Self {
-            Self {
-                width_elements: None,
-                height_elements: None,
-                style_to_attribute: None,
-                table_elements: None,
-                non_visual_elements: None,
-                excluded_properties: None,
-            }
+impl From<ConcreteSettings> for AbstractSettings {
+    fn from(concrete_settings: ConcreteSettings) -> Self {
+        Self {
+            width_elements: Some(concrete_settings.width_elements),
+            height_elements: Some(concrete_settings.height_elements),
+            style_to_attribute: Some(concrete_settings.style_to_attribute),
+            table_elements: Some(concrete_settings.table_elements),
+            non_visual_elements: Some(concrete_settings.non_visual_elements),
+            excluded_properties: Some(concrete_settings.excluded_properties),
         }
     }
 }
@@ -123,7 +132,7 @@ pub mod default {
 /// The required settings to inline HTML and CSS. Use the other `Settings`, it is has nice
 /// defaults.
 #[derive(Clone, Debug)]
-pub struct Settings {
+pub struct ConcreteSettings {
     pub width_elements: Vec<String>,
     pub height_elements: Vec<String>,
     pub style_to_attribute: HashMap<String, String>,
@@ -132,66 +141,66 @@ pub struct Settings {
     pub excluded_properties: Vec<String>,
 }
 
-impl Settings {
+impl From<AbstractSettings> for ConcreteSettings {
     /// Takes the other `Settings` and uses any fields set on it or defaults to another value.
-    pub fn new(opt: default::Settings) -> Self {
+    fn from(abstract_settings: AbstractSettings) -> Self {
         Self {
-            width_elements: opt.width_elements.unwrap_or_else(||
+            width_elements: abstract_settings.width_elements.unwrap_or_else(||
                 vec![
-                    "table".to_owned(),
-                    "td".to_owned(),
-                    "img".to_owned(),
-                ]
+                    "table",
+                    "td",
+                    "img",
+                ].iter().map(|x| x.to_string()).collect()
             ),
-            height_elements: opt.height_elements.unwrap_or_else(||
+            height_elements: abstract_settings.height_elements.unwrap_or_else(||
                 vec![
-                    "table".to_owned(),
-                    "td".to_owned(),
-                    "img".to_owned(),
-                ]
+                    "table",
+                    "td",
+                    "img",
+                ].iter().map(|x| x.to_string()).collect()
             ),
-            table_elements: opt.table_elements.unwrap_or_else(||
+            table_elements: abstract_settings.table_elements.unwrap_or_else(||
                 vec![
-                    "table".to_owned(),
-                    "td".to_owned(),
-                    "th".to_owned(),
-                    "tr".to_owned(),
-                    "td".to_owned(),
-                    "caption".to_owned(),
-                    "colgroup".to_owned(),
-                    "col".to_owned(),
-                    "thead".to_owned(),
-                    "tbody".to_owned(),
-                    "tfoot".to_owned(),
-                ]
+                    "table",
+                    "td",
+                    "th",
+                    "tr",
+                    "td",
+                    "caption",
+                    "colgroup",
+                    "col",
+                    "thead",
+                    "tbody",
+                    "tfoot",
+                ].iter().map(|x| x.to_string()).collect()
             ),
-            style_to_attribute: opt.style_to_attribute.unwrap_or(
+            style_to_attribute: abstract_settings.style_to_attribute.unwrap_or_else(||
                 hashmap!{
-                    "background-color".to_owned() => "bgcolor".to_owned(),
-                    "background-image".to_owned() => "background".to_owned(),
-                    "text-align".to_owned() => "align".to_owned(),
-                    "vertical-align".to_owned() => "valign".to_owned(),
-                }
+                    "background-color" => "bgcolor",
+                    "background-image" => "background",
+                    "text-align" => "align",
+                    "vertical-align" => "valign",
+                }.iter().map(|(k, v)| (k.to_string(), v.to_string())).collect()
             ),
-            non_visual_elements: opt.non_visual_elements.unwrap_or_else(||
+            non_visual_elements: abstract_settings.non_visual_elements.unwrap_or_else(||
                 vec![
-                    "head".to_owned(),
-                    "title".to_owned(),
-                    "base".to_owned(),
-                    "link".to_owned(),
-                    "style".to_owned(),
-                    "meta".to_owned(),
-                    "script".to_owned(),
-                    "noscript".to_owned(),
-                ]
+                    "head",
+                    "title",
+                    "base",
+                    "link",
+                    "style",
+                    "meta",
+                    "script",
+                    "noscript",
+                ].iter().map(|x| x.to_string()).collect()
             ),
-            excluded_properties: opt.excluded_properties.unwrap_or_else(|| vec![]),
+            excluded_properties: abstract_settings.excluded_properties.unwrap_or_else(|| vec![]),
         }
     }
 }
 
-impl Default for Settings {
+impl Default for ConcreteSettings {
     fn default() -> Self {
-        Self::new(default::Settings::default())
+        Self::from(AbstractSettings::default())
     }
 }
