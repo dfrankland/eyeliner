@@ -1,33 +1,26 @@
-use std::{
-    collections::{
-        HashMap,
-        hash_map::Entry::{Occupied, Vacant}
-    },
-    string::ToString
-};
-use kuchiki::{
+use super::{
+    hash::HashableNodeRef, options::ConcreteOptions, rules::Rules, settings::ConcreteSettings,
     traits::*,
-    parse_html,
-    NodeRef,
 };
-use html5ever::{QualName, ns, local_name, namespace_url};
+use html5ever::{local_name, namespace_url, ns, QualName};
+use kuchiki::{parse_html, traits::*, NodeRef};
 use servo_css_parser::{
     parse,
-    types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet},
     style::{
-        stylesheets::{CssRule, StyleRule},
         properties::{
-            declaration_block::{parse_style_attribute, PropertyDeclarationBlock, Importance},
+            declaration_block::{parse_style_attribute, Importance, PropertyDeclarationBlock},
             PropertyDeclarationId, PropertyId,
         },
+        stylesheets::{CssRule, StyleRule},
     },
+    types::{MediaList, Origin, QuirksMode, ServoStylesheet as Stylesheet, Url},
 };
-use super::{
-    traits::*,
-    hash::HashableNodeRef,
-    rules::Rules,
-    options::ConcreteOptions,
-    settings::ConcreteSettings,
+use std::{
+    collections::{
+        hash_map::Entry::{Occupied, Vacant},
+        HashMap,
+    },
+    string::ToString,
 };
 
 trait ExtendFromPropertyDeclarationBlock {
@@ -157,22 +150,30 @@ impl CollectRules for Eyeliner {
     fn collect_rules(self: &mut Self) -> &mut Self {
         {
             let read_guard = &self.stylesheet.shared_lock.read();
-            for css_rule in &self.stylesheet.contents.rules.as_ref().read_with(read_guard).0 {
+            for css_rule in &self
+                .stylesheet
+                .contents
+                .rules
+                .as_ref()
+                .read_with(read_guard)
+                .0
+            {
                 match *css_rule {
-                    CssRule::Style (ref style_rule_locked) => {
+                    CssRule::Style(ref style_rule_locked) => {
                         let style_rule = style_rule_locked.as_ref().read_with(read_guard);
-                        let StyleRule { ref selectors, block: ref block_locked, .. } = *style_rule;
+                        let StyleRule {
+                            ref selectors,
+                            block: ref block_locked,
+                            ..
+                        } = *style_rule;
 
                         use servo_css_parser::cssparser::ToCss;
                         let mut block = block_locked.as_ref().read_with(read_guard).clone();
                         block.remove_excluded_properties(&self.settings.excluded_properties);
-                        self.rules.style.push((
-                            selectors.to_css_string(),
-                            block,
-                        ));
-                    },
+                        self.rules.style.push((selectors.to_css_string(), block));
+                    }
 
-                    CssRule::Media (ref media_rule_locked) => {
+                    CssRule::Media(ref media_rule_locked) => {
                         if !self.options.preserve_media_queries {
                             continue;
                         }
@@ -181,18 +182,21 @@ impl CollectRules for Eyeliner {
 
                         use servo_css_parser::style::shared_lock::ToCssWithGuard;
                         self.rules.media.push(media_rule.to_css_string(read_guard));
-                    },
+                    }
 
-                    CssRule::FontFace (ref font_face_rule_data_locked) => {
+                    CssRule::FontFace(ref font_face_rule_data_locked) => {
                         if !self.options.preserve_font_faces {
                             continue;
                         }
 
-                        let font_face_rule_data = font_face_rule_data_locked.as_ref().read_with(read_guard);
+                        let font_face_rule_data =
+                            font_face_rule_data_locked.as_ref().read_with(read_guard);
 
                         use servo_css_parser::style::shared_lock::ToCssWithGuard;
-                        self.rules.font_face.push(font_face_rule_data.to_css_string(read_guard));
-                    },
+                        self.rules
+                            .font_face
+                            .push(font_face_rule_data.to_css_string(read_guard));
+                    }
 
                     _ => (),
                 }
@@ -226,10 +230,10 @@ impl ApplyRules for Eyeliner {
             };
 
             for node in nodes {
-                if
-                    self.settings.non_visual_elements.contains(
-                        &node.name.local.chars().as_str().to_lowercase()
-                    )
+                if self
+                    .settings
+                    .non_visual_elements
+                    .contains(&node.name.local.chars().as_str().to_lowercase())
                 {
                     continue;
                 }
@@ -237,7 +241,7 @@ impl ApplyRules for Eyeliner {
                 match self.node_style_map.entry(HashableNodeRef::new(&node)) {
                     Occupied(mut entry) => {
                         entry.get_mut().extend_from_block(&block);
-                    },
+                    }
                     Vacant(entry) => {
                         let mut exisiting_style = parse_style_attribute(
                             node.attributes.borrow_mut().get("style").unwrap_or(""),
@@ -247,7 +251,7 @@ impl ApplyRules for Eyeliner {
                         );
                         exisiting_style.extend_from_block(&block);
                         entry.insert(exisiting_style.clone());
-                    },
+                    }
                 };
             }
         }
@@ -261,10 +265,7 @@ impl ApplyRules for Eyeliner {
             if let Some(element) = hash.node.as_element() {
                 let mut css = String::default();
                 cloned_block.to_css(&mut css).unwrap();
-                element.attributes.borrow_mut().insert(
-                    "style",
-                    css,
-                );
+                element.attributes.borrow_mut().insert("style", css);
             }
         }
 
@@ -277,11 +278,12 @@ impl ApplyAttributes for Eyeliner {
     /// property.
     fn apply_attributes(self: &Self, property: &str) -> &Self {
         for (hash, block) in &self.node_style_map {
-            let property_declaration = block.get(
-                PropertyDeclarationId::Longhand(
-                    PropertyId::parse_enabled_for_all_content(property).unwrap().longhand_id().unwrap()
-                )
-            );
+            let property_declaration = block.get(PropertyDeclarationId::Longhand(
+                PropertyId::parse_enabled_for_all_content(property)
+                    .unwrap()
+                    .longhand_id()
+                    .unwrap(),
+            ));
 
             if property_declaration.is_none() {
                 continue;
@@ -298,11 +300,11 @@ impl ApplyAttributes for Eyeliner {
                 continue;
             }
 
-            if
-                value.ends_with('%') &&
-                self.settings.table_elements.contains(
-                    &element.name.local.chars().as_str().to_lowercase()
-                )
+            if value.ends_with('%')
+                && self
+                    .settings
+                    .table_elements
+                    .contains(&element.name.local.chars().as_str().to_lowercase())
             {
                 attributes.insert(property, value);
             }
@@ -353,10 +355,10 @@ impl ApplyTableElementAttributes for Eyeliner {
         for (hash, block) in &self.node_style_map {
             let element = hash.node.as_element().unwrap();
 
-            if
-                !self.settings.table_elements.contains(
-                    &element.name.local.chars().as_str().to_lowercase()
-                )
+            if !self
+                .settings
+                .table_elements
+                .contains(&element.name.local.chars().as_str().to_lowercase())
             {
                 continue;
             }
@@ -374,10 +376,7 @@ impl ApplyTableElementAttributes for Eyeliner {
                 let mut css = String::default();
                 property_declaration.to_css(&mut css).unwrap();
 
-                attributes.insert(
-                    attribute.unwrap().clone(),
-                    css,
-                );
+                attributes.insert(attribute.unwrap().clone(), css);
             }
         }
 
@@ -406,8 +405,12 @@ impl InsertPreservedCss for Eyeliner {
 
             let text_node = NodeRef::new_text(preserved_css.join("\n"));
             let style_node = NodeRef::new_element(
-                QualName { prefix: None, ns: ns!(), local: local_name!("style") },
-                vec![]
+                QualName {
+                    prefix: None,
+                    ns: ns!(),
+                    local: local_name!("style"),
+                },
+                vec![],
             );
             style_node.append(text_node);
             node.as_node().append(style_node);

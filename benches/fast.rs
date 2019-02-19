@@ -2,9 +2,9 @@
 
 extern crate test;
 
-use test::Bencher;
 use eyeliner::inline;
 use servo_css_parser::embedder_traits;
+use test::Bencher;
 
 #[bench]
 fn bench_dashboard(b: &mut Bencher) {

@@ -58,7 +58,6 @@ impl Default for AbstractOptions {
     }
 }
 
-
 impl From<ConcreteOptions> for AbstractOptions {
     fn from(concrete_options: ConcreteOptions) -> Self {
         AbstractOptions {
@@ -98,13 +97,18 @@ impl Default for ConcreteOptions {
 impl From<AbstractOptions> for ConcreteOptions {
     fn from(abstract_options: AbstractOptions) -> Self {
         Self {
-            apply_table_element_attributes: abstract_options.apply_table_element_attributes.unwrap_or(true),
+            apply_table_element_attributes: abstract_options
+                .apply_table_element_attributes
+                .unwrap_or(true),
             apply_height_attributes: abstract_options.apply_height_attributes.unwrap_or(true),
             apply_style_tags: abstract_options.apply_style_tags.unwrap_or(true),
             apply_width_attributes: abstract_options.apply_width_attributes.unwrap_or(true),
-            insert_preserved_css: abstract_options.insert_preserved_css.unwrap_or_else(
-                || vec!["head", "body", "html"].iter().map(|x| x.to_string()).collect()
-            ),
+            insert_preserved_css: abstract_options.insert_preserved_css.unwrap_or_else(|| {
+                vec!["head", "body", "html"]
+                    .iter()
+                    .map(|x| x.to_string())
+                    .collect()
+            }),
             preserve_font_faces: abstract_options.preserve_font_faces.unwrap_or(true),
             preserve_important: abstract_options.preserve_important.unwrap_or(false),
             preserve_media_queries: abstract_options.preserve_media_queries.unwrap_or(true),

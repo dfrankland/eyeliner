@@ -1,11 +1,19 @@
 use eyeliner::inline;
-use kuchiki::traits::*;
 use kuchiki::parse_html;
+use kuchiki::traits::*;
 
 #[test]
 fn test() {
     let expected_document = parse_html().one(include_str!("./fixture.html"));
-    let result_document = parse_html().one(
+    let result_document = parse_html().one(inline(
+        include_str!("./test.html"),
+        Some(include_str!("./test.css").to_string()),
+        None,
+        None,
+    ));
+
+    println!(
+        "{}",
         inline(
             include_str!("./test.html"),
             Some(include_str!("./test.css").to_string()),
@@ -13,13 +21,6 @@ fn test() {
             None,
         )
     );
-
-    println!("{}", inline(
-        include_str!("./test.html"),
-        Some(include_str!("./test.css").to_string()),
-        None,
-        None,
-    ));
 
     let selector = "#test1, #test2";
     let expected_select = expected_document.select(selector).unwrap();
@@ -33,7 +34,10 @@ fn test() {
         let expected_style = expected_attributes.get(attribute).unwrap();
         let result_style = result_attributes.get(attribute).unwrap();
 
-        println!("\nExpected:\t{}\nResult:  \t{}", expected_style, result_style);
+        println!(
+            "\nExpected:\t{}\nResult:  \t{}",
+            expected_style, result_style
+        );
 
         assert_eq!(result_style, expected_style);
     }

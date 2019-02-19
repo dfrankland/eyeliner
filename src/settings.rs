@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use maplit::hashmap;
+use std::collections::HashMap;
 
 /// Settings referenced by features enabled through `Options`.
 #[derive(Clone, Debug)]
@@ -146,56 +146,49 @@ impl From<AbstractSettings> for ConcreteSettings {
     /// Takes the other `Settings` and uses any fields set on it or defaults to another value.
     fn from(abstract_settings: AbstractSettings) -> Self {
         Self {
-            width_elements: abstract_settings.width_elements.unwrap_or_else(||
+            width_elements: abstract_settings.width_elements.unwrap_or_else(|| {
+                vec!["table", "td", "img"]
+                    .iter()
+                    .map(|x| x.to_string())
+                    .collect()
+            }),
+            height_elements: abstract_settings.height_elements.unwrap_or_else(|| {
+                vec!["table", "td", "img"]
+                    .iter()
+                    .map(|x| x.to_string())
+                    .collect()
+            }),
+            table_elements: abstract_settings.table_elements.unwrap_or_else(|| {
                 vec![
-                    "table",
-                    "td",
-                    "img",
-                ].iter().map(|x| x.to_string()).collect()
-            ),
-            height_elements: abstract_settings.height_elements.unwrap_or_else(||
-                vec![
-                    "table",
-                    "td",
-                    "img",
-                ].iter().map(|x| x.to_string()).collect()
-            ),
-            table_elements: abstract_settings.table_elements.unwrap_or_else(||
-                vec![
-                    "table",
-                    "td",
-                    "th",
-                    "tr",
-                    "td",
-                    "caption",
-                    "colgroup",
-                    "col",
-                    "thead",
-                    "tbody",
-                    "tfoot",
-                ].iter().map(|x| x.to_string()).collect()
-            ),
-            style_to_attribute: abstract_settings.style_to_attribute.unwrap_or_else(||
-                hashmap!{
+                    "table", "td", "th", "tr", "td", "caption", "colgroup", "col", "thead",
+                    "tbody", "tfoot",
+                ]
+                .iter()
+                .map(|x| x.to_string())
+                .collect()
+            }),
+            style_to_attribute: abstract_settings.style_to_attribute.unwrap_or_else(|| {
+                hashmap! {
                     "background-color" => "bgcolor",
                     "background-image" => "background",
                     "text-align" => "align",
                     "vertical-align" => "valign",
-                }.iter().map(|(k, v)| (k.to_string(), v.to_string())).collect()
-            ),
-            non_visual_elements: abstract_settings.non_visual_elements.unwrap_or_else(||
+                }
+                .iter()
+                .map(|(k, v)| (k.to_string(), v.to_string()))
+                .collect()
+            }),
+            non_visual_elements: abstract_settings.non_visual_elements.unwrap_or_else(|| {
                 vec![
-                    "head",
-                    "title",
-                    "base",
-                    "link",
-                    "style",
-                    "meta",
-                    "script",
-                    "noscript",
-                ].iter().map(|x| x.to_string()).collect()
-            ),
-            excluded_properties: abstract_settings.excluded_properties.unwrap_or_else(|| vec![]),
+                    "head", "title", "base", "link", "style", "meta", "script", "noscript",
+                ]
+                .iter()
+                .map(|x| x.to_string())
+                .collect()
+            }),
+            excluded_properties: abstract_settings
+                .excluded_properties
+                .unwrap_or_else(|| vec![]),
         }
     }
 }

@@ -1,20 +1,14 @@
 //! A CSS inliner for making emails.
 
-mod rules;
+mod eyeliner;
 mod hash;
 mod options;
+mod rules;
 mod settings;
-mod eyeliner;
 pub mod traits;
 
-pub use self::{
-    rules::*,
-    hash::*,
-    options::*,
-    settings::*,
-    eyeliner::*,
-};
 use self::traits::*;
+pub use self::{eyeliner::*, hash::*, options::*, rules::*, settings::*};
 
 /// Returns a string of HTML with CSS inlined.
 ///
@@ -80,7 +74,7 @@ pub fn inline(
     html: &str,
     css: Option<String>,
     options: Option<AbstractOptions>,
-    settings: Option<AbstractSettings>
+    settings: Option<AbstractSettings>,
 ) -> String {
     Eyeliner::new(html, css, options, settings)
         .collect_rules()

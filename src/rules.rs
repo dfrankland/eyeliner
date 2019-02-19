@@ -1,6 +1,5 @@
 use servo_css_parser::style::properties::declaration_block::PropertyDeclarationBlock;
 
-
 /// Data collected from the CSS stylesheet.
 #[derive(Clone, Debug)]
 pub struct Rules {

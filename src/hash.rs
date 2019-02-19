@@ -1,6 +1,6 @@
 use std::hash::{Hash, Hasher};
 
-use kuchiki::{NodeDataRef, ElementData, NodeRef, Node};
+use kuchiki::{ElementData, Node, NodeDataRef, NodeRef};
 
 /// Wraps nodes from Kuchiki to make them hashable.
 #[derive(Clone, Debug)]
@@ -10,13 +10,16 @@ pub struct HashableNodeRef {
 
 impl HashableNodeRef {
     pub fn new(node: &NodeDataRef<ElementData>) -> Self {
-        Self { node: node.as_node().clone() }
+        Self {
+            node: node.as_node().clone(),
+        }
     }
 }
 
 impl Hash for HashableNodeRef {
     fn hash<H>(&self, state: &mut H)
-        where H: Hasher
+    where
+        H: Hasher,
     {
         let a: *const Node = &*self.node.0;
         a.hash(state)
