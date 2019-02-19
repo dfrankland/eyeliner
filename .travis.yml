@@ -1,0 +1,22 @@
+branches:
+  only:
+  - master
+language: rust
+rust:
+  - nightly
+cache:
+  cargo: true
+matrix:
+  include:
+    - os: linux # 14.04
+      dist: trusty
+before_install:
+  - rustup component add clippy-preview rustfmt-preview
+install:
+  - npm install
+script:
+  - cargo build
+  - cargo test
+  - cargo bench
+  - cargo clippy --all-targets --all-features -- -D warnings
+  - cargo fmt --all -- --check
