@@ -8,14 +8,14 @@ use eyeliner::inline;
 
 #[bench]
 fn bench_dashboard(b: &mut Bencher) {
-    let html = include_str!("./bootstrap/docs/4.0/examples/dashboard/index.html");
-    let css = include_str!("./bootstrap/dist/css/bootstrap.min.css");
+    let html = include_str!("./bootstrap/site/docs/4.3/examples/dashboard/index.html");
+    let css = include_str!("./bootstrap/dist/css/bootstrap.css");
     b.iter(|| inline(html, Some(css.to_owned()), None, None))
 }
 
 #[bench]
 fn bench_navbar(b: &mut Bencher) {
-    let html = include_str!("./bootstrap/docs/4.0/examples/navbars/index.html");
-    let css = include_str!("./bootstrap/dist/css/bootstrap.min.css");
+    let html = include_str!("./bootstrap/site/docs/4.3/examples/navbars/index.html");
+    let css = include_str!("./bootstrap/dist/css/bootstrap.css");
     b.iter(|| inline(html, Some(css.to_owned()), None, None))
 }
