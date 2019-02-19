@@ -1,6 +1,3 @@
-extern crate eyeliner;
-extern crate kuchiki;
-
 use eyeliner::inline;
 use kuchiki::traits::*;
 use kuchiki::parse_html;

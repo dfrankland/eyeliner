@@ -8,9 +8,10 @@ readme = "README.md"
 keywords = ["html", "css", "email", "inliner"]
 categories = ["email", "development-tools", "parsing", "rendering", "template-engine"]
 license = "MIT"
+edition = "2018"
 
 [dependencies]
-kuchiki = { git = "https://github.com/kuchiki-rs/kuchiki", version = "0.7.0" }
-maplit = "1.0.0"
-servo-css-parser = { git = "https://github.com/victorporof/servo-css-parser" }
-html5ever = "0.22.0"
+kuchiki = "0.7.2"
+maplit = "1.0.1"
+servo-css-parser = { git = "https://github.com/dfrankland/servo-css-parser" }
+html5ever = "0.22.5"

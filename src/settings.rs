@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use maplit::hashmap;
 
 /// Settings referenced by features enabled through `Options`.
 #[derive(Clone, Debug)]

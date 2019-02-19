@@ -1,29 +1,20 @@
 //! A CSS inliner for making emails.
 
-extern crate kuchiki;
-extern crate servo_css_parser;
-#[macro_use] extern crate html5ever;
-#[macro_use] extern crate maplit;
-
 mod rules;
-pub use rules::*;
-
 mod hash;
-pub use hash::*;
-
-mod property_declaration_value;
-
 mod options;
-pub use options::*;
-
 mod settings;
-pub use settings::*;
-
 mod eyeliner;
-pub use eyeliner::*;
-
 pub mod traits;
-use traits::*;
+
+pub use self::{
+    rules::*,
+    hash::*,
+    options::*,
+    settings::*,
+    eyeliner::*,
+};
+use self::traits::*;
 
 /// Returns a string of HTML with CSS inlined.
 ///

@@ -1,25 +1,34 @@
-use std::collections::HashMap;
-use std::collections::hash_map::Entry::{Occupied, Vacant};
-use std::string::ToString;
-
-use kuchiki::traits::*;
-use kuchiki::{parse_html, NodeRef};
-
-use html5ever::QualName;
-
-use servo_css_parser::parse;
-use servo_css_parser::types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet};
-use servo_css_parser::style::stylesheets::{CssRule, StyleRule};
-use servo_css_parser::style::properties::declaration_block::{parse_style_attribute, PropertyDeclarationBlock, DeclarationSource, Importance};
-use servo_css_parser::style::properties::{PropertyDeclarationId, PropertyId};
-use servo_css_parser::style::error_reporting::RustLogReporter;
-
-use traits::*;
-use hash::HashableNodeRef;
-use rules::Rules;
-use options::ConcreteOptions;
-use settings::ConcreteSettings;
-use property_declaration_value::property_declaration_value_to_css_string;
+use std::{
+    collections::{
+        HashMap,
+        hash_map::Entry::{Occupied, Vacant}
+    },
+    string::ToString
+};
+use kuchiki::{
+    traits::*,
+    parse_html,
+    NodeRef,
+};
+use html5ever::{QualName, ns, local_name, namespace_url};
+use servo_css_parser::{
+    parse,
+    types::{Url, QuirksMode, MediaList, Origin, ServoStylesheet as Stylesheet},
+    style::{
+        stylesheets::{CssRule, StyleRule},
+        properties::{
+            declaration_block::{parse_style_attribute, PropertyDeclarationBlock, Importance},
+            PropertyDeclarationId, PropertyId,
+        },
+    },
+};
+use super::{
+    traits::*,
+    hash::HashableNodeRef,
+    rules::Rules,
+    options::ConcreteOptions,
+    settings::ConcreteSettings,
+};
 
 trait ExtendFromPropertyDeclarationBlock {
     fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &mut Self;
@@ -27,7 +36,7 @@ trait ExtendFromPropertyDeclarationBlock {
 impl ExtendFromPropertyDeclarationBlock for PropertyDeclarationBlock {
     fn extend_from_block(self: &mut Self, block: &PropertyDeclarationBlock) -> &mut Self {
         for (declartion, importance) in block.declaration_importance_iter() {
-            self.push(declartion.clone(), importance, DeclarationSource::Parsing);
+            self.push(declartion.clone(), importance);
         }
 
         self
@@ -41,11 +50,7 @@ impl RemoveImportanceFromPropertyDeclarationBlock for PropertyDeclarationBlock {
     fn remove_importance(self: &mut Self) -> &mut Self {
         let property_declaration_block = self.clone();
         for property_declaration in property_declaration_block.declarations().iter() {
-            let property_id = match property_declaration.id() {
-                PropertyDeclarationId::Longhand(id) => PropertyId::Longhand(id),
-                PropertyDeclarationId::Custom(name) => PropertyId::Custom(name.clone()),
-            };
-            self.set_importance(&property_id, Importance::Normal);
+            self.push(property_declaration.clone(), Importance::Normal);
         }
 
         self
@@ -58,8 +63,10 @@ trait RemoveExcludedPropertiesFromPropertyDeclarationBlock {
 impl RemoveExcludedPropertiesFromPropertyDeclarationBlock for PropertyDeclarationBlock {
     fn remove_excluded_properties(self: &mut Self, properties: &[String]) -> &mut Self {
         for property_id in properties {
-            if let Ok(ref id) = PropertyId::parse(property_id) {
-                self.remove_property(id);
+            if let Ok(ref id) = PropertyId::parse_enabled_for_all_content(property_id) {
+                if let Some(first_declaration_to_remove) = self.first_declaration_to_remove(id) {
+                    self.remove_property(id, first_declaration_to_remove);
+                }
             }
         }
 
@@ -235,7 +242,7 @@ impl ApplyRules for Eyeliner {
                         let mut exisiting_style = parse_style_attribute(
                             node.attributes.borrow_mut().get("style").unwrap_or(""),
                             &self.stylesheet.contents.url_data.read(),
-                            &RustLogReporter {},
+                            None,
                             QuirksMode::NoQuirks,
                         );
                         exisiting_style.extend_from_block(&block);
@@ -251,11 +258,12 @@ impl ApplyRules for Eyeliner {
                 cloned_block.remove_importance();
             }
 
-            use servo_css_parser::style_traits::values::ToCss;
             if let Some(element) = hash.node.as_element() {
+                let mut css = String::default();
+                cloned_block.to_css(&mut css).unwrap();
                 element.attributes.borrow_mut().insert(
                     "style",
-                    cloned_block.to_css_string(),
+                    css,
                 );
             }
         }
@@ -271,7 +279,7 @@ impl ApplyAttributes for Eyeliner {
         for (hash, block) in &self.node_style_map {
             let property_declaration = block.get(
                 PropertyDeclarationId::Longhand(
-                    PropertyId::parse(property).unwrap().longhand_id().unwrap()
+                    PropertyId::parse_enabled_for_all_content(property).unwrap().longhand_id().unwrap()
                 )
             );
 
@@ -282,8 +290,8 @@ impl ApplyAttributes for Eyeliner {
             let element = hash.node.as_element().unwrap();
 
             let mut attributes = element.attributes.borrow_mut();
-            use servo_css_parser::style_traits::values::ToCss;
-            let value = property_declaration.unwrap().0.to_css_string();
+            let mut value = String::default();
+            property_declaration.unwrap().0.to_css(&mut value).unwrap();
 
             if value.ends_with("px") {
                 attributes.insert(property, value.replace("px", ""));
@@ -363,9 +371,12 @@ impl ApplyTableElementAttributes for Eyeliner {
                     continue;
                 }
 
+                let mut css = String::default();
+                property_declaration.to_css(&mut css).unwrap();
+
                 attributes.insert(
                     attribute.unwrap().clone(),
-                    property_declaration_value_to_css_string(property_declaration)
+                    css,
                 );
             }
         }
