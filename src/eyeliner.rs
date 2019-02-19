@@ -133,10 +133,10 @@ impl Eyeliner {
         let stylesheet = parse(&css, url, origin, quirks_mode, media);
 
         Self {
-            document: document,
-            stylesheet: stylesheet,
-            options: options,
-            settings: settings,
+            document,
+            stylesheet,
+            options,
+            settings,
             node_style_map: HashMap::new(),
             rules: Rules::default(),
         }
@@ -338,7 +338,6 @@ impl ApplyHeightAttributes for Eyeliner {
     }
 }
 
-#[cfg_attr(feature = "cargo-clippy", allow(clone_double_ref))]
 impl ApplyTableElementAttributes for Eyeliner {
     /// Applies attributes to table elements.
     ///
