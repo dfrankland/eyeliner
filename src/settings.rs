@@ -168,14 +168,12 @@ impl From<AbstractSettings> for ConcreteSettings {
                 .collect()
             }),
             style_to_attribute: abstract_settings.style_to_attribute.unwrap_or_else(|| {
-                (
-                    hashmap! {
-                        "background-color" => "bgcolor",
-                        "background-image" => "background",
-                        "text-align" => "align",
-                        "vertical-align" => "valign",
-                    }
-                )
+                (hashmap! {
+                    "background-color" => "bgcolor",
+                    "background-image" => "background",
+                    "text-align" => "align",
+                    "vertical-align" => "valign",
+                })
                 .iter()
                 .map(|(k, v)| (k.to_string(), v.to_string()))
                 .collect()
