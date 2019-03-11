@@ -10,12 +10,26 @@ matrix:
   include:
     - os: linux # 14.04
       dist: trusty
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - autoconf2.13
 before_install:
-  - rustup component add clippy-preview rustfmt-preview
+  - nvm install --lts
+  - nvm use --lts
+  - node -v
+  - npm -v
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 60 --slave /usr/bin/g++ g++ /usr/bin/g++-8
+  - g++ -v
+  - rustup component add clippy --toolchain=nightly || cargo install --git https://github.com/rust-lang/rust-clippy/ --force clippy
+  - rustup component add rustfmt --toolchain=nightly || cargo install --git https://github.com/rust-lang/rustfmt/ --force clippy
 install:
   - npm install
 script:
-  - cargo build
+  - travis_wait 30 cargo build
   - cargo test
   - cargo bench
   - cargo clippy --all-targets --all-features -- -D warnings
