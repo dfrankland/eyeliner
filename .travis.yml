@@ -6,17 +6,15 @@ rust:
   - nightly
 cache:
   cargo: true
-matrix:
-  include:
-    - os: linux # 14.04
-      dist: trusty
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-8
-            - autoconf2.13
+os: linux
+dist: trusty # 14.04
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-8
+      - autoconf2.13
 before_install:
   - nvm install --lts
   - nvm use --lts
