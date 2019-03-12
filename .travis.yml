@@ -28,9 +28,26 @@ before_install:
   - rustup component add rustfmt || cargo install --git https://github.com/rust-lang/rustfmt/ --force rustfmt
 install:
   - npm install
-script:
-  - travis_wait 30 cargo build
-  - cargo test
-  - cargo bench
-  - cargo clippy --all-targets --all-features -- -D warnings
-  - cargo fmt --all -- --check
+stages:
+  - Build
+  - Test
+  - Bench
+  - Lint
+  - Format
+jobs:
+  include:
+    - stage: Build
+      script:
+        - travis_wait 30 cargo build
+    - stage: Test
+      script:
+        - cargo test
+    - stage: Bench
+      script:
+        - cargo bench
+    - stage: Lint
+      script:
+        -  cargo clippy --all-targets --all-features -- -D warnings
+    - stage: Format
+      script:
+        - cargo fmt --all -- --check
