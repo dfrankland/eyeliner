@@ -6,46 +6,26 @@ rust:
   - nightly
 cache:
   cargo: true
-os: linux
-dist: trusty # 14.04
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-8
-      - autoconf2.13
+matrix:
+  include:
+    - os: linux # 14.04
+      dist: trusty
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - autoconf2.13
 before_install:
-  - nvm install --lts
-  - nvm use --lts
-  - node -v
-  - npm -v
   - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 60 --slave /usr/bin/g++ g++ /usr/bin/g++-8
   - g++ -v
   - rustup component add clippy || cargo install --git https://github.com/rust-lang/rust-clippy/ --force clippy
   - rustup component add rustfmt || cargo install --git https://github.com/rust-lang/rustfmt/ --force rustfmt
-install:
-  - npm install
-stages:
-  - Build
-  - Test
-  - Bench
-  - Lint
-  - Format
-jobs:
-  include:
-    - stage: Build
-      script:
-        - travis_wait 30 cargo build
-    - stage: Test
-      script:
-        - cargo test
-    - stage: Bench
-      script:
-        - cargo bench
-    - stage: Lint
-      script:
-        -  cargo clippy --all-targets --all-features -- -D warnings
-    - stage: Format
-      script:
-        - cargo fmt --all -- --check
+  - cp ./servo/Cargo.lock .
+script:
+  - travis_wait 30 cargo build
+  - cargo test
+  - cargo bench
+  - cargo clippy --all-targets --all-features -- -D warnings
+  - cargo fmt --all -- --check
