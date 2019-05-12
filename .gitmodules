@@ -3,6 +3,6 @@
   url = https://github.com/twbs/bootstrap.git
   shallow = true
 [submodule "servo"]
-  path = servo
-  url = https://github.com/servo/servo.git
+	path = servo
+	url = https://github.com/servo/servo.git
   shallow = true
