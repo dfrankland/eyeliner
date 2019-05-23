@@ -9,7 +9,7 @@ pub mod traits;
 
 use self::traits::*;
 pub use self::{eyeliner::*, hash::*, options::*, rules::*, settings::*};
-pub use servo_css_parser::servo_config;
+pub use servo_css_parser::{servo_config, embedder_traits as servo_embedder_traits};
 
 /// Returns a string of HTML with CSS inlined.
 ///
