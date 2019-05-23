@@ -9,6 +9,7 @@ pub mod traits;
 
 use self::traits::*;
 pub use self::{eyeliner::*, hash::*, options::*, rules::*, settings::*};
+pub use servo_css_parser::servo_config;
 
 /// Returns a string of HTML with CSS inlined.
 ///
