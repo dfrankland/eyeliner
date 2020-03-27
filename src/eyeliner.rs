@@ -406,7 +406,7 @@ impl InsertPreservedCss for Eyeliner {
             let style_node = NodeRef::new_element(
                 QualName {
                     prefix: None,
-                    ns: ns!(),
+                    ns: ns!(html),
                     local: local_name!("style"),
                 },
                 vec![],
